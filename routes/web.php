@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\StudentCourseController;
+use App\Http\Controllers\TeacherController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,9 +16,10 @@ Route::get('/dashboard', function () {
 
 
 Route::resource('/students', StudentController::class);
+Route::resource('/teachers', TeacherController::class);
 Route::resource('/courses-available', CourseController::class);
 Route::get('/students-courses', [StudentCourseController::class, 'index']);
-Route::post('/students-courses/{alias}', [StudentCourseController::class, 'show']);
+Route::get('/students-courses/{alias}', [StudentCourseController::class, 'show']);
 
 
 Route::get('/enrollments', [EnrollmentController::class, 'index']);

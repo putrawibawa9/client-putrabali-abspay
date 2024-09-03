@@ -1,4 +1,4 @@
-{{-- @dd($courses) --}}
+{{-- @dd($courseWithStudents) --}}
 @extends('layouts.main')
 
 @section('content')
@@ -37,11 +37,17 @@
     
     <!-- /.card-header -->
     <div class="card-body">
-  <div class="form-group">
-    <label>Choose Class</label>
-    @foreach ($courses as $course)
-        <a href="/students-courses/{{ $course['alias'] }}">{{ $course['name'] }}</a><br>
+<!-- Bootstrap Dropdown -->
+<div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select Course
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      @foreach ($courses as $course)
+        <a class="dropdown-item" href="/students-courses/{{ $course['alias'] }}">{{ $course['name'] }}</a><br>
     @endforeach  
+  </div>
 </div>
 
         <table id="example1" class="table table-bordered table-striped">
@@ -55,8 +61,8 @@
                 </tr>
             </thead>
             <tbody>
-                @if(isset($students) && $students->isNotEmpty())
-                    @foreach ($students as $row)
+                @if(isset($courseWithStudents)&& count($courseWithStudents['students']) > 0)
+                    @foreach ($courseWithStudents['students'] as $row)
                         <tr>
                             <td>{{ $row['name'] }}</td>
                             <td><a href="https://wa.me/{{ $row['wa_number'] }}">{{ $row['wa_number'] }}</a></td>

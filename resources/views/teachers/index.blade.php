@@ -36,35 +36,27 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="/students/create" class="btn btn-primary">Add New Student</a>
+                <a href="/teachers/create" class="btn btn-primary">Add New Teacher</a>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Whatsapp</th>
-                    <th>Gender</th>
-                    <th>School</th>
-                    <th>Enroll Date</th>
+                    <th>Alias</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach ($students as $row)
+                    @foreach ($teachers as $row)
                   <tr>
                     <td>{{ $row['name'] }}</td>
-                    <td><a href="https://wa.me/{{ $row['wa_number'] }}">{{ $row['wa_number'] }}</a></td>
-                    <td>{{ $row['gender'] }}</td>
-                    <td>{{ $row['school'] }}</td>
-                    <td>{{ $row['enroll_date'] }}</td>
+                    <td>{{ $row['alias'] }}</td>
+                    
                   </tr>
                  @endforeach
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>Name</th>
-                    <th>Whatsapp</th>
-                    <th>Gender</th>
-                    <th>School</th>
-                    <th>Enroll Date</th>
+                   <th>Name</th>
+                    <th>Alias</th>
                   </tr>
                   </tfoot>
                 </table>

@@ -40,9 +40,9 @@
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+  {{-- <div class="preloader flex-column justify-content-center align-items-center">
+    <p class="animation__shake">Putra Bali English Course</p>
+  </div> --}}
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -76,11 +76,11 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="/students" class="nav-link active">
+          <li class="nav-item ">
+            <a href="/students" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Students
+                Dashboard
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -88,24 +88,88 @@
               <li class="nav-item">
                 <a href="/students" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard</p>
+                  <p>Overview</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/students/create" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add New Student</p>
+                  <p>Quick Stats</p>
                 </a>
               </li>
+            </ul>
+          </li>
+
+                    <li class="nav-item">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Attendance
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/enrollments" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Form</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/students" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reports</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Payments
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/enrollments" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Form</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/students" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reports</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+    
+                    <li class="nav-item">
+            <a href="/students" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Students
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/enrollments" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Enrollment</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/students" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Students</p>
+                </a>
+              </li>
             </ul>
           </li>
-    
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
@@ -116,13 +180,38 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="/students-courses" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Courses</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/courses-available" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard</p>
+                  <p>Add New Course</p>
                 </a>
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Teachers
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/teachers" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New Teacher</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
 
         </ul>
       </nav>
@@ -201,7 +290,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('lte/dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('lte/dist/js/pages/dashboard.js')}}"></script>
+{{-- <script src="{{ asset('lte/dist/js/pages/dashboard.js')}}"></script> --}}
 
 
 </body>
