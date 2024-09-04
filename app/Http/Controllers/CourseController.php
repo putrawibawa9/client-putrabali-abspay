@@ -4,39 +4,22 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use App\Services\CourseService;
 
 class CourseController extends Controller
 {
+     protected $courseService;
+   public function __construct(CourseService $courseService)
+    {
+        $this->courseService = $courseService;
+    }
     /**
      * Display a listing of the resource.
      */
  public function index(){
-          // Create a new Guzzle client
-    $client = new Client();
-
-    // Define the API endpoint URL
-    $url = 'localhost:8000/api/v1/courses-available';
-
-    try {
-        // Send a GET request to the API
-        $response = $client->request('GET', $url);
-
-        // Check if the response status code is 200 (OK)
-        if ($response->getStatusCode() === 200) {
-            // Decode the JSON response into an associative array
-            $data = json_decode($response->getBody()->getContents(), true);
-
-            // Return or process the data as needed
-            return view('courses.index', ['courses' => $data]);
-        }
-    } catch (\Exception $e) {
-        // Handle exceptions or errors
-        return response()->json([
-            'error' => 'Failed to fetch data',
-            'message' => $e->getMessage()
-        ], 500);
-    }
-        
+        $courses = $this->courseService->getAllCourses();
+   
+        return view('courses.index', compact('courses'));
     }
 
     /**

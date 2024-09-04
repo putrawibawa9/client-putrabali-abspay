@@ -2,41 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\StudentService;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
 class StudentController extends Controller
 {
+    protected $studentService;
+     public function __construct(StudentService $studentService)
+    {
+        $this->studentService = $studentService;
+    }
     /**
      * Display a listing of the resource.
      */
    public function index(){
-          // Create a new Guzzle client
-    $client = new Client();
-
-    // Define the API endpoint URL
-    $url = 'localhost:8000/api/v1/students';
-
-    try {
-        // Send a GET request to the API
-        $response = $client->request('GET', $url);
-
-        // Check if the response status code is 200 (OK)
-        if ($response->getStatusCode() === 200) {
-            // Decode the JSON response into an associative array
-            $data = json_decode($response->getBody()->getContents(), true);
-
-            // Return or process the data as needed
-            return view('students.index', ['students' => $data]);
-        }
-    } catch (\Exception $e) {
-        // Handle exceptions or errors
-        return response()->json([
-            'error' => 'Failed to fetch data',
-            'message' => $e->getMessage()
-        ], 500);
-    }
-        
+        // use student service to get all students
+         $students = $this->studentService->getAllStudents();
+   
+        return view('students.index', compact('students'));
     }
 
     /**
@@ -91,7 +75,7 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        //
+      
     }
 
     /**

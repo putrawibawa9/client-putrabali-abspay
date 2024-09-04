@@ -1,4 +1,4 @@
-{{-- @dd($courseWithStudents) --}}
+@dd($students)
 @extends('layouts.main')
 
 @section('content')
@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Students</h1>
+            <h1 class="m-0">Courses</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -31,9 +31,7 @@
         <div class="row">
           <div class="col-12">
  <div class="card">
-    <div class="card-header">
-        <h3 class="card-title">DataTable with default features</h3>
-    </div>
+
     
     <!-- /.card-header -->
     <div class="card-body">
@@ -48,6 +46,11 @@
         <a class="dropdown-item" href="/students-courses/{{ $course['alias'] }}">{{ $course['name'] }}</a><br>
     @endforeach  
   </div>
+</div>
+<div>
+  @if (isset($courseWithStudents['name']))
+  <h1 class="text-center">{{ $courseWithStudents['name'] }}</h1>
+  @endif
 </div>
 
         <table id="example1" class="table table-bordered table-striped">
