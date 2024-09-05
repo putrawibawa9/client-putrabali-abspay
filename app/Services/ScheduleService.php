@@ -5,7 +5,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Exception\RequestException;
 
-class PaymentService
+class ScheduleService
 {
     protected $client;
     protected $baseUrl;
@@ -16,20 +16,23 @@ class PaymentService
          $this->baseUrl = config('services.api.base_url');
     }
 
-    public function store($data)
+    public function getStudentSchedules($nis)
     {
         try {
             // Make the API request
-            $response = $this->client->request('POST', $this->baseUrl . '/payments', [
+            $response = $this->client->request('GET', $this->baseUrl . '/students/schedules/' . $nis, [
                 'timeout' => 10, // Set a timeout for the request
                 'headers' => [
                     'Accept' => 'application/json',
                 ],
-                'json' => $data,
+                // Optional: Add query parameters if needed
+                'query' => [
+                    // 'param1' => 'value1',
+                ],
             ]);
 
-            // Check if the response status code is 201 (Created)
-            if ($response->getStatusCode() === 201) {
+            // Check if the response status code is 200 (OK)
+            if ($response->getStatusCode() === 200) {
                 // Decode the JSON response into an associative array
                 $data = json_decode($response->getBody()->getContents(), true);
                 
@@ -46,7 +49,7 @@ class PaymentService
 
             // Return a user-friendly error message
             return [
-                'error' => 'Failed to process payment. Please try again later.',
+                'error' => 'Failed to fetch student schedules. Please try again later.',
             ];
         } catch (\Exception $e) {
             // Log unexpected errors
@@ -57,6 +60,8 @@ class PaymentService
                 'error' => 'An unexpected error occurred. Please try again later.',
             ];
         }
-
     }
+
+
+  
 }

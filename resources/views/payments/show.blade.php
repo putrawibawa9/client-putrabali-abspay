@@ -82,7 +82,7 @@
                             <!-- Date Selection -->
                             <div class="form-group">
                                 <label>Date</label>
-                                <input type="date" class="form-control select2 select2-danger" value="{{ date('Y-m-d') }}">
+                                <input name="payment_date" type="date" class="form-control select2 select2-danger" value="{{ date('Y-m-d') }}">
                             </div>
                         </div>
                         <!-- /.col -->
@@ -90,36 +90,44 @@
                         <div class="col-md-6">
                             <!-- General Payment Rate Selection -->
                             <div class="form-group">
-                                <label>General Payment Rate</label>
-                                <select id="generalRate" class="form-control select2" style="width: 100%;">
-                                    <option value="">Select Class</option>
-                                    @foreach ($student as $row)
-                                        <option value="{{ $row['payment_rate'] }}">
-                                            {{ $row['course_name'] }} || Rp. {{ number_format($row['payment_rate'], 0, ',', '.') }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                               <label>General Payment Rate</label>
+                    <select name="course_details" id="generalRate" class="form-control select2" style="width: 100%;">
+                        <option value="">Select Class</option>
+                        @foreach ($student as $row)
+                            <option value="{{ $row['course_id'] }}|{{ $row['payment_rate'] }}">
+                                {{ $row['course_name'] }} || Rp. {{ number_format($row['payment_rate'], 0, ',', '.') }}
+                            </option>
+                        @endforeach
+                    </select>
+
                             </div>
 
                             <!-- Custom Payment Rate Selection -->
                             <div class="form-group">
-                                <label>Custom Payment Rate</label>
-                                <select id="customRate" class="form-control select2" style="width: 100%;">
-                                    <option value="">Select Class</option>
-                                    @foreach ($student as $row)
-                                        <option value="{{ $row['custom_payment_rate'] }}">
-                                            {{ $row['course_name'] }} || 
-                                            @if ($row['custom_payment_rate'])
-                                                Rp. {{ number_format($row['custom_payment_rate'], 0, ',', '.') }}
-                                            @else
-                                                No custom payment rate
-                                            @endif
-                                        </option>
-                                    @endforeach
-                                </select>
+<label>Custom Payment Rate</label>
+<select name="custom_course_details" id="customRate" class="form-control select2" style="width: 100%;">
+    <option value="">Select Class</option>
+    @foreach ($student as $row)
+        <option value="{{ $row['course_id'] }}|{{ $row['custom_payment_rate'] ?? 'No custom payment rate' }}">
+            {{ $row['course_name'] }} || 
+            @if ($row['custom_payment_rate'])
+                Rp. {{ number_format($row['custom_payment_rate'], 0, ',', '.') }}
+            @else
+                No custom payment rate
+            @endif
+        </option>
+    @endforeach
+</select>
+
                             </div>
                         </div>
                         <input type="submit" class="btn btn-primary">
+                        <input type="hidden" id="course_id" name="course_id">
+                        <input type="hidden" id="payment_rate" name="payment_rate">
+                        <input type="hidden" id="custom_course_id" name="custom_course_id">
+                        <input type="hidden" id="custom_payment_rate" name="custom_payment_rate">
+
+                        @csrf
                     </form>
                         <!-- /.col -->
                     </div>
@@ -136,6 +144,25 @@
 <!-- /.content-wrapper -->
 
 <script>
+    document.getElementById('customRate').addEventListener('change', function() {
+    // Split the selected value into course_id and custom_payment_rate
+    const [courseId, customPaymentRate] = this.value.split('|');
+
+    // Assign the values to hidden input fields
+    document.getElementById('custom_course_id').value = courseId;
+    document.getElementById('custom_payment_rate').value = customPaymentRate;
+});
+
+    document.getElementById('generalRate').addEventListener('change', function() {
+    // Split the selected value into course_id and payment_rate
+    const [courseId, paymentRate] = this.value.split('|');
+
+    // Assign the values to hidden input fields
+    document.getElementById('course_id').value = courseId;
+    document.getElementById('payment_rate').value = paymentRate;
+});
+
+
     document.addEventListener('DOMContentLoaded', function() {
         const generalRate = document.getElementById('generalRate');
         const customRate = document.getElementById('customRate');

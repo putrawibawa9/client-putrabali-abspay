@@ -20,7 +20,7 @@ class StudentService
     {
         try {
             // Make the API request
-            $response = $this->client->request('GET', $this->baseUrl . '/payments', [
+            $response = $this->client->request('GET', $this->baseUrl . '/students', [
                 'timeout' => 10, // Set a timeout for the request
                 'headers' => [
                     'Accept' => 'application/json',

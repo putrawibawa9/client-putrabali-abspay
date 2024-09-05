@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="{{ asset('lte/plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('lte/plugins/summernote/summernote-bs4.min.css')}}">
+  
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
   <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -55,7 +57,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="" class="brand-link">
       <span class="brand-text font-weight-light">Putra Bali English Course</span>
     </a>
 
@@ -210,6 +212,31 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Schedule
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/students-schedules-check" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Student Schedule</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/students-schedules-check" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Teacher Schedule</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
 
 
@@ -238,7 +265,12 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+ <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+ <script>
+        $(document).ready(function() {
+            $('#table').DataTable();
+        });
+    </script>
 <script>
   $(function () {
     $("#example1").DataTable({

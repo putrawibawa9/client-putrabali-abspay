@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Services\CourseService;
 use App\Services\StudentService;
 use App\Services\StudentCourseService;
+use App\Services\PaymentService;
+
 
 class PaymentController extends Controller
 {
@@ -13,11 +15,13 @@ class PaymentController extends Controller
      protected $studentService;
     protected $courseService;
     protected $studentCoursesService;
-    public function __construct(StudentService $studentService, CourseService $courseService, StudentCourseService $studentCoursesService)
+    protected $paymentService;
+    public function __construct(StudentService $studentService, CourseService $courseService, StudentCourseService $studentCoursesService, PaymentService $paymentService)
     {
         $this->studentService = $studentService;
         $this->courseService = $courseService;
         $this->studentCoursesService = $studentCoursesService;
+        $this->paymentService = $paymentService;
     }
     /**
      * Display a listing of the resource.
@@ -42,7 +46,18 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate the request
+        $request->validate([
+            'student_id' => 'required|numeric',
+            'course_id' => 'required|numeric',
+            'payment_date' => 'required|date',
+            'payment_amount' => 'required|numeric',
+            'payment_month' => 'required',
+        ]);
+        // call the payment services
+        $response = $this->paymentService->store($request->all());
+        // return the response
+        return redirect()->route('payments.index')->with($response);
     }
 
     /**
@@ -52,7 +67,7 @@ class PaymentController extends Controller
     {
         $allStudents = $this->studentService->getAllStudents();
         $student = $this->studentCoursesService->getStudentCourses($id);
-        return view('payments.show', compact('allStudents', 'student'));
+        return view('payments.test', compact('allStudents', 'student'));
     }
 
     /**
