@@ -25,9 +25,8 @@
     <section class="content">
       <div class="container-fluid">
  <div class="container table-container">
-        <h1 class="my-4">jQuery Table Example</h1>
         <input type="text" id="search" class="form-control mb-3" placeholder="Search...">
-        <table class="table table-striped">
+        <table id="table" class="table table-striped">
             <thead>
                 <tr>
                     <th>Name</th>

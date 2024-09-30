@@ -36,6 +36,11 @@
     
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+     <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -57,9 +62,9 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="" class="brand-link">
-      <span class="brand-text font-weight-light">Putra Bali English Course</span>
-    </a>
+
+      <span  class=" brand-link brand-text font-weight-light">Putra Bali English Course</span>
+
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -68,9 +73,9 @@
         <div class="image">
           <img src="{{ asset('img/fotoProfesional.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
-        <div class="info">
-          <a href="#" class="d-block">I Gede Putra Wibawa</a>
-        </div>
+    
+           <span  class=" brand-link brand-text font-weight-light">Putra Wibawa</span>
+   
       </div>
 
       <!-- Sidebar Menu -->
@@ -264,14 +269,18 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
+
+<script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+ 
 <!-- ./wrapper -->
  <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
  <script>
-        $(document).ready(function() {
-            $('#table').DataTable();
-        });
+      
     </script>
 <script>
+    $(document).ready(function() {
+            $('#table').DataTable();
+        });
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
