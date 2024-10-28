@@ -32,8 +32,8 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <a href="/course/create" class="btn btn-primary">Add New Course</a>
-        
+       
+  
         <!-- Filter form -->
         <form action="/courses/search" method="POST">
           @csrf <!-- Don't forget to include the CSRF token for POST requests -->
@@ -57,6 +57,7 @@
             </button>
           </div>
         </form>
+              <h1>Kontol</h1>
       </div>
       <!-- /.card-header -->
 
@@ -64,11 +65,12 @@
  <table class="table table-hover text-nowrap display" id="table">
     <thead>
         <tr>
-            <th>Level</th>
-            <th>Section</th>
-            <th>Subject</th>
-            <th>Alias</th>
-            <th>Payment Rate</th>
+            <th>Nis</th>
+            <th>Name</th>
+            <th>Wa Number</th>
+            <th>Gender</th>
+            <th>School</th>
+            <th>Enroll Date</th>
             <th>Show</th>
         </tr>
     </thead>
@@ -80,11 +82,11 @@
                 </tr>
             @else {{-- Otherwise, display row data as usual --}}
                 <tr>
-                    <td>{{ $row['level'] }}</td>
-                    <td>{{ $row['section'] }}</td>
-                    <td>{{ $row['subject'] }}</td>
-                    <td>{{ $row['alias'] }}</td>
-                    <td>{{ $row['payment_rate'] }}</td>
+                    <td>{{ $row['nis'] }}</td>
+                    <td>{{ $row['name'] }}</td>
+                    <td>{{ $row['wa_number'] }}</td>
+                    <td>{{ $row['gender'] }}</td>
+                    <td>{{ $row['school'] }}</td>
                     <td><a class="btn btn-secondary" href="/courses/{{ $row['id'] }}">Show</a></td>
                 </tr>
             @endif

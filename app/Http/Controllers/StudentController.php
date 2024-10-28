@@ -46,53 +46,44 @@ class StudentController extends Controller
         ]);
         $validatedData['wa_number'] = $this->formatWaNumber($validatedData['wa_number']);
 
-        // Initialize Guzzle client
-        $client = new Client();
-
-        try {
-            // Send POST request to the API endpoint
-            $response = $client->post('localhost:8000/api/v1/students', [
-                'headers' => [
-                    'Accept' => 'application/json',
-                ],
-                'json' => $validatedData,
-            ]);
-
-            // Decode the JSON response
-            $data = json_decode($response->getBody(), true);
-
-            // Handle the response as needed
-            return redirect()->route('students.index')->with('success', $data['message']);
-
-        } catch (\Exception $e) {
-            // Handle exceptions
-            return redirect()->route('students.index')->withErrors('Failed to create student: ' . $e->getMessage());
-        }
+        $this->studentService->addNewStudent($validatedData);
+        return redirect('/students');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-      
-    }
+   public function show($id){
+        // use student service to get student by id
+        $student = $this->studentService->getStudentById($id);
+        return view('students.show', compact('student'));
+   }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+   public function update(Request $request, $id)
+{
+    // Get only the fields that have values in the request
+    $data = $request->only(['name', 'school', 'enroll_date', 'wa_number']);
+    
+    // Filter out any fields that are empty or null
+    $data = array_filter($data, function ($value) {
+        return !is_null($value) && $value !== '';
+    });
+
+    
+    $this->studentService->updateStudent($id, $data);
+    return redirect('/students/' . $id);
+}
 
     /**
      * Remove the specified resource from storage.

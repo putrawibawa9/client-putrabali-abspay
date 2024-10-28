@@ -16,9 +16,17 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function search(Request $request)
+    {
+        $courses = $this->courseService->search($request->all());
+    
+        return view('courses.index', compact('courses'));
+
+    }
  public function index(){
         $courses = $this->courseService->getAllCourses();
-   
+  
         return view('courses.index', compact('courses'));
     }
 
@@ -77,7 +85,8 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = $this->courseService->getCourseWithStudentsbyID($id);
+        return view('students.index', compact('data'));
     }
 
     /**

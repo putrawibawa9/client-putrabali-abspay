@@ -1,3 +1,4 @@
+{{-- @dd($data) --}}
 @extends('layouts.main')
 
 @section('content')
@@ -25,7 +26,9 @@
     <section class="content">
       <div class="container-fluid">
  <div class="container table-container">
-        <input type="text" id="search" class="form-control mb-3" placeholder="Search...">
+
+        <h1>{{ $data['alias'] }}</h1>
+        <a href="/students/create" class="btn btn-primary">Add New Student</a>
         <table id="table" class="table table-striped">
             <thead>
                 <tr>
@@ -34,16 +37,18 @@
                     <th>Gender</th>
                     <th>School</th>
                     <th>Enroll Date</th>
+                    <th>Show</th>
                 </tr>
             </thead>
             <tbody>
-                    @foreach ($students as $row)
+                    @foreach ($data['students'] as $row)
                   <tr>
                     <td>{{ $row['name'] }}</td>
                     <td><a href="https://wa.me/{{ $row['wa_number'] }}">{{ $row['wa_number'] }}</a></td>
                     <td>{{ $row['gender'] }}</td>
                     <td>{{ $row['school'] }}</td>
                     <td>{{ $row['enroll_date'] }}</td>
+                    <td><a href="/student/payment{{ $row['id'] }}">Show</a></td>
                   </tr>
                  @endforeach
                   </tbody>

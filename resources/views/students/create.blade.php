@@ -45,8 +45,12 @@
                     <input type="text" name="wa_number" class="form-control" id="exampleInputPassword1">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Gender</label>
-                    <input type="text" name="gender" class="form-control" id="exampleInputPassword1" >
+                     <label>
+                    <input type="radio" name="gender" value="Male"> Male
+                </label>
+                <label>
+                    <input type="radio" name="gender" value="Female"> Female
+                </label>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">School</label>
