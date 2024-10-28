@@ -37,7 +37,8 @@
                     <th>Gender</th>
                     <th>School</th>
                     <th>Enroll Date</th>
-                    <th>Show</th>
+                    <th>Edit</th>
+                    <th>Payment</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,7 +49,8 @@
                     <td>{{ $row['gender'] }}</td>
                     <td>{{ $row['school'] }}</td>
                     <td>{{ $row['enroll_date'] }}</td>
-                    <td><a href="/student/payment{{ $row['id'] }}">Show</a></td>
+                    <td><a href="/students/{{ $row['id'] }}">Edit</a></td>
+                    <td><a href="/student/payment/{{ $row['id'] }}">Show</a></td>
                   </tr>
                  @endforeach
                   </tbody>

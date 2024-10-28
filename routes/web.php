@@ -38,3 +38,6 @@ Route::get('/absences', [AbsenceController::class, 'index']);
 
 Route::post('/courses/search', [CourseController::class, 'search'])->name('courses.search');
 
+Route::get('/student/payment/{id}', [PaymentController::class, 'getStudentPayment'])->name('student.payment');
+
+Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembayaranPrint'])->name('formPembayaran.print');

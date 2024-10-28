@@ -93,4 +93,17 @@ class PaymentController extends Controller
     {
         //
     }
+
+    public function getStudentPayment($id)
+    {
+        $data = $this->paymentService->getStudentPayment($id);
+        return view('payments.studentPayment', compact('data'));
+    }
+
+    public function formPembayaranPrint($id)
+    {
+        $student = $this->studentService->getStudentById($id);
+        return view('forms.pembayaran', compact('student'));
+    
+    }
 }

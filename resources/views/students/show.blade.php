@@ -62,6 +62,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
+                  <a href="/formPembayaran/print/{{ $student['id'] }}" class="btn btn-secondary">Print PDF</a>
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
               </form>
