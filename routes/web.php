@@ -41,3 +41,12 @@ Route::post('/courses/search', [CourseController::class, 'search'])->name('cours
 Route::get('/student/payment/{id}', [PaymentController::class, 'getStudentPayment'])->name('student.payment');
 
 Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembayaranPrint'])->name('formPembayaran.print');
+
+rOUTE::get('/students/edit/{id}', [StudentController::class, 'edit'])->name('student.edit');
+
+Route::get('/public/payments', [PaymentController::class, 'checkPaymentFromParents']);
+Route::post('/public/search', [StudentController::class, 'searchStudentByNisOrName']);
+
+Route::get('/public/payments/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
+
+Route::get('/students/payment/form', [PaymentController::class, 'index']);

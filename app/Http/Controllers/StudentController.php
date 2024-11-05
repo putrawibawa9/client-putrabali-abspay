@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\StudentService;
-use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use App\Services\PaymentService;
+use App\Services\StudentService;
 
 class StudentController extends Controller
 {
     protected $studentService;
-     public function __construct(StudentService $studentService)
+    protected $paymentService;
+     public function __construct(StudentService $studentService, PaymentService $paymentService)
     {
         $this->studentService = $studentService;
+        $this->paymentService = $paymentService;
     }
     /**
      * Display a listing of the resource.
@@ -56,7 +59,8 @@ class StudentController extends Controller
    public function show($id){
         // use student service to get student by id
         $student = $this->studentService->getStudentById($id);
-        return view('students.show', compact('student'));
+        $payment = $this->paymentService->getStudentPayment($id);
+        return view('students.show', compact('student', 'payment'));
    }
 
     /**
@@ -64,7 +68,8 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        
+        $student = $this->studentService->getStudentById($id);
+        return view('students.update', compact('student'));
     }
 
     /**
@@ -99,5 +104,14 @@ class StudentController extends Controller
         return '62' . substr($wa_number, 1);
     }
     return $wa_number;
+}
+
+public function searchStudentByNisOrName(Request $request)
+{
+    $search = $request->input('search');
+
+    $students = $this->studentService->searchStudentByNisOrName($search);
+    return view('public.search', compact('students'));
+
 }
 }

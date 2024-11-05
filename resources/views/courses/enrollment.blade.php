@@ -1,4 +1,4 @@
-{{-- @dd($data) --}}
+{{-- @dd($students) --}}
 @extends('layouts.main')
 
 @section('content')
@@ -46,7 +46,7 @@
                 <div class="form-group">
                   <label>Nama Siswa</label>
                   <select name="student_id" class="form-control select2" style="width: 100%;">
-                    @foreach ($data['students'] as $row )
+                    @foreach ($students as $row )
                     <option  value="{{ $row['id'] }}"> {{ $row['name'] }}</option>
                     @endforeach
                    
@@ -64,8 +64,8 @@
                 <div class="form-group">
                   <label>Nama Kelas</label>
                   <select name="course_id" class="select2" multiple="multiple" data-placeholder="Select a Class" style="width: 100%;">
-                    @foreach ($data['courses'] as $row )
-                    <option value=" {{ $row['id'] }} ">{{ $row['name'] }}</option>
+                    @foreach ($courses as $row )
+                    <option value=" {{ $row['id'] }} ">{{ $row['alias'] }}</option>
                     @endforeach
                   </select>
                 </div>

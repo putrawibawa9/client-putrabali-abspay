@@ -4,37 +4,28 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use App\Services\CourseService;
+use App\Services\StudentService;
 
 class EnrollmentController extends Controller
 {
-public function index(){
-          // Create a new Guzzle client
-    $client = new Client();
+protected $courseService;
+protected $studentService;
 
-    // Define the API endpoint URL
-    $url = 'localhost:8000/api/v1/enrollments';
+ public function __construct(CourseService $courseService, StudentService $studentService)
+    {
+        $this->courseService = $courseService;
+        $this->studentService = $studentService;
+    }
 
-    try {
-        // Send a GET request to the API
-        $response = $client->request('GET', $url);
+public function index()
+{
+    $students = $this->studentService->getAllStudents();
+    $courses = $this->courseService->getAllCourses();
 
-        // Check if the response status code is 200 (OK)
-        if ($response->getStatusCode() === 200) {
-            // Decode the JSON response into an associative array
-            $data = json_decode($response->getBody()->getContents(), true);
-
-            // Return or process the data as needed
-            return view('enrollments.enrollments', ['data' => $data]);
+    return view('courses.enrollment', compact('students', 'courses'));
         }
-    } catch (\Exception $e) {
-        // Handle exceptions or errors
-        return response()->json([
-            'error' => 'Failed to fetch data',
-            'message' => $e->getMessage()
-        ], 500);
-    }
-        
-    }
+
 
      public function store(Request $request)
     {
@@ -65,7 +56,7 @@ public function index(){
         } catch (\Exception $e) {
             // Handle exceptions or errors
             return response()->json([
-                'error' => 'Failed to enroll student',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }

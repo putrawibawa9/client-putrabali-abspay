@@ -26,6 +26,7 @@
       <div class="container-fluid">
  <div class="container table-container">
 
+        <h1>{{ $data['alias'] }}</h1>
         <a href="/students/create" class="btn btn-primary">Add New Student</a>
         <table id="table" class="table table-striped">
             <thead>
@@ -40,10 +41,10 @@
                 </tr>
             </thead>
             <tbody>
-                    @foreach ($students as $row)
+                    @foreach ($data['students'] as $row)
                   <tr>
                     <td>{{ $row['name'] }}</td>
-                    <td><a  href="https://wa.me/{{ $row['wa_number'] }}">{{ $row['wa_number'] }}</a></td>
+                    <td><a href="https://wa.me/{{ $row['wa_number'] }}">{{ $row['wa_number'] }}</a></td>
                     <td>{{ $row['gender'] }}</td>
                     <td>{{ $row['school'] }}</td>
                     <td>{{ $row['enroll_date'] }}</td>

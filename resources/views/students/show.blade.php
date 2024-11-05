@@ -1,81 +1,61 @@
+{{-- @dd($student); --}}
 @extends('layouts.main')
 
 @section('content')
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+<div class="content-wrapper">
     <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Edit Student</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">General Form</li>
-            </ol>
-          </div>
+        <div class="container-fluid">
+            <h1>Student Payment Records</h1>
+            <h2>{{ $payment['student']['name'] }}</h2>
         </div>
-      </div><!-- /.container-fluid -->
     </section>
 
-    <!-- Main content -->
+    <!-- Courses the student is enrolled in -->
     <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-md-6">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Student Data</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form action="/students/{{ $student['id'] }}" method="POST">
-                <input type="hidden" name="enroll_date" placeholder="{{ $student['enroll_date'] }}">
-                @csrf
-                @method('PUT')
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">NIS</label>
-                    <input name="nis" type="text" class="form-control" id="exampleInputEmail1" readonly placeholder="{{ $student['nis'] }}">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Name</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1" name="name" placeholder="{{ $student['name'] }}">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">WA</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1" name="wa_number" placeholder="{{ $student['wa_number'] }}">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Gender</label>
-                    <input type="text" name="gender" class="form-control" id="exampleInputPassword1" readonly placeholder="{{ $student['gender'] }}">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">School</label>
-                    <input name="school" type="text" class="form-control" id="exampleInputPassword1" placeholder="{{ $student['school'] }}">
-                  </div>
-               
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <a href="/formPembayaran/print/{{ $student['id'] }}" class="btn btn-secondary">Print PDF</a>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
-            </div>
-          
-
-          </div>
-      
+        <div class="container-fluid mb-4">
+            <h3>Classes Enrolled</h3>
+            <ul class="list-group">
+                @foreach ($student['active_courses'] as $course)
+                    <li class="list-group-item">{{ $course['alias'] }} - {{ $course['subject'] }}</li>
+                @endforeach
+            </ul>
         </div>
-     
-      </div><!-- /.container-fluid -->
+        <a href="/formPembayaran/print/{{ $student['id'] }}" class="btn btn-primary">Print Payment Form</a>
+        <!-- Payment records for each course -->
+        <div class="container-fluid">
+            <h3 class="mt-4">Payment Records by Class</h3>
+            @foreach ($payment['course_payments'] as $coursePayment)
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title m-0">Class: {{ $coursePayment['course']['alias'] }} - {{ $coursePayment['course']['subject'] }}</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-bordered table-hover mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Payment Month</th>
+                                    <th>Payment Amount</th>
+                                    <th>Payment Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($coursePayment['payments'] as $payment)
+                                    <tr>
+                                        <td>{{ $payment['payment_month'] }}</td>
+                                        <td>{{ number_format($payment['payment_amount'], 2) }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($payment['created_at'])->format('d M Y') }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted">No payments recorded for this class.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </section>
-
-  </div>
-
+</div>
 @endsection

@@ -124,8 +124,8 @@
                 <span class="info-label">Nis</span>:    {{ $student['nis'] }}
             </div>
      @php
-    $classNames = implode(', ', array_column($student['courses'], 'alias'));
-    $subjects = implode(', ', array_column($student['courses'], 'subject'));
+    $classNames = implode(', ', array_column($student['active_courses'], 'alias'));
+    $subjects = implode(', ', array_column($student['active_courses'], 'subject'));
 @endphp
 
 <div class="info-row">
