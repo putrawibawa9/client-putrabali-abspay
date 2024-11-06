@@ -20,7 +20,7 @@ Route::resource('/teachers', TeacherController::class);
 Route::resource('/courses', CourseController::class);
 
 // Operations
-// Route::resource('/payments', PaymentController::class);
+Route::resource('/payments', PaymentController::class);
 
 
 
@@ -50,3 +50,6 @@ Route::post('/public/search', [StudentController::class, 'searchStudentByNisOrNa
 Route::get('/public/payments/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
 
 Route::get('/students/payment/form', [PaymentController::class, 'index']);
+
+Route::post('/students/payment/select', [PaymentController::class, 'paymentForm']);
+Route::post('/students/payment/search', [PaymentController::class, 'searchStudentByNisOrName']);

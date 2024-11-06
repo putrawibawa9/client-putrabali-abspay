@@ -36,9 +36,11 @@ class PaymentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function paymentForm(Request $request)
     {
-    
+        $id = $request->input('id');
+        $student = $this->studentService->getStudentById($id);
+        return view('payments.show', compact('student'));
     }
 
     /**
@@ -46,9 +48,11 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         // validate the request
         $request->validate([
             'student_id' => 'required|numeric',
+            'user_id' => 'required|numeric',
             'course_id' => 'required|numeric',
             'payment_date' => 'required|date',
             'payment_amount' => 'required|numeric',
@@ -116,4 +120,13 @@ class PaymentController extends Controller
     public function checkPaymentFromParents(){
         return view('public.search');
     }
+
+    public function searchStudentByNisOrName(Request $request)
+{
+    $search = $request->input('search');
+    $students = $this->studentService->searchStudentByNisOrName($search);
+    $courses = $this->courseService->getAllCourses();
+    return view('payments.index', compact('students', 'courses'));
+
+}
 }
