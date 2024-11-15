@@ -153,23 +153,28 @@ class CourseService
         }
     }
 
-   public function addNewStudent($data)
+   public function addNewCourse($data)
     {
+
+        // dd($data);
         try {
             // Make the API request to add a new student
-            $response = $this->client->request('POST', $this->baseUrl . '/students', [
-                'form_params' => $data,
+            $response = $this->client->request('POST', $this->baseUrl . '/courses', [
                 'headers' => [
                     'Accept' => 'application/json',
-                    'Content-Type' => 'application/x-www-form-urlencoded', // Set content type if needed
                 ],
+                'json' => [
+                    'level' => $data['level'],
+                    'section' => $data['section'],
+                    'subject' => $data['subject'],
+                    'alias' => $data['alias'],
+                    'payment_rate' => $data['payment_rate'],
+                ]
             ]);
 
             // Check if the response status code is 201 (Created)
             if ($response->getStatusCode() === 201) {
                 // Decode the JSON response into an associative array
-                $data = json_decode($response->getBody()->getContents(), true);
-
                 return $data;
             }
 
@@ -180,10 +185,10 @@ class CourseService
         } catch (RequestException $e) {
             // Log the error details
             Log::error('API Request Failed: ' . $e->getMessage());
-
+        
             // Return a user-friendly error message
             return [
-                'error' => 'Failed to add new student. Please try again later.',
+                'error' => $e->getMessage(),
             ];
         } catch (\Exception $e) {
             // Log unexpected errors
@@ -191,7 +196,7 @@ class CourseService
 
             // Return a generic error message
             return [
-                'error' => 'An unexpected error occurred. Please try again later.',
+                'error' => $e->getMessage()
             ];
         }
     }

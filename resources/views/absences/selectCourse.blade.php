@@ -1,4 +1,4 @@
-{{-- @dd($data) --}}
+{{-- @dd($courses) --}}
 @extends('layouts.main')
 
 @section('content')
@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Course</h1>
+            <h1 class="m-0">Courses Available</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -31,11 +31,9 @@
       <div class="row">
   <div class="col-12">
     <div class="card">
-      <div class="card-header">
-       
-  
+      <div class="card-header">        
         <!-- Filter form -->
-        <form action="/courses/search" method="POST">
+        <form action="/absences/search" method="POST">
           @csrf <!-- Don't forget to include the CSRF token for POST requests -->
           <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 500px;">
@@ -57,7 +55,6 @@
             </button>
           </div>
         </form>
-              <h1>{{ $data['alias'] }}</h1>
       </div>
       <!-- /.card-header -->
 
@@ -65,30 +62,26 @@
  <table class="table table-hover text-nowrap display" id="table">
     <thead>
         <tr>
-            <th>Nis</th>
-            <th>Name</th>
-            <th>Wa Number</th>
-            <th>Gender</th>
-            <th>School</th>
-            <th>Enroll Date</th>
-            <th>Detail</th>
+            <th>Level</th>
+            <th>Section</th>
+            <th>Subject</th>
+            <th>Alias</th>
+            <th>Select</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($data['students'] as $row)
+        @foreach ($courses as $row)
             @if (is_string($row)) {{-- Check if $row is a string --}}
                 <tr>
                     <td colspan="6">Classes not found</td> {{-- Display the string in one row --}}
                 </tr>
             @else {{-- Otherwise, display row data as usual --}}
                 <tr>
-                    <td>{{ $row['nis'] }}</td>
-                    <td>{{ $row['name'] }}</td>
-                    <td>{{ $row['wa_number'] }}</td>
-                    <td>{{ $row['gender'] }}</td>
-                    <td>{{ $row['school'] }}</td>
-                    <td>{{ $row['enroll_date'] }}</td>
-                    <td><a class="btn btn-secondary" href="/students/{{ $row['id'] }}">Show</a></td>
+                    <td>{{ $row['level'] }}</td>
+                    <td>{{ $row['section'] }}</td>
+                    <td>{{ $row['subject'] }}</td>
+                    <td>{{ $row['alias'] }}</td>
+                    <td><a class="btn btn-primary" href="/absences/{{ $row['id'] }}">Select</a></td>
                 </tr>
             @endif
         @endforeach

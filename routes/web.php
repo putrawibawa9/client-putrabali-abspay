@@ -8,6 +8,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\RecapitulationController;
 use App\Http\Controllers\StudentCourseController;
 
 Route::get('/dashboard', function () {
@@ -53,3 +54,19 @@ Route::get('/students/payment/form', [PaymentController::class, 'index']);
 
 Route::post('/students/payment/select', [PaymentController::class, 'paymentForm']);
 Route::post('/students/payment/search', [PaymentController::class, 'searchStudentByNisOrName']);
+
+// Absences
+Route::get('/absences', [AbsenceController::class, 'allCourses']);
+
+Route::post('/absences/search', [AbsenceController::class, 'searchCourse'])->name('absences.search');
+
+Route::get('/absences/{id}', [AbsenceController::class, 'absenceForm'])->name('absences.show');
+
+Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absences.store');
+
+
+// Recapitulation
+
+Route::get('/recapitulations', [RecapitulationController::class, 'index']);
+// Route::post('/recapitulations', [PaymentController::class, 'rexx']);
+Route::post('/recapitulations/payment', [PaymentController::class, 'paymentRecapitulation'])->name('recapitulations.payment');

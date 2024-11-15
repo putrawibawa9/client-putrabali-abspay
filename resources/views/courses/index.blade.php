@@ -32,7 +32,7 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <a href="/course/create" class="btn btn-primary">Add New Courses</a>
+        <a href="/courses/create" class="btn btn-primary">Add New Courses</a>
         
         <!-- Filter form -->
         <form action="/courses/search" method="POST">

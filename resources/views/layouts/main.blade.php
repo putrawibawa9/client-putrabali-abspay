@@ -31,7 +31,7 @@
   <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
-    <!-- DataTables CSS -->
+    <!-- DataTables CSSB -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     
     <!-- DataTables JS -->
@@ -92,17 +92,10 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/students" class="nav-link">
+                <a href="/recapitulations" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Overview</p>
+                  <p>Recapitulations</p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="/students/create" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Quick Stats</p>
-                </a>
-              </li>
             </ul>
           </li>
 
@@ -110,23 +103,18 @@
             <a href="" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
-                Attendance
+                Absences
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/enrollments" class="nav-link">
+                <a href="/absences" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Form</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/students" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Reports</p>
-                </a>
-              </li>
+
             </ul>
           </li>
           <li class="nav-item">
@@ -144,12 +132,7 @@
                   <p>Form</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/students" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Reports</p>
-                </a>
-              </li>
+       
             </ul>
           </li>
     
@@ -191,12 +174,6 @@
                   <p>All Courses</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/courses-available" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add New Course</p>
-                </a>
-              </li>
             </ul>
           </li>
           <li class="nav-item">
@@ -211,7 +188,7 @@
               <li class="nav-item">
                 <a href="/teachers" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add New Teacher</p>
+                  <p>All Teacher</p>
                 </a>
               </li>
             </ul>
@@ -229,14 +206,6 @@
                 <a href="/students-schedules-check" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Student Schedule</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/students-schedules-check" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Teacher Schedule</p>
                 </a>
               </li>
             </ul>

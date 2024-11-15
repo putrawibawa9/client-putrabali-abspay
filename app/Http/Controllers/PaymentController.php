@@ -54,7 +54,7 @@ class PaymentController extends Controller
             'student_id' => 'required|numeric',
             'user_id' => 'required|numeric',
             'course_id' => 'required|numeric',
-            'payment_date' => 'required|date',
+            'start_date' => 'required|date',
             'payment_amount' => 'required|numeric',
             'payment_month' => 'required',
         ]);
@@ -128,5 +128,19 @@ class PaymentController extends Controller
     $courses = $this->courseService->getAllCourses();
     return view('payments.index', compact('students', 'courses'));
 
+}
+
+public function recapitulation(){
+    return view('overview.index');
+}
+
+public function paymentRecapitulation(Request $request){
+
+    $request->validate([
+        'start_date' => 'required',
+        'start_date' => 'required',
+    ]);
+    $data = $this->paymentService->recapitulation($request->all());
+    return view('overview.index', compact('data'));
 }
 }

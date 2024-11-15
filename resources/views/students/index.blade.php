@@ -1,3 +1,4 @@
+{{-- @dd($students) --}}
 @extends('layouts.main')
 
 @section('content')
