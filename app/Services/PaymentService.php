@@ -18,6 +18,7 @@ class PaymentService
 
     public function store($data)
     {
+        // dd($data);
         try {
             // Make the API request
             $response = $this->client->request('POST', $this->baseUrl . '/payments', [
@@ -43,18 +44,18 @@ class PaymentService
         } catch (RequestException $e) {
             // Log the error details
             Log::error('API Request Failed: ' . $e->getMessage());
-
+dd($e->getMessage());
             // Return a user-friendly error message
             return [
-                'error' => 'Failed to process payment. Please try again later.',
+                'error' =>  $e->getMessage(),
             ];
         } catch (\Exception $e) {
             // Log unexpected errors
             Log::error('Unexpected Error: ' . $e->getMessage());
-
+dd($e->getMessage());
             // Return a generic error message
             return [
-                'error' => 'An unexpected error occurred. Please try again later.',
+                'error' =>  $e->getMessage(),
             ];
         }
 

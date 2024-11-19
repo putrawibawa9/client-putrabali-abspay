@@ -53,6 +53,7 @@ Route::get('/public/payments/{id}', [PaymentController::class, 'getStudentPaymen
 Route::get('/students/payment/form', [PaymentController::class, 'index']);
 
 Route::post('/students/payment/select', [PaymentController::class, 'paymentForm']);
+
 Route::post('/students/payment/search', [PaymentController::class, 'searchStudentByNisOrName']);
 
 // Absences
@@ -70,3 +71,8 @@ Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absen
 Route::get('/recapitulations', [RecapitulationController::class, 'index']);
 // Route::post('/recapitulations', [PaymentController::class, 'rexx']);
 Route::post('/recapitulations/payment', [PaymentController::class, 'paymentRecapitulation'])->name('recapitulations.payment');
+
+
+Route::get('/sufyan', function(){
+    return view('update-views.pages.students.index');
+});

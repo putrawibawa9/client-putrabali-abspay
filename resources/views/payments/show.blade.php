@@ -70,10 +70,16 @@
         </select>
     </div>
 
-    <div class="form-group">
-        <label>Date</label>
-        <input name="payment_date" type="date" class="form-control" value="{{ date('Y-m-d') }}">
+     <div class="form-group">
+        <label>Type</label>
+        <select name="type" class="form-control select2" style="width: 100%;">
+            <option selected="selected" value="Pembayaran SPP">Pembayaran SPP</option>
+            <option value="Modul">Modul</option>
+            <option value="Pendaftaran">Pendaftaran</option>
+        </select>
     </div>
+
+
 
     <!-- General Payment Rate Selection -->
     <div class="form-group">

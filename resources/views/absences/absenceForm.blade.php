@@ -43,7 +43,7 @@
                                     <label>Teacher:</label>
                                     <select name="teacher_id" class="form-control" required>
                                         @foreach($teachers as $teacher)
-                                            <option value="{{ $teacher['id'] }}">{{ $teacher['name'] }}</option>
+                                            <option value="{{ $teacher['id'] }}">{{ $teacher['name'] }} || {{ $teacher['alias'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>
