@@ -58,10 +58,42 @@
 
     @include('update-views.partials.footer')
 
+
     {{-- Script --}}
     <script async defer src="{{ asset('flowbite/js/buttons.js') }}"></script>
     <script src="{{ asset('flowbite/js/app.bundle.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (Session::has('error') || !empty('error'))
+        {{-- Untuk !empty dapat dihilangkan nanti saat redirect page sudah diimplementasikan (untuk menghindari bug alert) --}}
+        {{-- Contoh @if (Session::has('error')) --}}
+
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: "{{ Session::get('error') ?? ($error ?? '') }}",
+                icon: 'error',
+                confirmButtonText: 'OK',
+                confirmButtonColor: 'rgb(37, 99, 235)',
+            })
+        </script>
+    @endif
+
+    @if (Session::has('success') || !empty('success'))
+        {{-- Untuk !empty dapat dihilangkan nanti saat redirect page sudah diimplementasikan (untuk menghindari bug alert) --}}
+        {{-- Contoh @if (Session::has('success')) --}}
+
+        <script>
+            Swal.fire({
+                title: 'Success!',
+                text: "{{ Session::get('success') ?? ($success ?? '') }}",
+                icon: 'success',
+                confirmButtonText: 'OK',
+                confirmButtonColor: 'rgb(37, 99, 235)',
+            })
+        </script>
+    @endif
 </body>
 
 </html>

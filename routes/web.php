@@ -63,5 +63,5 @@ Route::post('/students/payment/search', [PaymentController::class, 'searchStuden
 
 // UPDATED VIEWS
 Route::get('/updated-students', function () {
-    return view('update-views.pages.students.index');
+    return view('update-views.pages.students.index')->with('error', 'Fill all required fields!');
 });
