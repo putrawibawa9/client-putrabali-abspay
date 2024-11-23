@@ -7,6 +7,7 @@ use App\Services\CourseService;
 use App\Services\StudentService;
 use App\Services\StudentCourseService;
 use App\Services\PaymentService;
+use Carbon\Carbon;
 
 
 class RecapitulationController extends Controller
@@ -24,11 +25,25 @@ class RecapitulationController extends Controller
         $this->paymentService = $paymentService;
     }
    
-    public function index(){
-        $studentRecap = $this->studentService->getMonthlyEnrolledStudent();
+    public function index(Request $request)
+{
+    // Initialize variables
+    $studentRecap = $this->studentService->getMonthlyEnrolledStudent();
+    $paymentRecap = $this->paymentService->getMonthlyPayment();
+    $data = null; // Default to null if no filtering is applied
+    // Check if the request has a month filter
+    if ($request->has('month')) {
+        // Convert month to a string format
+        $unformattedMonth = Carbon::createFromFormat('Y-m', $request->month);
+        $month = $unformattedMonth->translatedFormat('F');
 
-        $paymentRecap = $this->paymentService->getMonthlyPayment(); 
-
-        return view('recapitulations.index', compact('studentRecap', 'paymentRecap'));
+        // Fetch data based on the filtered month
+        $data = $this->paymentService->paidAndUnpaidStudentsMonthly($month);
     }
+    
+
+    // Return the view with all data
+    return view('recapitulations.index', compact('studentRecap', 'paymentRecap', 'data'));
+}
+
 }

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\CourseService;
+use App\Services\PaymentService;
 use App\Services\StudentService;
 use App\Services\StudentCourseService;
-use App\Services\PaymentService;
 
 
 class PaymentController extends Controller
@@ -142,5 +143,17 @@ public function paymentRecapitulation(Request $request){
     ]);
     $data = $this->paymentService->recapitulation($request->all());
     return view('overview.index', compact('data'));
+}
+
+public function paidAndUnpaidStudentsMonthly(Request $request){
+    // get the month in string format
+    // dd($request->month);
+   $unformatedMonth = Carbon::createFromFormat('Y-m', $request->month);
+  
+     $month = $unformatedMonth->translatedFormat('F'); 
+    //  dd($month);
+    $data = $this->paymentService->paidAndUnpaidStudentsMonthly($month);
+    return view('recapitulations.index', compact('data'));
+
 }
 }
