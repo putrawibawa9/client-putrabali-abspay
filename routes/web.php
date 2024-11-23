@@ -75,6 +75,12 @@ Route::post('/recapitulations/payment', [PaymentController::class, 'paymentRecap
 Route::post('/students/monthly-paid-unpaid', [PaymentController::class, 'paidAndUnpaidStudentsMonthly']);
 
 
+// UPDATED VIEWS
+Route::get('/updated-students', function () {
+    return view('update-views.pages.students.index')->with('error', 'Fill all required fields!');
+});
+
 Route::get('/sufyan', function(){
     return view('update-views.pages.students.index');
 });
+
