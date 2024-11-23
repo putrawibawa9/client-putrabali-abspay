@@ -26,7 +26,7 @@ class StudentController extends Controller
         // use student service to get all students
          $students = $this->studentService->getAllStudents();
    
-        return view('students.index', compact('students'));
+        return view('pages.students.index', compact('students'));
     }
 
     /**

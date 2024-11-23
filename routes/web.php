@@ -77,7 +77,7 @@ Route::post('/students/monthly-paid-unpaid', [PaymentController::class, 'paidAnd
 
 // UPDATED VIEWS
 Route::get('/updated-students', function () {
-    return view('update-views.pages.students.index')->with('error', 'Fill all required fields!');
+    return view('pages.students.index')->with('error', 'Fill all required fields!');
 });
 
 Route::get('/sufyan', function(){
