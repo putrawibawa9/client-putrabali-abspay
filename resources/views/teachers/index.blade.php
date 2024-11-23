@@ -1,4 +1,4 @@
-{{-- @dd($students) --}}
+{{-- @dd($teachers) --}}
 @extends('layouts.main')
 
 @section('content')
@@ -42,6 +42,7 @@
                   <tr>
                     <th>Name</th>
                     <th>Alias</th>
+                    <th>Delete</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -49,6 +50,13 @@
                   <tr>
                     <td>{{ $row['name'] }}</td>
                     <td>{{ $row['alias'] }}</td>
+                   
+                    <td>
+                      <form action="/teachers/{{ $row['id'] }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                      </form>
                     
                   </tr>
                  @endforeach
@@ -57,6 +65,8 @@
                   <tr>
                    <th>Name</th>
                     <th>Alias</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                   </tfoot>
                 </table>

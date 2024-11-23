@@ -43,41 +43,19 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming request data
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'credit_units' => 'required|string|max:255',
+           'level' => 'required',
+           'section' => 'required',
+           'subject' => 'required',
+           'alias'  => 'required',
+           'payment_rate' => 'required',
         ]);
 
-        // Create a new Guzzle client
-        $client = new Client();
-
-        // Define the API endpoint URL
-        $url = 'localhost:8000/api/v1/courses';
-
-        try {
-            // Send a POST request to the API
-            $response = $client->request('POST', $url, [
-                'form_params' => $validatedData
-            ]);
-
-            // Check if the response status code is 201 (Created)
-            if ($response->getStatusCode() === 201) {
-                // Decode the JSON response into an associative array
-                $data = json_decode($response->getBody()->getContents(), true);
-
-                // Redirect to the course details page
-                return redirect()->route('courses.index', ['course' => $data['id']]);
-            }
-        } catch (\Exception $e) {
-            // Handle exceptions or errors
-            return response()->json([
-                'error' => 'Failed to create course',
-                'message' => $e->getMessage()
-            ], 500);
+        $success =$this->courseService->addNewCourse($validatedData);
+        if($success){
+            return redirect()->route('courses.index');
         }
+        // return redirect()->route('courses.index');
     }
 
     /**
@@ -86,7 +64,7 @@ class CourseController extends Controller
     public function show(string $id)
     {
         $data = $this->courseService->getCourseWithStudentsbyID($id);
-        return view('students.index', compact('data'));
+        return view('courses.show', compact('data'));
     }
 
     /**

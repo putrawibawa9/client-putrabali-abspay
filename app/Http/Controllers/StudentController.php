@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AbsenceService;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Services\PaymentService;
@@ -11,10 +12,12 @@ class StudentController extends Controller
 {
     protected $studentService;
     protected $paymentService;
-     public function __construct(StudentService $studentService, PaymentService $paymentService)
+    protected $absenceService;
+     public function __construct(StudentService $studentService, PaymentService $paymentService, AbsenceService $absenceService)
     {
         $this->studentService = $studentService;
         $this->paymentService = $paymentService;
+        $this->absenceService = $absenceService;
     }
     /**
      * Display a listing of the resource.
@@ -60,7 +63,8 @@ class StudentController extends Controller
         // use student service to get student by id
         $student = $this->studentService->getStudentById($id);
         $payment = $this->paymentService->getStudentPayment($id);
-        return view('students.show', compact('student', 'payment'));
+        $absenceHistory = $this->absenceService->getStudentAbsencesHistory($id);
+        return view('students.show', compact('student', 'payment', 'absenceHistory'));
    }
 
     /**

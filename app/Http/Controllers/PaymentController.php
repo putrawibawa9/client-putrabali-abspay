@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\CourseService;
+use App\Services\PaymentService;
 use App\Services\StudentService;
 use App\Services\StudentCourseService;
-use App\Services\PaymentService;
 
 
 class PaymentController extends Controller
@@ -29,8 +30,8 @@ class PaymentController extends Controller
     public function index()
     {
         $students = $this->studentService->getAllStudents();
-        $courses = $this->courseService->getAllCourses();
-        return view('payments.index', compact('students', 'courses'));
+        // $courses = $this->courseService->getAllCourses();
+        return view('payments.index', compact('students'));
     }
 
     /**
@@ -48,20 +49,20 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        // validate the request
+         // validate the request
+        //  dd(    $request->all());
         $request->validate([
             'student_id' => 'required|numeric',
             'user_id' => 'required|numeric',
             'course_id' => 'required|numeric',
-            'payment_date' => 'required|date',
+            'type' => 'required|string',
             'payment_amount' => 'required|numeric',
             'payment_month' => 'required',
         ]);
         // call the payment services
-        $response = $this->paymentService->store($request->all());
+        $this->paymentService->store($request->all());
         // return the response
-        return redirect()->route('payments.index')->with($response);
+        // return redirect()->route('/students');
     }
 
     /**
@@ -125,8 +126,34 @@ class PaymentController extends Controller
 {
     $search = $request->input('search');
     $students = $this->studentService->searchStudentByNisOrName($search);
-    $courses = $this->courseService->getAllCourses();
-    return view('payments.index', compact('students', 'courses'));
+    // $courses = $this->courseService->getAllCourses();
+    return view('payments.index', compact('students'));
+
+}
+
+public function recapitulation(){
+    return view('overview.index');
+}
+
+public function paymentRecapitulation(Request $request){
+
+    $request->validate([
+        'start_date' => 'required',
+        'start_date' => 'required',
+    ]);
+    $data = $this->paymentService->recapitulation($request->all());
+    return view('overview.index', compact('data'));
+}
+
+public function paidAndUnpaidStudentsMonthly(Request $request){
+    // get the month in string format
+    // dd($request->month);
+   $unformatedMonth = Carbon::createFromFormat('Y-m', $request->month);
+  
+     $month = $unformatedMonth->translatedFormat('F'); 
+    //  dd($month);
+    $data = $this->paymentService->paidAndUnpaidStudentsMonthly($month);
+    return view('recapitulations.index', compact('data'));
 
 }
 }
