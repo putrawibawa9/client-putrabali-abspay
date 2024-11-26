@@ -23,10 +23,11 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-   public function index(){
-        // use student service to get all students
-         $students = $this->studentService->getAllStudents();
-   
+   public function index( Request $request){
+        $page = $request->query('page', 1);
+         $students = $this->studentService->getAllStudents($page);
+    // dd($students);
+    
         return view('pages.students.index', compact('students'));
     }
 
@@ -146,8 +147,5 @@ public function searchStudentByNisOrName(Request $request)
 
 }
 
-public function studentPaginationTest(){
-    $students = $this->studentService->getAllStudents();
-    return view('testingPagination', compact('students'));
-}
+
 }

@@ -58,11 +58,11 @@ class StudentService
     }
 
 
-     public function getAllStudents()
+     public function getAllStudents($page)
     {
         try {
             // Make the API request
-            $response = $this->client->request('GET', $this->baseUrl . '/students', [
+            $response = $this->client->request('GET', $this->baseUrl . "/students?page=$page", [
                 'timeout' => 10, // Set a timeout for the request
                 'headers' => [
                     'Accept' => 'application/json',
