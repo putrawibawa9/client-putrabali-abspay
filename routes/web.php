@@ -17,6 +17,7 @@ Route::get('/dashboard', function () {
 
 // Entities
 Route::resource('/students', StudentController::class);
+Route::post('/students/search', [StudentController::class, 'searchStudentByNisOrName'])->name('students.search');
 Route::resource('/teachers', TeacherController::class);
 Route::resource('/courses', CourseController::class);
 
@@ -46,7 +47,7 @@ Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembaya
 Route::get('/students/edit/{id}', [StudentController::class, 'edit'])->name('student.edit');
 
 Route::get('/public/payments', [PaymentController::class, 'checkPaymentFromParents']);
-Route::post('/public/search', [StudentController::class, 'searchStudentByNisOrName']);
+// Route::post('/public/search', [StudentController::class, 'searchStudentByNisOrName']);
 
 Route::get('/public/payments/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
 

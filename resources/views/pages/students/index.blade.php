@@ -1,3 +1,4 @@
+{{-- @dd($students) --}}
 @extends('update-views.layouts.main')
 
 @section('content')
@@ -50,10 +51,11 @@
             <div class="sm:flex sm:flex-1 min-h-full">
                 <div
                     class="items-center hidden sm:flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                    <form class="lg:pr-3 w-full" action="#" method="GET">
+                    <form class="lg:pr-3 w-full" action="/students/search" method="POST">
+                        @csrf
                         <label for="student-search" class="sr-only">Search</label>
                         <div class="relative mt-1">
-                            <input type="text" name="email" id="student-search"
+                            <input type="text" name="search" id="student-search" value="{{ old('search') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="Search for Student">
                         </div>
@@ -127,6 +129,10 @@
                             <tr>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                    NIS
+                                </th>
+                                <th scope="col"
+                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                     Name
                                 </th>
                                 <th scope="col"
@@ -157,6 +163,10 @@
                             @foreach ($students['data'] as $student)                             
                            
                                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">    
+                                    <td
+                                        class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
+                                        {{ $student['nis'] }}
+                                    </td>
                                     <td
                                         class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
                                         {{ $student['name'] }}

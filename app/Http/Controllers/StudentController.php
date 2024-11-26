@@ -140,8 +140,9 @@ public function searchStudentByNisOrName(Request $request)
 {
     $search = $request->input('search');
 
-    $students = $this->studentService->searchStudentByNisOrName($search);
-    return view('public.search', compact('students'));
+    $data = $this->studentService->searchStudentByNisOrName($search);
+    $students['data'] = $data;
+       return view('pages.students.index', compact('students'));
 
 }
 
