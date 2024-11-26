@@ -88,19 +88,32 @@ class StudentController extends Controller
      */
    public function update(Request $request, $id)
 {
-    // dd($request->all());
-    // Get only the fields that have values in the request
-    $data = $request->only(['name', 'school', 'enroll_date', 'wa_number']);
-    
-    // Filter out any fields that are empty or null
-    $data = array_filter($data, function ($value) {
-        return !is_null($value) && $value !== '';
-    });
+    // implement the logic to compare the old data and new data
+    $oldData = $this->studentService->getStudentById($id);
+    $newData = $request->all();
 
-    
-   
-    $error =  $this->studentService->updateStudent($id, $data);
-    // dd($error['message']);
+    // Initialize an array to store only the changed data
+    $updatedData = [];
+
+    // Compare each field in the new data with the old data
+    foreach ($newData as $key => $value) {
+        // Skip if the key is not present in the old data
+        if (!array_key_exists($key, $oldData)) {
+            continue;
+        }
+
+        // Compare the values and only add the changed ones
+        if ($value != $oldData[$key]) {
+            $updatedData[$key] = $value;
+        }
+    }
+
+
+     // Proceed with the next process only if there are changes
+    if (!empty($updatedData)) {
+       $error = $this->studentService->updateStudent($id, $updatedData);
+    }
+
         if ($error) {
             return redirect('/students')->with('error', $error['message']);
         }
