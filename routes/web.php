@@ -84,3 +84,6 @@ Route::get('/sufyan', function(){
     return view('update-views.pages.students.index');
 });
 
+
+
+Route::get('/test', [StudentController::class, 'studentPaginationTest']);

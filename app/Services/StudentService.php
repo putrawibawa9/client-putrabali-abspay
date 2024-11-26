@@ -75,9 +75,8 @@ class StudentService
 
             // Check if the response status code is 200 (OK)
             if ($response->getStatusCode() === 200) {
-                // Decode the JSON response into an associative array
+                // return data 
                 $data = json_decode($response->getBody()->getContents(), true);
-                
                 return $data;
             }
 
@@ -106,8 +105,9 @@ class StudentService
 
    public function addNewStudent($data)
     {
-
-     $response = $this->client->request('POST', $this->baseUrl . '/students', [
+        // dd($data);
+        try{
+            $this->client->request('POST', $this->baseUrl . '/students', [
             'timeout' => 10, // Set a timeout for the request
             'headers' => [
                 'Accept' => 'application/json',
@@ -121,33 +121,32 @@ class StudentService
             ],
         ]);
 
-        // Check if the response status code is 201 (Created)
-        if ($response->getStatusCode() === 201) {
-            // Decode the JSON response into an associative array
-            $data = json_decode($response->getBody()->getContents(), true);
-            return $data;
-        }else{
-            return [
-                'error' => 'Unexpected response status code: ' . $response->getStatusCode(),
-            ];
+        }catch(RequestException $e){
+        
+            $error = json_decode($e->getResponse()->getBody()->getContents(), true);
+            return $error;
         }
-
     }
 
     public function updateStudent($id, $data)
     {
+
        try{
-         $response = $this->client->patch("$this->baseUrl/students/{$id}", [
+          $data['_method'] = 'PUT'; // Add the method override
+         $response = $this->client->post("$this->baseUrl/students/{$id}", [
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
             'json' => $data
         ]);
-
-        return true;
        }catch(RequestException $e){
-           // Handle any errors
-        return response()->json([
-            'error' => 'Failed to update student',
-            'message' => $e->getMessage()
-        ], 500);
+
+        // return error to Controller
+        
+        $error = $e->getResponse()->getBody()->getContents();
+        // get the error message
+        $error = json_decode($error, true);
+        return $error;
        }
     }
 

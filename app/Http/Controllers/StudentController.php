@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\AbsenceService;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use App\Services\AbsenceService;
 use App\Services\PaymentService;
 use App\Services\StudentService;
+use Illuminate\Support\Facades\Http;
 
 class StudentController extends Controller
 {
@@ -42,6 +43,7 @@ class StudentController extends Controller
      */
    public function store(Request $request)
     {
+        // dd($request->all());
         // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -52,8 +54,13 @@ class StudentController extends Controller
         ]);
         $validatedData['wa_number'] = $this->formatWaNumber($validatedData['wa_number']);
 
-        $this->studentService->addNewStudent($validatedData);
-        return redirect('/students');
+        $error = $this->studentService->addNewStudent($validatedData);
+    // dd($error['message']);
+        if ($error) {
+            return redirect('/students')->with('error', $error['message']);
+        }
+
+        return redirect('/students')->with('success', 'Student added successfully');
     }
 
     /**
@@ -81,6 +88,7 @@ class StudentController extends Controller
      */
    public function update(Request $request, $id)
 {
+    // dd($request->all());
     // Get only the fields that have values in the request
     $data = $request->only(['name', 'school', 'enroll_date', 'wa_number']);
     
@@ -90,8 +98,13 @@ class StudentController extends Controller
     });
 
     
-    $this->studentService->updateStudent($id, $data);
-    return redirect('/students/' . $id);
+   
+    $error =  $this->studentService->updateStudent($id, $data);
+    // dd($error['message']);
+        if ($error) {
+            return redirect('/students')->with('error', $error['message']);
+        }
+        return redirect('/students')->with('success', 'Student updated successfully');
 }
 
     /**
@@ -117,5 +130,10 @@ public function searchStudentByNisOrName(Request $request)
     $students = $this->studentService->searchStudentByNisOrName($search);
     return view('public.search', compact('students'));
 
+}
+
+public function studentPaginationTest(){
+    $students = $this->studentService->getAllStudents();
+    return view('testingPagination', compact('students'));
 }
 }

@@ -369,12 +369,12 @@
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="position"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
-                                <select name="position" id="position"
+                                <select name="name" id="position"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     required>
                                     <option value="">Select gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
                             </div>
                             <div class="col-span-6">

@@ -153,13 +153,10 @@
                         </thead>
 
                         <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                             {{-- @dd($students) --}}
-                            @foreach ($students as $student)
-                            {{-- @for ($i = 1; $i <= 20; $i++) --}}
-                                
+                            
+                            @foreach ($students['data'] as $student)                             
                            
-                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                   
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">    
                                     <td
                                         class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
                                         {{ $student['name'] }}
@@ -178,6 +175,12 @@
                                     </td>
                                     <td class="p-4 space-x-2 whitespace-nowrap">
                                         <button type="button" data-modal-toggle="edit-user-modal"
+                                        data-id="{{ $student['id'] }}"
+                                          data-name="{{ $student['name'] }}"
+                                            data-wa_number="{{ $student['wa_number'] }}"
+                                            data-gender="{{ $student['gender'] }}"
+                                            data-school="{{ $student['school'] }}"
+                                            data-enroll_date="{{ $student['enroll_date'] }}"
                                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-500 dark:bg-amber-500 dark:hover:bg-amber-700 dark:focus:ring-amber-700">
                                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -205,7 +208,7 @@
                                         </button>
                                     </td>
                                 </tr>
-                            {{-- @endfor --}}
+                      
                              @endforeach
                             {{-- <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                                 <td class="w-4 p-4">
@@ -320,6 +323,7 @@
                         Edit Student
                     </h3>
                     <button type="button"
+                  
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white"
                         data-modal-toggle="edit-user-modal">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -330,21 +334,35 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="#">
+                <form method="POST">
+                    @csrf
+                    @method('PUT')
                     <div class="p-6 space-y-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="first-name"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First
+                                <label for="name"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Name</label>
-                                <input type="text" name="first-name" id="first-name"
+                                <input type="text" name="name" value="name" id="name"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Bonnie" required>
                             </div>
+
+                            
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                <label for="name"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Gender</label>
+                                <input type="text" name="gender" id="gender"
+                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Bonnie" readonly>
+                            </div>
+
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="last-name"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
-                                <input type="text" name="last-name" id="last-name"
+                                <label for="enroll_date"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enroll date</label>
+                                <input type="date" name="enroll_date" id="enroll_date"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Green" required>
                             </div>
@@ -352,21 +370,11 @@
                                 <label for="whatsapp_number"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">WhatsApp
                                     Number</label>
-                                <input type="tel" name="whatsapp_number" id="whatsapp_number"
+                                <input type="tel" name="wa_number" id="wa_number"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="+62 234 567 890" required>
                             </div>
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="position"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
-                                <select name="position" id="position"
-                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    required>
-                                    <option value="">Select gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
+                          
                             <div class="col-span-6">
                                 <label for="school"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School</label>
@@ -384,9 +392,7 @@
                         <button
                             class="text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
                             type="reset">Reset Form</button>
-                        <button
-                            class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                            type="submit">Cancel Input Student</button>
+                     
                     </div>
                 </form>
             </div>
@@ -415,41 +421,43 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="#">
+                <form action="/students" method="POST">
+                    @csrf
                     <div class="p-6 space-y-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="first-name"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First
+                                <label for="name"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Name</label>
-                                <input type="text" name="first-name" id="first-name"
+                                <input type="text" name="name" id="name"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Bonnie" required>
                             </div>
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="last-name"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
-                                <input type="text" name="last-name" id="last-name"
-                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Green" required>
-                            </div>
+                        
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="whatsapp_number"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">WhatsApp
                                     Number</label>
-                                <input type="tel" name="whatsapp_number" id="whatsapp_number"
+                                <input type="tel" name="wa_number" id="whatsapp_number"
+                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="+62 234 567 890" required>
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="whatsapp_number"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enroll Date</label>
+                                <input type="date" name="enroll_date" id="whatsapp_number"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="+62 234 567 890" required>
                             </div>
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="position"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
-                                <select name="position" id="position"
+                                <select name="gender" id="gender"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     required>
                                     <option value="">Select gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
                             </div>
                             <div class="col-span-6">
@@ -469,9 +477,7 @@
                         <button
                             class="text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
                             type="reset">Reset Form</button>
-                        <button
-                            class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                            type="submit">Cancel Input Student</button>
+                    
                     </div>
                 </form>
             </div>

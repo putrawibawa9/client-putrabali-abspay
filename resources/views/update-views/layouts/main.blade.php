@@ -1,3 +1,14 @@
+@if (Session::has('error'))
+       <script>
+            Swal.fire({
+                title: 'Error!',
+                text: "{{ Session::get('error') ?? ($error ?? '') }}",
+                icon: 'error',
+                confirmButtonText: 'OK',
+                confirmButtonColor: 'rgb(37, 99, 235)',
+            })
+        </script>
+    @endif
 <!doctype html>
 <html lang="en">
 
@@ -65,9 +76,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    @if (Session::has('error') || !empty('error'))
-        {{-- Untuk !empty dapat dihilangkan nanti saat redirect page sudah diimplementasikan (untuk menghindari bug alert) --}}
-        {{-- Contoh @if (Session::has('error')) --}}
+    @if (Session::has('error'))
+      
 
         <script>
             Swal.fire({
@@ -80,7 +90,7 @@
         </script>
     @endif
 
-    @if (Session::has('success') || !empty('success'))
+    @if (Session::has('success'))
         {{-- Untuk !empty dapat dihilangkan nanti saat redirect page sudah diimplementasikan (untuk menghindari bug alert) --}}
         {{-- Contoh @if (Session::has('success')) --}}
 
@@ -94,6 +104,41 @@
             })
         </script>
     @endif
+
+    <script>
+        document.querySelectorAll('[data-modal-toggle="edit-user-modal"]').forEach(button => {
+    button.addEventListener('click', () => {
+        // Get modal and form elements
+        const modal = document.getElementById('edit-user-modal');
+        const form = modal.querySelector('form');
+
+         // Retrieve student ID and populate the form's action URL
+        const studentId = button.dataset.id;
+        form.action = `/students/${studentId}`;
+
+        // Populate modal fields
+        form.querySelector('#name').value = button.dataset.name || '';
+        form.querySelector('#wa_number').value = button.dataset.wa_number || '';
+        form.querySelector('#gender').value = button.dataset.gender || '';
+        form.querySelector('#school').value = button.dataset.school || '';
+        form.querySelector('#enroll_date').value = button.dataset.enroll_date || '';
+
+        // Show modal
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    });
+});
+
+// Close modal
+document.querySelectorAll('[data-modal-close]').forEach(button => {
+    button.addEventListener('click', () => {
+        const modal = button.closest('.fixed');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    });
+});
+
+    </script>
 </body>
 
 </html>
