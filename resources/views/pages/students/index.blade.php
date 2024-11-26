@@ -277,7 +277,8 @@
     <div
         class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
         <div class="flex items-center mb-4 sm:mb-0">
-            <a href="#"
+             @if ($students['prev_page_url'])
+            <a href="?page={{ $students['current_page'] - 1 }}"
                 class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                 <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -285,7 +286,9 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </a>
-            <a href="#"
+            @endif
+             @if ($students['next_page_url'])
+            <a href="?page={{ $students['current_page'] + 1 }}"
                 class="inline-flex justify-center p-1 mr-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                 <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -293,9 +296,10 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </a>
+             @endif
             <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
-                    class="font-semibold text-gray-900 dark:text-white">1-20</span> of <span
-                    class="font-semibold text-gray-900 dark:text-white">2290</span> Data</span>
+                    class="font-semibold text-gray-900 dark:text-white">{{ $students['from'] }}- {{ $students['to'] }}</span> of <span
+                    class="font-semibold text-gray-900 dark:text-white">{{ $students['total'] }}</span> Data</span>
         </div>
         {{-- @dd($students) --}}
         <div class="flex items-center space-x-3">

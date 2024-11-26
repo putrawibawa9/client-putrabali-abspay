@@ -25,11 +25,18 @@ class StudentController extends Controller
      */
    public function index( Request $request){
         $page = $request->query('page', 1);
+        // dd($page);
          $students = $this->studentService->getAllStudents($page);
-    // dd($students);
-    
+         
         return view('pages.students.index', compact('students'));
     }
+
+    // public function pagination ($page){
+    //     dd($page);
+    //      $students = $this->studentService->getAllStudents($page);
+    
+    //     return view('pages.students.index', compact('students'));
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -141,8 +148,9 @@ public function searchStudentByNisOrName(Request $request)
 {
     $search = $request->input('search');
 
-    $data = $this->studentService->searchStudentByNisOrName($search);
-    $students['data'] = $data;
+    $students = $this->studentService->searchStudentByNisOrName($search);
+    // $students['data'] = $data;
+    // dd($students);
        return view('pages.students.index', compact('students'));
 
 }

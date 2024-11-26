@@ -60,17 +60,11 @@ class StudentService
 
      public function getAllStudents($page)
     {
+    
         try {
             // Make the API request
             $response = $this->client->request('GET', $this->baseUrl . "/students?page=$page", [
                 'timeout' => 10, // Set a timeout for the request
-                'headers' => [
-                    'Accept' => 'application/json',
-                ],
-                // Optional: Add query parameters if needed
-                'query' => [
-                    // 'param1' => 'value1',
-                ],
             ]);
 
             // Check if the response status code is 200 (OK)
@@ -81,7 +75,9 @@ class StudentService
             }
 
             // Handle unexpected status codes
+            dd($response->getStatusCode());
             return [
+           
                 'error' => 'Unexpected response status code: ' . $response->getStatusCode(),
             ];
         } catch (RequestException $e) {
