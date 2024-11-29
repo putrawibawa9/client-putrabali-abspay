@@ -82,8 +82,14 @@ Route::get('/updated-students', function () {
     return view('pages.students.index')->with('error', 'Fill all required fields!');
 });
 
-Route::get('/sufyan', function(){
-    return view('update-views.pages.students.index');
+Route::get('/sufyan', function () {
+    return view('update-views.pages.students.index')->with('activeRoute', 'students');
+});
+
+
+// Ini Route Baru Dari Saya Buat Halaman Student Detail (Statis)
+Route::get('/updated-students/detail/{id}', function () {
+    return view('update-views.pages.students.detail')->with('activeRoute', 'students');
 });
 
 
