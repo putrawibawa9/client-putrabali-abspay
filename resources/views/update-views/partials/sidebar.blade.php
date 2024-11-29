@@ -58,7 +58,7 @@
                     <li>
                         <button type="button"
                             class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                            aria-controls="dropdown-crud" data-collapse-toggle="dropdown-crud">
+                            aria-controls="dropdown-crud-students" data-collapse-toggle="dropdown-crud-students">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
@@ -74,18 +74,25 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-crud" class="space-y-2 py-2 ">
+                        <ul id="dropdown-crud-students" class="space-y-2 py-2 ">
                             <li>
-                                <a href="https://flowbite-admin-dashboard.vercel.app/crud/products/"
-                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 bg-gray-100 dark:bg-gray-700 ">All
+                                <a href="/students"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'students' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">All
                                     Student</a>
                             </li>
                             <li>
-                                <a href="https://flowbite-admin-dashboard.vercel.app/crud/users/"
-                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 ">Enrollment</a>
+                                <a href=""
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'enrollments' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">Enrollment</a>
                             </li>
                         </ul>
                     </li>
+
+
+          
+                    
+
+
+
                     <li>
                         <a href="https://flowbite-admin-dashboard.vercel.app/settings/"
                             class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
@@ -101,8 +108,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://flowbite-admin-dashboard.vercel.app/settings/"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                        <a href="/teachers"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'teachers' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">

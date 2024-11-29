@@ -27,8 +27,8 @@ class StudentController extends Controller
         $page = $request->query('page', 1);
         // dd($page);
          $students = $this->studentService->getAllStudents($page);
-         
-        return view('pages.students.index', compact('students'));
+         $activeRoute = 'students';
+        return view('pages.students.index', compact('students', 'activeRoute'));
     }
 
     // public function pagination ($page){
@@ -63,7 +63,7 @@ class StudentController extends Controller
         $validatedData['wa_number'] = $this->formatWaNumber($validatedData['wa_number']);
 
         $error = $this->studentService->addNewStudent($validatedData);
-    // dd($error['message']);
+   
         if ($error) {
             return redirect('/students')->with('error', $error['message']);
         }
@@ -149,9 +149,9 @@ public function searchStudentByNisOrName(Request $request)
     $search = $request->input('search');
 
     $students = $this->studentService->searchStudentByNisOrName($search);
-    // $students['data'] = $data;
-    // dd($students);
-       return view('pages.students.index', compact('students'));
+    // also return the search value to be used in the view
+    $activeRoute = 'students';
+       return view('pages.students.index', compact('students', 'search', 'activeRoute'));
 
 }
 

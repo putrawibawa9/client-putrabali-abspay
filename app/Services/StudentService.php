@@ -101,7 +101,7 @@ class StudentService
 
    public function addNewStudent($data)
     {
-        // dd($data);
+        
         try{
             $this->client->request('POST', $this->baseUrl . '/students', [
             'timeout' => 10, // Set a timeout for the request

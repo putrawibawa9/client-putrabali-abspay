@@ -18,6 +18,7 @@ Route::get('/dashboard', function () {
 // Entities
 Route::resource('/students', StudentController::class);
 Route::post('/students/search', [StudentController::class, 'searchStudentByNisOrName'])->name('students.search');
+Route::post('/teachers/search', [TeacherController::class, 'searchTeacherByNameOrAlias'])->name('teachers.search');
 Route::resource('/teachers', TeacherController::class);
 Route::resource('/courses', CourseController::class);
 // Route::get('/students?page={page}', [StudentController::class, 'pagination']);

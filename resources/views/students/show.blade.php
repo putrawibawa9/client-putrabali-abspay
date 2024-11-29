@@ -1,5 +1,5 @@
 {{-- @dd($student); --}}
-@extends('layouts.main')
+@extends('layouts-old.main')
 
 @section('content')
 <div class="content-wrapper">
