@@ -79,7 +79,8 @@ class StudentController extends Controller
         $student = $this->studentService->getStudentById($id);
         $payment = $this->paymentService->getStudentPayment($id);
         $absenceHistory = $this->absenceService->getStudentAbsencesHistory($id);
-        return view('students.show', compact('student', 'payment', 'absenceHistory'));
+        $activeRoute = 'students';
+        return view('pages.students.detail', compact('student', 'payment', 'absenceHistory', 'activeRoute'));
    }
 
     /**
