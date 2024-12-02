@@ -1,4 +1,4 @@
-{{-- @dd($absenceHistory) --}}
+{{-- @dd($payments) --}}
 @extends('update-views.layouts.main')
 
 @section('content')
@@ -28,7 +28,7 @@
                                         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                {{-- <a href="#" --}}
+                                <a href="/students"
                                     class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Students</a>
                             </div>
                         </li>
@@ -103,176 +103,168 @@
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">      
-@forelse ($payment['course_payments'] as $row )
-     <div class="overflow-x-auto">
-                        <div class="inline-block min-w-full align-middle">
-                            <div class="overflow-hidden shadow">
-                                <div
-                                    class="bg-gray-100 dark:bg-gray-700 px-8 py-4 border-b border-gray-400 dark:border-gray-600">
-                                    <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-400">{{ $row['course']['subject'] }} - {{ $row['course']['alias'] }} </h3>
-                                </div>
-                                <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                                    <thead class="bg-gray-100 dark:bg-gray-700">
-                                        <tr>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Month
-                                            </th>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Amount
-                                            </th>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Date
-                                            </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-
-                                        @foreach ($row['payments'] as $r)
-                                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                <td
-                                                    class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                                    {{ $r['payment_month'] }}
-                                                </td>
-                                                <td
-                                                    class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ $r['payment_amount'] }} IDR
-                                                </td>
-                                                <td
-                                                    class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ \Carbon\Carbon::parse($r['created_at'])->format('d M Y') }}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                            
-                               
-                                    </tbody>
-                                </table>
-                            </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">
+    @if (!empty($payment['course_payments']) && count($payment['course_payments']) > 0)
+        @foreach ($payment['course_payments'] as $row)
+            <div class="overflow-x-auto">
+                <div class="inline-block min-w-full align-middle">
+                    <div class="overflow-hidden shadow">
+                        <div
+                            class="bg-gray-100 dark:bg-gray-700 px-8 py-4 border-b border-gray-400 dark:border-gray-600">
+                            <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-400">
+                                {{ $row['course']['subject'] }} - {{ $row['course']['alias'] }}
+                            </h3>
                         </div>
+                        <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+                            <thead class="bg-gray-100 dark:bg-gray-700">
+                                <tr>
+                                    <th scope="col"
+                                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Type
+                                    </th>
+                                    <th scope="col"
+                                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Month
+                                    </th>
+                                    <th scope="col"
+                                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Amount
+                                    </th>
+                                    <th scope="col"
+                                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Date
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody
+                                class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                @forelse ($row['payments'] as $r)
+                                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <td
+                                            class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
+                                            {{ $r['type'] }}
+                                        </td>
+                                        <td
+                                            class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
+                                            {{ $r['payment_month'] }}
+                                        </td>
+                                        <td
+                                            class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            Rp.{{ number_format($r['payment_amount'], 0, ',','.') }}
+                                        </td>
+                                        <td
+                                            class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ \Carbon\Carbon::parse($r['created_at'])->format('d M Y') }}
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="p-4 text-center text-gray-500 dark:text-gray-400">
+                                            No payment records for this course.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
-@empty
-    <div class="col-span-1 lg:col-span-2 text-center py-8">
-        <svg class="w-12 h-12 mx-auto text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 20l9-5-9-5-9 5 9 5z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16"></path>
-        </svg>
-        <p class="text-lg font-semibold text-gray-600 dark:text-gray-400 mt-4">No payment records available</p>
-    </div>
-@endforelse
-                   
                 </div>
+            </div>
+        @endforeach
+    @else
+        <div class="col-span-1 lg:col-span-2 text-center py-8">
+            <svg class="w-12 h-12 mx-auto text-gray-400 dark:text-gray-500"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 20l9-5-9-5-9 5 9 5z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16"></path>
+            </svg>
+            <p class="text-lg font-semibold text-gray-600 dark:text-gray-400 mt-4">
+                No payment records available
+            </p>
+        </div>
+    @endif
+</div>
+
 
 
                 <div class="flex items-center justify-between w-full mt-12">
                     <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Absence</h2>
                 </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">
-                    <div class="overflow-x-auto">
-                        <div class="inline-block min-w-full align-middle">
-                            <div class="overflow-hidden shadow">
-                                <div
-                                    class="bg-gray-100 dark:bg-gray-700 px-8 py-4 border-b border-gray-400 dark:border-gray-600">
-                                    <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-400">English - 6sra</h3>
-                                </div>
-                                <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                                    <thead class="bg-gray-100 dark:bg-gray-700">
-                                        <tr>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Meeting Date
-                                            </th>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Meeting Time
-                                            </th>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Absence Status
-                                            </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                <td
-                                                    class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                                    {{ date('d M Y', strtotime(rand(0, 365) . ' days')) }}
-                                                </td>
-                                                <td
-                                                    class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ sprintf('%02d:%02d', rand(0, 23), rand(0, 59)) }}
-                                                </td>
-                                                <td>
-                                                    <button
-                                                        class="py-2 px-8 text-base font-medium {{ rand(0, 1) ? 'bg-green-500' : 'bg-red-500' }} text-white rounded">
-                                                        {{ rand(0, 1) ? 'Present' : 'Absent' }}
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endfor
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">
+    @forelse ($absenceHistory as $absence)
+        <div class="overflow-x-auto">
+            <div class="inline-block min-w-full align-middle">
+                <div class="overflow-hidden shadow">
+                    <div
+                        class="bg-gray-100 dark:bg-gray-700 px-8 py-4 border-b border-gray-400 dark:border-gray-600">
+                        <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-400">
+                            {{ $absence['course']['subject'] }} - {{ $absence['course']['alias'] }}
+                        </h3>
                     </div>
-
-                    <div class="overflow-x-auto">
-                        <div class="inline-block min-w-full align-middle">
-                            <div class="overflow-hidden shadow">
-                                <div
-                                    class="bg-gray-100 dark:bg-gray-700 px-8 py-4 border-b border-gray-400 dark:border-gray-600">
-                                    <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-400">English - 6sra</h3>
-                                </div>
-                                <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                                    <thead class="bg-gray-100 dark:bg-gray-700">
-                                        <tr>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Meeting Date
-                                            </th>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Meeting Time
-                                            </th>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Absence Status
-                                            </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                <td
-                                                    class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                                    {{ date('d M Y', strtotime(rand(0, 365) . ' days')) }}
-                                                </td>
-                                                <td
-                                                    class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ sprintf('%02d:%02d', rand(0, 23), rand(0, 59)) }}
-                                                </td>
-                                                <td>
-                                                    <button
-                                                        class="py-2 px-8 text-base font-medium {{ rand(0, 1) ? 'bg-green-500' : 'bg-red-500' }} text-white rounded">
-                                                        {{ rand(0, 1) ? 'Present' : 'Absent' }}
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endfor
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+                        <thead class="bg-gray-100 dark:bg-gray-700">
+                            <tr>
+                                <th scope="col"
+                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                    Meeting Date
+                                </th>
+                                <th scope="col"
+                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                    Meeting Time
+                                </th>
+                                <th scope="col"
+                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                    Absence Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                            @forelse ($absence['absences'] as $row)
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td
+                                        class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
+                                        {{ $row['meeting_date'] }}
+                                    </td>
+                                    <td
+                                        class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $row['meeting_time'] }}
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="py-2 px-8 text-base font-medium {{ $row['status'] === 'present' ? 'bg-green-500' : 'bg-red-500' }} text-white rounded">
+                                            {{ $row['status'] }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="p-4 text-center text-gray-500 dark:text-gray-400">
+                                        No absence records available for this course.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+        </div>
+    @empty
+        <div class="col-span-1 lg:col-span-2 text-center py-8">
+            <div class="bg-gray-100 dark:bg-gray-700 p-8 rounded-lg shadow">
+                <h2 class="text-2xl font-semibold text-gray-600 dark:text-gray-300">
+                    No Absence History Available
+                </h2>
+                <p class="text-gray-500 dark:text-gray-400 mt-4">
+                    It seems like there are no records of absences at the moment. 
+                    Please check back later or ensure the data is correctly entered.
+                </p>
+            </div>
+        </div>
+    @endforelse
+</div>
+
             </div>
         </div>
     </div>
