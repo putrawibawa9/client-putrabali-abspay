@@ -1,4 +1,4 @@
-{{-- @dd($payment) --}}
+{{-- @dd($absenceHistory) --}}
 @extends('update-views.layouts.main')
 
 @section('content')
@@ -53,9 +53,8 @@
                         <h1 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">{{ $student['name'] }}</h1>
 
                         <ul class="flex items-center gap-6">
-
-                            @foreach ($student['active_courses'] as $row )
-                                <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                            @forelse ( $student['active_courses'] as $row)
+                                  <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
                                 <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                     viewBox="0 0 24 24">
@@ -66,7 +65,20 @@
 
                                 <span>{{ $row['subject'] }} - {{ $row['alias'] }}</span>
                             </li>
-                            @endforeach
+                            @empty
+                                  <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+        <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            viewBox="0 0 24 24">
+            <path fill-rule="evenodd"
+                d="M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20ZM8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"
+                clip-rule="evenodd" />
+        </svg>
+        <span>No active courses available</span>
+                            @endforelse
+                           
+                              
+                        
                             
                             
                         </ul>
@@ -91,54 +103,7 @@
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">
-                    {{-- <div class="overflow-x-auto">
-                        <div class="inline-block min-w-full align-middle">
-                            <div class="overflow-hidden shadow">
-                                <div
-                                    class="bg-gray-100 dark:bg-gray-700 px-8 py-4 border-b border-gray-400 dark:border-gray-600">
-                                    <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-400">English - 6sra</h3>
-                                </div>
-                                <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                                    <thead class="bg-gray-100 dark:bg-gray-700">
-                                        <tr>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Month
-                                            </th>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Amount
-                                            </th>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Date
-                                            </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                <td
-                                                    class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                                    {{ date('F', mktime(0, 0, 0, $i, 1)) }}
-                                                </td>
-                                                <td
-                                                    class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ number_format(rand(100000, 1000000), 0, ',', '.') }} IDR
-                                                </td>
-                                                <td
-                                                    class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ date('d M Y', strtotime(rand(0, 365) . ' days')) }}
-                                                </td>
-                                            </tr>
-                                        @endfor
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div> --}}
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">      
 @forelse ($payment['course_payments'] as $row )
      <div class="overflow-x-auto">
                         <div class="inline-block min-w-full align-middle">
@@ -166,29 +131,38 @@
                                     </thead>
 
                                     <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                        @for ($i = 1; $i <= 5; $i++)
+
+                                        @foreach ($row['payments'] as $r)
                                             <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                                                 <td
                                                     class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                                    {{ date('F', mktime(0, 0, 0, $i, 1)) }}
+                                                    {{ $r['payment_month'] }}
                                                 </td>
                                                 <td
                                                     class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ number_format(rand(100000, 1000000), 0, ',', '.') }} IDR
+                                                    {{ $r['payment_amount'] }} IDR
                                                 </td>
                                                 <td
                                                     class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ date('d M Y', strtotime(rand(0, 365) . ' days')) }}
+                                                    {{ \Carbon\Carbon::parse($r['created_at'])->format('d M Y') }}
                                                 </td>
                                             </tr>
-                                        @endfor
+                                        @endforeach
+                                            
+                               
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 @empty
-    
+    <div class="col-span-1 lg:col-span-2 text-center py-8">
+        <svg class="w-12 h-12 mx-auto text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 20l9-5-9-5-9 5 9 5z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16"></path>
+        </svg>
+        <p class="text-lg font-semibold text-gray-600 dark:text-gray-400 mt-4">No payment records available</p>
+    </div>
 @endforelse
                    
                 </div>
