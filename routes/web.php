@@ -92,6 +92,14 @@ Route::get('/updated-students/detail/{id}', function () {
     return view('update-views.pages.students.detail')->with('activeRoute', 'students');
 });
 
+// Ini Route Baru Dari Saya Buat Halaman Absen (Statis)
+Route::get('/updated-absences', function () {
+    return view('update-views.pages.absences.index')->with('activeRoute', 'teachers');
+});
 
+// Ini Route Baru Dari Saya Buat Halaman Input Absen (Statis)
+Route::get('/updated-absences/input/{id}', function () {
+    return view('update-views.pages.absences.input')->with('activeRoute', 'teachers');
+});
 
 Route::get('/test', [StudentController::class, 'studentPaginationTest']);
