@@ -27,16 +27,18 @@ class PaymentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $students = $this->studentService->getAllStudents();
-        // $courses = $this->courseService->getAllCourses();
-        return view('payments.index', compact('students'));
+       public function index( Request $request){
+        $page = $request->query('page', 1);
+        // dd($page);
+         $students = $this->studentService->getAllStudents($page);
+         $activeRoute = 'payments';
+        return view('pages.payment.index', compact('students', 'activeRoute'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
+    
     public function paymentForm(Request $request)
     {
         $id = $request->input('id');
@@ -125,9 +127,11 @@ class PaymentController extends Controller
     public function searchStudentByNisOrName(Request $request)
 {
     $search = $request->input('search');
+
     $students = $this->studentService->searchStudentByNisOrName($search);
-    // $courses = $this->courseService->getAllCourses();
-    return view('payments.index', compact('students'));
+    // also return the search value to be used in the view
+    $activeRoute = 'students';
+       return view('pages.payment.index', compact('students', 'search', 'activeRoute'));
 
 }
 
@@ -156,4 +160,6 @@ public function paidAndUnpaidStudentsMonthly(Request $request){
     return view('recapitulations.index', compact('data'));
 
 }
+
+
 }

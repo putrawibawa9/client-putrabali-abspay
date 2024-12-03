@@ -24,6 +24,7 @@ Route::resource('/courses', CourseController::class);
 // Route::get('/students?page={page}', [StudentController::class, 'pagination']);
 // Operations
 Route::resource('/payments', PaymentController::class);
+Route::post('/payments/search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
 
 
 
