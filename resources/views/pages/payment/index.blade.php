@@ -1,4 +1,4 @@
-
+{{-- @dd($students) --}}
 @extends('update-views.layouts.main')
 
 @section('content')
@@ -316,16 +316,19 @@
                                     placeholder="Bonnie" required>
                             </div>
 
-                            
-
-                                    <div class="col-span-6 sm:col-span-3">
-                                <label for="name"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Gender</label>
-                                <input type="text" name="gender" id="gender"
+                               <div class="col-span-6 sm:col-span-3">
+                                <label for="position"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
+                                <select name="gender" id="gender"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Bonnie" readonly>
+                                    required>
+                                    <option value="SPP">SPP</option>
+                                    <option value="Pendaftaran">Pendaftaran</option>
+                                    <option value="Modul">Modul</option>
+                                </select>
                             </div>
+
+                                   
 
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="enroll_date"
@@ -423,7 +426,7 @@
                                 <select name="gender" id="gender"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     required>
-                                    <option value="">Select gender</option>
+                                    <option value="">Select gende</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                 </select>

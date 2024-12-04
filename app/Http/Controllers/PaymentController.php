@@ -30,7 +30,7 @@ class PaymentController extends Controller
        public function index( Request $request){
         $page = $request->query('page', 1);
         // dd($page);
-         $students = $this->studentService->getAllStudents($page);
+         $students = $this->paymentService->getStudentsWithActiveCourse($page);
          $activeRoute = 'payments';
         return view('pages.payment.index', compact('students', 'activeRoute'));
     }

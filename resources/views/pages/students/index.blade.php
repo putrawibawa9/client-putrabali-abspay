@@ -168,7 +168,7 @@
 </a>
 
                                         <button type="button" data-modal-toggle="edit-user-modal"
-                                        data-id="{{ $student['id'] }}"
+                                            data-id="{{ $student['id'] }}"
                                           data-name="{{ $student['name'] }}"
                                             data-wa_number="{{ $student['wa_number'] }}"
                                             data-gender="{{ $student['gender'] }}"
