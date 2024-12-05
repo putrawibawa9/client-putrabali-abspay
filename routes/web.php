@@ -21,24 +21,17 @@ Route::post('/students/search', [StudentController::class, 'searchStudentByNisOr
 Route::post('/teachers/search', [TeacherController::class, 'searchTeacherByNameOrAlias'])->name('teachers.search');
 Route::resource('/teachers', TeacherController::class);
 Route::resource('/courses', CourseController::class);
-// Route::get('/students?page={page}', [StudentController::class, 'pagination']);
+
+
 // Operations
 Route::resource('/payments', PaymentController::class);
 Route::post('/payments/search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
-
-
-
 Route::get('/students-schedules-check', [ScheduleController::class, 'index'])->name('students-schedules-check');
-
-// routes/web.php
 Route::get('/students-schedules', [ScheduleController::class, 'getStudentsSchedules'])->name('students.schedules');
-
-
-
 Route::get('/enrollments', [EnrollmentController::class, 'index']);
 Route::post('/enrollments', [EnrollmentController::class, 'store'])->name('enrollments.store');
 
-Route::get('/absences', [AbsenceController::class, 'index']);
+// Route::get('/absences', [AbsenceController::class, 'index']);
 
 Route::post('/courses/search', [CourseController::class, 'search'])->name('courses.search');
 
@@ -60,7 +53,7 @@ Route::post('/students/payment/select', [PaymentController::class, 'paymentForm'
 Route::post('/students/payment/search', [PaymentController::class, 'searchStudentByNisOrName']);
 
 // Absences
-Route::get('/absences', [AbsenceController::class, 'allCourses']);
+Route::get('/absences', [AbsenceController::class, 'allCourses'])->name('absences.index');
 
 Route::post('/absences/search', [AbsenceController::class, 'searchCourse'])->name('absences.search');
 
@@ -93,14 +86,10 @@ Route::get('/updated-students/detail/{id}', function () {
     return view('update-views.pages.students.detail')->with('activeRoute', 'students');
 });
 
-// Ini Route Baru Dari Saya Buat Halaman Absen (Statis)
-Route::get('/updated-absences', function () {
-    return view('update-views.pages.absences.index')->with('activeRoute', 'teachers');
-});
+
+// Route::get('/absences' ,[AbsenceController::class, 'allCourses']);
 
 // Ini Route Baru Dari Saya Buat Halaman Input Absen (Statis)
-Route::get('/updated-absences/input/{id}', function () {
-    return view('update-views.pages.absences.input')->with('activeRoute', 'teachers');
-});
+Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput'])->name('absences.input');
 
 Route::get('/test', [StudentController::class, 'studentPaginationTest']);

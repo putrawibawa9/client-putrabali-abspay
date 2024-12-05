@@ -1,4 +1,4 @@
-{{-- @dd($payments) --}}
+{{-- @dd($absenceHistory) --}}
 @extends('update-views.layouts.main')
 
 @section('content')

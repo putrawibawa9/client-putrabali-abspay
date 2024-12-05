@@ -77,8 +77,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @if (Session::has('error'))
-      
-
         <script>
             Swal.fire({
                 title: 'Error!',
@@ -89,7 +87,6 @@
             })
         </script>
     @endif
-
     @if (Session::has('success'))
         {{-- Untuk !empty dapat dihilangkan nanti saat redirect page sudah diimplementasikan (untuk menghindari bug alert) --}}
         {{-- Contoh @if (Session::has('success')) --}}
@@ -106,115 +103,71 @@
     @endif
 
     {{-- Script untuk poplate data student di fitur update --}}
-    <script>
-        document.querySelectorAll('[data-modal-toggle="edit-user-modal"]').forEach(button => {
-    button.addEventListener('click', () => {
-        // Get modal and form elements
-        const modal = document.getElementById('edit-user-modal');
-        const form = modal.querySelector('form');
-
-         // Retrieve student ID and populate the form's action URL
-        const studentId = button.dataset.id;
-        form.action = `/students/${studentId}`;
-
-        // Populate modal fields
-        form.querySelector('#name').value = button.dataset.name || '';
-        form.querySelector('#wa_number').value = button.dataset.wa_number || '';
-        form.querySelector('#gender').value = button.dataset.gender || '';
-        form.querySelector('#school').value = button.dataset.school || '';
-        form.querySelector('#enroll_date').value = button.dataset.enroll_date || '';
-
-        // Show modal
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    });
-});
-
-// Close modal
-document.querySelectorAll('[data-modal-close]').forEach(button => {
-    button.addEventListener('click', () => {
-        const modal = button.closest('.fixed');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    });
-});
-
-    </script>
+   <script src="{{ asset('js/students.js') }}"></script>
 
 
 
  {{-- Script untuk poplate data teacher di fitur update --}}
-    <script>
-        document.querySelectorAll('[data-modal-toggle="edit-user-modal-teacher"]').forEach(button => {
-    button.addEventListener('click', () => {
-        // Get modal and form elements
-        const modal = document.getElementById('edit-user-modal-teacher');
-        const form = modal.querySelector('form');
+     <script src="{{ asset('js/teacher.js') }}"></script>
 
-         // Retrieve student ID and populate the form's action URL
-        const studentId = button.dataset.id;
-        form.action = `/teachers/${studentId}`;
 
-        // Populate modal fields
-        form.querySelector('#name').value = button.dataset.name || '';
-        form.querySelector('#username').value = button.dataset.username || '';
-        form.querySelector('#alias').value = button.dataset.alias || '';
-        form.querySelector('#password').value = button.dataset.password || '';
+     {{-- script untuk absensi --}}
+     <script>
+document.getElementById('attendance-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
 
-       
+    // Gather form data
+    const form = event.target;
+    const formData = new FormData(form);
 
-        // Show modal
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
+    // Construct the JSON object
+    const jsonData = {
+        day: "Tuesday", // Add static or dynamically retrieved values here
+        date: "2021-06-03",
+        time: "11:00",
+        course_id: 1,
+        teacher_id: 5,
+        attendances: [],
+    };
+
+    // Process the form inputs
+    const students = document.querySelectorAll('tbody tr');
+    students.forEach((row, index) => {
+        const studentId = row.querySelector(`input[name^="student-"]`).name.match(/\d+/)[0];
+        const status = row.querySelector(`input[name="student-${studentId}"]:checked`);
+        
+        if (status) {
+            jsonData.attendances.push({
+                students_courses_id: studentId,
+                status: status.value
+            });
+        }
+    });
+
+    console.log(JSON.stringify(jsonData, null, 2)); // For debugging purposes
+
+    // Send the JSON to your server
+    fetch(form.action, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value // Include CSRF token
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // Optionally handle success feedback
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        // Optionally handle error feedback
     });
 });
-
-// Close modal
-document.querySelectorAll('[data-modal-close]').forEach(button => {
-    button.addEventListener('click', () => {
-        const modal = button.closest('.fixed');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    });
-});
-
-    </script>
-
-    <script>
-    const searchInput = document.getElementById('student-search');
-    const closeButton = document.getElementById('close-btn');
-
-    // Show or hide the close button based on input value
-    searchInput.addEventListener('input', () => {
-        closeButton.classList.toggle('hidden', !searchInput.value.trim());
-    });
-
-    // Clear the search input when close button is clicked
-    function clearSearch() {
-        searchInput.value = '';
-        closeButton.classList.add('hidden');
-        searchInput.focus(); // Optionally, refocus on the input
-    }
 </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const deleteButtons = document.querySelectorAll('[data-modal-toggle="delete-user-modal"]');
-
-    deleteButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            // Retrieve the teacher ID from the button's data attribute
-            const teacherId = button.getAttribute("data-id");
-
-            // Update the form action dynamically
-            const deleteForm = document.getElementById("delete-teacher-form");
-            deleteForm.action = `/teachers/${teacherId}`;
-        });
-    });
-});
-
-
-</script>
+     
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-{{-- @dd($students) --}}
+@dd($courses)
 @extends('update-views.layouts.main')
 
 @section('content')

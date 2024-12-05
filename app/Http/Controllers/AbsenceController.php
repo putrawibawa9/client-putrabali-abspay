@@ -30,23 +30,62 @@ class AbsenceController extends Controller
     }
  public function allCourses(){
         $courses = $this->courseService->getAllCourses();
-  
-        return view('absences.selectCourse', compact('courses'));
+        $activeRoute = 'absences';
+        return view('pages.absences.index', compact('courses', 'activeRoute'));
     }
 
-    public function absenceForm( $id){
-        // dd($id);
+    public function absenceInput( $id){
            $data = $this->courseService->getCourseWithStudentsbyID($id);
            $teachers = $this->teacherService->getAllTeachers();
-        return view('absences.absenceForm', compact('data', 'teachers'));
+           $activeRoute = 'absences';
+             return view('pages.absences.input', compact('data', 'teachers', 'activeRoute'));
     }
 
-    public function store(Request $request){
-        $data = $request->all();
-        $this->absenceService->store($data);
-        return redirect()->route('absences.show', $data['course_id']);
-    
+    public function store(Request $request)
+{
+    // Extract day from the date
+    $date = $request->input('date');
+    $day = date('l', strtotime($date));
+
+    $data = $request->all();
+    $data['day'] = $day;
+    // Extract basic data for the API request
+    $apiRequestData = [
+        "day" => $data["day"],
+        "date" => $data["date"],
+        "time" => $data["time"],
+        "course_id" => (int)$data["course_id"],
+        "teacher_id" => (int)$data["teacher_id"],
+    ];
+
+    // Prepare attendances array
+    $attendances = [];
+    foreach ($data as $key => $value) {
+        // Check if the key matches the attendance field pattern
+        if (str_starts_with($key, "students_courses_id-")) {
+            $studentsCoursesId = (int)str_replace("students_courses_id-", "", $key);
+
+            $attendances[] = [
+                "students_courses_id" => $studentsCoursesId,
+                "status" => $value,
+            ];
+        }
     }
+
+    // Add attendances to the request data
+    $apiRequestData["attendances"] = $attendances;
+
+// dd($apiRequestData);
+    // Now you can pass $apiRequestData to your service or API client
+    $error = $this->absenceService->store($apiRequestData);
+    // dd($error);
+    if ($error) {
+        return redirect()->route("absences.index")->with('error', $error['message']);
+    }
+
+    return redirect()->route("absences.index")->with('success', 'Absence recorded successfully');
+}
+
 
     
 }
