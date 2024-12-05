@@ -33,10 +33,12 @@ class CourseController extends Controller
         return view('pages.absences.index', compact('courses', 'activeRoute', 'level', 'section', 'subject'));
 
     }
- public function index(){
-        $courses = $this->courseService->getAllCourses();
-  
-        return view('courses.index', compact('courses'));
+
+     public function index( Request $request){
+        $page = $request->query('page', 1);
+         $courses = $this->courseService->getAllCourses($page);
+         $activeRoute = 'courses';
+        return view('pages.courses.index', compact('courses', 'activeRoute'));
     }
 
     /**

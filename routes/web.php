@@ -15,44 +15,37 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-// Entities
+// students
 Route::resource('/students', StudentController::class);
 Route::post('/students/search', [StudentController::class, 'searchStudentByNisOrName'])->name('students.search');
 Route::post('/teachers/search', [TeacherController::class, 'searchTeacherByNameOrAlias'])->name('teachers.search');
-Route::resource('/teachers', TeacherController::class);
-Route::resource('/courses', CourseController::class);
-
-
-// Operations
-Route::resource('/payments', PaymentController::class);
-Route::post('/payments/search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
+Route::get('/student/payment/{id}', [PaymentController::class, 'getStudentPayment'])->name('student.payment');
 Route::get('/students-schedules-check', [ScheduleController::class, 'index'])->name('students-schedules-check');
 Route::get('/students-schedules', [ScheduleController::class, 'getStudentsSchedules'])->name('students.schedules');
 Route::get('/enrollments', [EnrollmentController::class, 'index']);
 Route::post('/enrollments', [EnrollmentController::class, 'store'])->name('enrollments.store');
-
-// Route::get('/absences', [AbsenceController::class, 'index']);
-
-Route::post('/courses/search', [CourseController::class, 'search'])->name('courses.search');
-
-Route::get('/student/payment/{id}', [PaymentController::class, 'getStudentPayment'])->name('student.payment');
-
-Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembayaranPrint'])->name('formPembayaran.print');
-
 Route::get('/students/edit/{id}', [StudentController::class, 'edit'])->name('student.edit');
-
-Route::get('/public/payments', [PaymentController::class, 'checkPaymentFromParents']);
-// Route::post('/public/search', [StudentController::class, 'searchStudentByNisOrName']);
-
-Route::get('/public/payments/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
-
 Route::get('/students/payment/form', [PaymentController::class, 'index']);
-
 Route::post('/students/payment/select', [PaymentController::class, 'paymentForm']);
-
 Route::post('/students/payment/search', [PaymentController::class, 'searchStudentByNisOrName']);
 
-// Absences
+// Teacher
+Route::resource('/teachers', TeacherController::class);
+
+
+// courses
+Route::resource('/courses', CourseController::class);
+Route::post('/courses/search', [CourseController::class, 'search'])->name('courses.search');
+
+
+// payments
+Route::resource('/payments', PaymentController::class);
+Route::post('/payments/search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
+Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembayaranPrint'])->name('formPembayaran.print');
+Route::get('/public/payments', [PaymentController::class, 'checkPaymentFromParents']);
+Route::get('/public/payments/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
+
+// absences
 Route::get('/absences', [AbsenceController::class, 'allCourses'])->name('absences.index');
 
 Route::post('/absences/search', [AbsenceController::class, 'searchCourse'])->name('absences.search');
@@ -65,9 +58,7 @@ Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absen
 // Recapitulation
 
 Route::get('/recapitulations', [RecapitulationController::class, 'index']);
-// Route::post('/recapitulations', [PaymentController::class, 'rexx']);
 Route::post('/recapitulations/payment', [PaymentController::class, 'paymentRecapitulation'])->name('recapitulations.payment');
-
 Route::post('/students/monthly-paid-unpaid', [PaymentController::class, 'paidAndUnpaidStudentsMonthly']);
 
 

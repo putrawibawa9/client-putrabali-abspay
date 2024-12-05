@@ -28,6 +28,25 @@ class AbsenceController extends Controller
         return view('absences.selectCourse', compact('courses'));
 
     }
+
+    public function searchCourses(Request $request)
+    {
+       
+        $courses = $this->courseService->search($request->all());
+       
+        if(isset($courses['message'])){
+            return redirect()->route('absences.index')->with('error', $courses['message']);
+        }
+        $level = $request->input('level');
+        $section = $request->input('section');
+        $subject = $request->input('subject');
+        // dd($courses);
+        $activeRoute = 'absences';
+        return view('pages.absences.index', compact('courses', 'activeRoute', 'level', 'section', 'subject'));
+
+    }
+
+
  public function allCourses(){
         $courses = $this->courseService->getAllCourses();
         $activeRoute = 'absences';

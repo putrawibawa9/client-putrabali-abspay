@@ -1,4 +1,4 @@
-@dd($courses)
+{{-- @dd($courses) --}}
 @extends('update-views.layouts.main')
 
 @section('content')
@@ -35,27 +35,55 @@
                      
                     </ol>
                 </nav>
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All Student</h1>
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All Courses</h1>
             </div>
             <div class="sm:flex sm:flex-1 min-h-full">
             <div
          class="items-center hidden sm:flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
      <form class="lg:pr-3 w-full" action="{{ route('payments.search') }}" method="POST">
     @csrf
-    <label for="student-search" class="sr-only">Search</label>
-    <div class="relative mt-1">
-        <input type="text" name="search" id="student-search" value="{{ $search ?? '' }}"
-            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            placeholder="Search for Student">
-        <button type="submit" 
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 bg-transparent hover:text-primary-500 text-sm focus:outline-none">
-            Search
-        </button>
-    </div>
+ 
+     <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                           
+                                <div class="relative mt-1">
+                                    <input type="text" name="level" id="student-search" value="{{ $level ?? '' }}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        placeholder="Level">
+                                </div>
+                            </div>
+                            <div>
+                           
+                                <div class="relative mt-1">
+                                    <input type="text" name="section" id="student-search" value="{{ $section ?? '' }}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        placeholder="Section">
+                                </div>
+                            </div>
+                            <div>
+                           
+                                <div class="relative mt-1">
+                                    <input type="subject" name="subject" id="student-search" value="{{ $subject ?? '' }}"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        placeholder="Subject">
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        <button type="submit"
+                            class="inline-flex items-center justify-center w-full lg:w-full px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            <svg class="w-5 h-5 mr-2 -ml-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                            </svg>
+                            Search
+                        </button>
 </form>
 <div class="flex pl-0 mt-3 sm:pl-2 sm:mt-0">
     @if(isset($search) && $search != '')
-        <a href="/students"
+        <a href="/courses"
             class="inline-flex justify-center p-1 ml-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/>
@@ -77,71 +105,60 @@
                             <tr>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    NIS
+                                Alias
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Name
+                                  Level
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    WhatsApp Number
+                                    Section
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Gender
+                                    Subject
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    School
+                                    Action
                                 </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Enroll Date
-                                </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Actions
-                                </th>
+                                
+                               
                             </tr>
                         </thead>
 
                         <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                             
-                            @foreach ($students['data'] as $student)                             
+                            @foreach ($courses['data'] as $course)                             
                            
                                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">    
                                     <td
                                         class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                        {{ $student['nis'] }}
+                                        {{ $course['alias'] }}
                                     </td>
                                     <td
                                         class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                        {{ $student['name'] }}
+                                        {{ $course['level'] }}
+                                    </td>
+                                  
+                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $course['section'] }}
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                       <a href="https://wa.me/{{ $student['wa_number'] }}"> {{ $student['wa_number'] }} </a>
+                                        {{ $course['subject'] }}
                                     </td>
-                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $student['gender'] }}
-                                    </td>
-                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $student['school'] }}
-                                    </td>
-                                    <td class="p-4 text-base font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                                     {{ $student['enroll_date'] }}
-                                    </td>
+
                                     <td class="p-4 space-x-2 whitespace-nowrap">
 
                                           
 
 <button type="button" data-modal-toggle="edit-user-modal"
-    data-id="{{ $student['id'] }}"
-    data-name="{{ $student['name'] }}"
-    data-course="{{ $student['wa_number'] }}"
-    data-gender="{{ $student['gender'] }}"
-    data-school="{{ $student['school'] }}"
-    data-enroll_date="{{ $student['enroll_date'] }}"
+    data-id="{{ $course['id'] }}"
+    data-alias="{{ $course['alias'] }}"
+    data-level="{{ $course['level'] }}"
+    data-section="{{ $course['section'] }}"
+    data-subject="{{ $course['subject'] }}"
     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-500 dark:bg-amber-500 dark:hover:bg-amber-700 dark:focus:ring-amber-700">
     <svg class="w-4 h-4 mr-2" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path fill="currentColor"
@@ -152,7 +169,7 @@
 </button>
 
 
-                                         <a href="/students/{{ $student['id'] }}"
+                                         <a href="/courses/{{ $course['id'] }}"
     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
     <svg class="w-4 h-4 mr-2" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path stroke="currentColor" stroke-width="2"
@@ -179,8 +196,8 @@
     <div
         class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
         <div class="flex items-center mb-4 sm:mb-0">
-             @if ($students['prev_page_url'])
-            <a href="?page={{ $students['current_page'] - 1 }}"
+             @if ($courses['prev_page_url'])
+            <a href="?page={{ $courses['current_page'] - 1 }}"
                 class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                 <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -189,8 +206,8 @@
                 </svg>
             </a>
             @endif
-             @if ($students['next_page_url'])
-            <a href="?page={{ $students['current_page'] + 1 }}"
+             @if ($courses['next_page_url'])
+            <a href="?page={{ $courses['current_page'] + 1 }}"
                 class="inline-flex justify-center p-1 mr-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                 <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -200,13 +217,13 @@
             </a>
              @endif
             <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
-                    class="font-semibold text-gray-900 dark:text-white">{{ $students['from'] }}- {{ $students['to'] }}</span> of <span
-                    class="font-semibold text-gray-900 dark:text-white">{{ $students['total'] }}</span> Data</span>
+                    class="font-semibold text-gray-900 dark:text-white">{{ $courses['from'] }}- {{ $courses['to'] }}</span> of <span
+                    class="font-semibold text-gray-900 dark:text-white">{{ $courses['total'] }}</span> Data</span>
         </div>
-        {{-- @dd($students) --}}
+        {{-- @dd($courses) --}}
         <div class="flex items-center space-x-3">
-            @if ($students['prev_page_url'])
-            <a href="?page={{ $students['current_page'] - 1 }}"
+            @if ($courses['prev_page_url'])
+            <a href="?page={{ $courses['current_page'] - 1 }}"
                 class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 <svg class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
@@ -217,8 +234,8 @@
                 Previous
             </a>
                @endif
-               @if ($students['next_page_url'])
-            <a href="?page={{ $students['current_page'] + 1 }}"
+               @if ($courses['next_page_url'])
+            <a href="?page={{ $courses['current_page'] + 1 }}"
                 class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 Next
                 <svg class="w-5 h-5 ml-1 -mr-1" fill="currentColor" viewBox="0 0 20 20"
@@ -346,7 +363,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="/students" method="POST">
+                <form action="/courses" method="POST">
                     @csrf
                     <div class="p-6 space-y-6">
                         <div class="grid grid-cols-6 gap-6">

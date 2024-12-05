@@ -16,18 +16,14 @@ class CourseService
          $this->baseUrl = config('services.api.base_url');
     }
 
-     public function getAllCourses()
+     public function getAllCourses($page)
     {
         try {
             // Make the API request
-            $response = $this->client->request('GET', $this->baseUrl . '/courses', [
+            $response = $this->client->request('GET', $this->baseUrl . "/courses?page=$page", [
                 'timeout' => 10, // Set a timeout for the request
                 'headers' => [
                     'Accept' => 'application/json',
-                ],
-                // Optional: Add query parameters if needed
-                'query' => [
-                    // 'param1' => 'value1',
                 ],
             ]);
 
