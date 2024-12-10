@@ -47,6 +47,7 @@ Route::get('/public/payments/{id}', [PaymentController::class, 'getStudentPaymen
 
 // absences
 Route::get('/absences', [AbsenceController::class, 'allCourses'])->name('absences.index');
+Route::post('/absence/courses/search', [AbsenceController::class, 'searchCourses'])->name('absence.courses.search');
 
 Route::post('/absences/search', [AbsenceController::class, 'searchCourse'])->name('absences.search');
 

@@ -53,7 +53,7 @@
             </div>
             <div class="sm:flex sm:flex-1 min-h-full">
                 <div class="items-center flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                    <form class="w-full" action="{{ Route('courses.search') }}" method="POST">
+                    <form class="w-full" action="{{ Route('absence.courses.search') }}" method="POST">
                         @csrf
                         <div class="grid grid-cols-2 gap-4 mb-4">
                             <div>
@@ -120,7 +120,7 @@
                         </thead>
 
                         <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                           @forelse ( $courses as $course )
+                           @forelse ( $courses['data'] as $course )
                                  <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                                     <td class="p-4">
                                         <a href="{{ '/absences/input/' . $course['id'] }}"

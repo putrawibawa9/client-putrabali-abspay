@@ -153,24 +153,9 @@ class CourseService
                 ]
             ]);
 
-            // Check if the response status code is 201 (Created)
-            if ($response->getStatusCode() === 201) {
-                // Decode the JSON response into an associative array
-                return $data;
-            }
-
-            // Handle unexpected status codes
-            return [
-                'error' => 'Unexpected response status code: ' . $response->getStatusCode(),
-            ];
         } catch (RequestException $e) {
-            // Log the error details
-            Log::error('API Request Failed: ' . $e->getMessage());
-        
-            // Return a user-friendly error message
-            return [
-                'error' => $e->getMessage(),
-            ];
+            $error = json_decode($e->getResponse()->getBody()->getContents(), true);
+            return $error;
         } catch (\Exception $e) {
             // Log unexpected errors
             Log::error('Unexpected Error: ' . $e->getMessage());
@@ -209,6 +194,28 @@ class CourseService
                 'error' => 'An unexpected error occurred. Please try again later.',
             ];
         }
+    }
+
+     public function updateCourse($id, $data)
+    {
+        // dd($data);
+       try{
+          $data['_method'] = 'PUT'; // Add the method override
+         $this->client->post("$this->baseUrl/courses/{$id}", [
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
+            'json' => $data
+        ]);
+       }catch(RequestException $e){
+        // dd($e->getResponse()->getBody()->getContents());
+        // return error to Controller
+        
+        $error = $e->getResponse()->getBody()->getContents();
+        // get the error message
+        $error = json_decode($error, true);
+        return $error;
+       }
     }
 
 

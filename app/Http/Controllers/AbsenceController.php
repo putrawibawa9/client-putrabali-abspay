@@ -21,13 +21,7 @@ class AbsenceController extends Controller
         $this->teacherService = $teacherService;
         $this->absenceService = $absenceService;
     }
-    public function searchCourse(Request $request)
-    {
-        $courses = $this->courseService->search($request->all());
-    
-        return view('absences.selectCourse', compact('courses'));
-
-    }
+   
 
     public function searchCourses(Request $request)
     {
@@ -47,11 +41,13 @@ class AbsenceController extends Controller
     }
 
 
- public function allCourses(){
-        $courses = $this->courseService->getAllCourses();
+ public function allCourses(Request $request){
+     $page = $request->query('page', 1);
+        $courses = $this->courseService->getAllCourses($page);
         $activeRoute = 'absences';
         return view('pages.absences.index', compact('courses', 'activeRoute'));
     }
+   
 
     public function absenceInput( $id){
            $data = $this->courseService->getCourseWithStudentsbyID($id);

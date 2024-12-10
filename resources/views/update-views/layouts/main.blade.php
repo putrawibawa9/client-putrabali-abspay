@@ -110,6 +110,10 @@
  {{-- Script untuk poplate data teacher di fitur update --}}
      <script src="{{ asset('js/teacher.js') }}"></script>
 
+        {{-- Script untuk poplate data course di fitur update --}}
+        <script src="{{ asset('js/course.js') }}"></script>
+    
+
 
      {{-- script untuk absensi --}}
      <script>

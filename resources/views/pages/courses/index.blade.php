@@ -35,12 +35,30 @@
                      
                     </ol>
                 </nav>
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All Courses</h1>
-            </div>
+              <div class="flex items-center justify-between">
+  <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+    All Courses
+  </h1>
+  <div class="flex items-center space-x-2 sm:space-x-3">
+    <button type="button" data-modal-toggle="add-user-modal"
+      class="inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+      <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+          clip-rule="evenodd"></path>
+      </svg>
+      Add New Course
+    </button>
+  </div>
+</div>
+
+                 
+                </div>
             <div class="sm:flex sm:flex-1 min-h-full">
             <div
          class="items-center hidden sm:flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-     <form class="lg:pr-3 w-full" action="{{ route('payments.search') }}" method="POST">
+     <form class="lg:pr-3 w-full" action="{{ route('courses.search') }}" method="POST">
     @csrf
  
      <div class="grid grid-cols-2 gap-4 mb-4">
@@ -119,10 +137,15 @@
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                     Subject
                                 </th>
+                                       <th scope="col"
+                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                    Payment Rate
+                                </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Action
+                                    Actions
                                 </th>
+                         
                                 
                                
                             </tr>
@@ -148,25 +171,28 @@
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {{ $course['subject'] }}
                                     </td>
+                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $course['payment_rate'] }}
+                                    </td>
 
                                     <td class="p-4 space-x-2 whitespace-nowrap">
 
                                           
 
-<button type="button" data-modal-toggle="edit-user-modal"
+<button type="button" data-modal-toggle="edit-user-modal-course"
     data-id="{{ $course['id'] }}"
     data-alias="{{ $course['alias'] }}"
     data-level="{{ $course['level'] }}"
     data-section="{{ $course['section'] }}"
     data-subject="{{ $course['subject'] }}"
+    data-payment_rate="{{ $course['payment_rate'] }}"
     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-500 dark:bg-amber-500 dark:hover:bg-amber-700 dark:focus:ring-amber-700">
     <svg class="w-4 h-4 mr-2" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path fill="currentColor"
-            d="M2 7c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V7zm2 0v10h16V7H4zm3 3c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2s-.9 2-2 2H9c-1.1 0-2-.9-2-2zm0 4c0-.55.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1H8c-.55 0-1-.45-1-1z" />
-        <circle cx="8" cy="10" r="1.5" fill="currentColor" />
+        <path fill="currentColor" d="M3 17.25V21h3.75l10.607-10.607-3.75-3.75L3 17.25zm14.71-9.96l-2.12-2.12 1.29-1.29c.39-.39 1.02-.39 1.41 0l1.41 1.41c.39.39.39 1.02 0 1.41l-1.29 1.29-2.12-2.12z" />
     </svg>
-    Payment Form
+    Edit Course
 </button>
+
 
 
                                          <a href="/courses/{{ $course['id'] }}"
@@ -251,19 +277,19 @@
 
     <!-- Edit User Modal -->
     <div class="fixed bg-gray-200/50 dark:bg-gray-800/50 left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto top-4 md:inset-0 h-modal sm:h-full"
-        id="edit-user-modal">
+        id="edit-user-modal-course">
         <div class="relative w-full h-full max-w-2xl px-4 md:h-auto">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
                 <!-- Modal header -->
                 <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-700">
                     <h3 class="text-xl font-semibold dark:text-white">
-                        Edit Student
+                        Edit Course
                     </h3>
                     <button type="button"
                   
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white"
-                        data-modal-toggle="edit-user-modal">
+                        data-modal-toggle="edit-user-modal-course">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
                                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -275,62 +301,59 @@
                 <form method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="p-6 space-y-6">
+                        <div class="p-6 space-y-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="name"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Name</label>
-                                <input type="text" name="name" value="name" id="name"
+                                    Alias</label>
+                                <input type="text" name="alias" id="alias"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Bonnie" required>
+                                    placeholder="6sra" required>
                             </div>
-
-                               <div class="col-span-6 sm:col-span-3">
-                                <label for="position"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
-                                <select name="gender" id="gender"
-                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    required>
-                                    <option value="SPP">SPP</option>
-                                    <option value="Pendaftaran">Pendaftaran</option>
-                                    <option value="Modul">Modul</option>
-                                </select>
-                            </div>
-
-                                   
-
+                        
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="enroll_date"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Amount</label>
-                                <input type="text" name="enroll_date" id="enroll_date"
+                                <label for="whatsapp_number"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Level</label>
+                                <input type="tel" name="level" id="level"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Green" required>
+                                    placeholder="6" required>
                             </div>
 
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="whatsapp_number"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">WhatsApp
-                                    Number</label>
-                                <input type="tel" name="wa_number" id="wa_number"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
+                                <input type="text" name="section" id="section"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="+62 234 567 890" required>
+                                    placeholder="A" required>
                             </div>
-                          
-                            <div class="col-span-6">
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="position"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject</label>
+                                <select name="subject"  id="subject"
+                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    required>
+                                    <option value="">Select Subject</option>
+                                    <option value="English">English</option>
+                                    <option value="Mapel">Mapel</option>
+                                </select>
+                            </div>
+
+                          <div class="col-span-6">
                                 <label for="school"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School</label>
-                                <input type="text" name="school" id="school"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Rate</label>
+                                <input type="number" name="payment_rate" id="payment_rate"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Enter school name" required>
+                                    placeholder="90000" required>
                             </div>
+                       
                         </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
                         <button
                             class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                            type="submit">Edit Student</button>
+                            type="submit">Edit Course</button>
                         <button
                             class="text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
                             type="reset">Reset Form</button>
@@ -350,7 +373,7 @@
                 <!-- Modal header -->
                 <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-700">
                     <h3 class="text-xl font-semibold dark:text-white">
-                        Add New Student
+                        Add New Course
                     </h3>
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white"
@@ -370,52 +393,54 @@
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="name"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Name</label>
-                                <input type="text" name="name" id="name"
+                                    Alias</label>
+                                <input type="text" name="alias" id="name"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Bonnie" required>
+                                    placeholder="6sra" required>
                             </div>
                         
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="whatsapp_number"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">WhatsApp
-                                    Number</label>
-                                <input type="tel" name="wa_number" id="whatsapp_number"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Level</label>
+                                <input type="tel" name="level" id="whatsapp_number"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="+62 234 567 890" required>
+                                    placeholder="6" required>
                             </div>
+
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="whatsapp_number"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enroll Date</label>
-                                <input type="date" name="enroll_date" id="whatsapp_number"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
+                                <input type="text" name="section" id="whatsapp_number"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="+62 234 567 890" required>
+                                    placeholder="A" required>
                             </div>
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="position"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
-                                <select name="gender" id="gender"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject</label>
+                                <select name="subject"  id="gender"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     required>
-                                    <option value="">Select gende</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="">Select Subject</option>
+                                    <option value="English">English</option>
+                                    <option value="Mapel">Mapel</option>
                                 </select>
                             </div>
-                            <div class="col-span-6">
+
+                          <div class="col-span-6">
                                 <label for="school"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School</label>
-                                <input type="text" name="school" id="school"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Rate</label>
+                                <input type="number" name="payment_rate" id="school"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Enter school name" required>
+                                    placeholder="90000" required>
                             </div>
+                       
                         </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
                         <button
                             class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                            type="submit">Add Student</button>
+                            type="submit">Add Course</button>
                         <button
                             class="text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
                             type="reset">Reset Form</button>
