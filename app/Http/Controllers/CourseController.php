@@ -77,8 +77,9 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        $data = $this->courseService->getCourseWithStudentsbyID($id);
-        return view('courses.show', compact('data'));
+        $meetings = $this->courseService->recapMeetings($id);
+        $activeRoute = 'courses'; 
+        return view('pages.meetings.index', compact('meetings', 'activeRoute'));
     }
 
     /**

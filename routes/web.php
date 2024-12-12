@@ -8,6 +8,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\RecapitulationController;
 use App\Http\Controllers\StudentCourseController;
 
@@ -55,6 +56,8 @@ Route::get('/absences/{id}', [AbsenceController::class, 'absenceForm'])->name('a
 
 Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absences.store');
 
+// Meetings
+Route::get('/meetings/{id}', [MeetingController::class, 'getAbsencesByMeetingId']);
 
 // Recapitulation
 

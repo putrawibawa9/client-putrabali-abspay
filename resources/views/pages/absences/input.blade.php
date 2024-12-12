@@ -28,7 +28,7 @@
                                         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <a href="#"
+                                <a href="/absences"
                                     class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Absences</a>
                             </div>
                         </li>
@@ -66,8 +66,7 @@
                           
                             <div>
                                 <label for="student-search" class="sr-only">Search</label>
-                              <div>
-                                
+                              <div> 
     <label for="student-level" class="sr-only">Jam</label>
     <div class="relative mt-1">
         <select name="time" id="student-level"
@@ -79,6 +78,22 @@
             <option value="18:30">18:30</option>
             <option value="19:50">19:50</option>
           
+        </select>
+    </div>
+</div>
+
+                            </div>
+                            <div>
+                                <label for="student-search" class="sr-only">Search</label>
+                              <div> 
+    <label for="student-level" class="sr-only">Jam</label>
+    <div class="relative mt-1">
+        <select name="teacher_id" id="student-level"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+            <option value="" disabled selected>Jam</option>
+            @foreach ($teachers['data'] as $teacher)
+                <option value="{{ $teacher['id'] }}">{{ $teacher['name'] }}</option>)               
+            @endforeach
         </select>
     </div>
 </div>
@@ -121,7 +136,6 @@
                         
 
     <input type="hidden" name="course_id" value="{{ $data['id'] }}">
-    <input type="hidden" name="teacher_id" value="1">
                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
     @forelse ($data['students'] as $student)
         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
