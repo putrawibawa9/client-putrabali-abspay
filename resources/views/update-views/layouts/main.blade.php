@@ -1,14 +1,14 @@
 @if (Session::has('error'))
-       <script>
-            Swal.fire({
-                title: 'Error!',
-                text: "{{ Session::get('error') ?? ($error ?? '') }}",
-                icon: 'error',
-                confirmButtonText: 'OK',
-                confirmButtonColor: 'rgb(37, 99, 235)',
-            })
-        </script>
-    @endif
+    <script>
+        Swal.fire({
+            title: 'Error!',
+            text: "{{ Session::get('error') ?? ($error ?? '') }}",
+            icon: 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: 'rgb(37, 99, 235)',
+        })
+    </script>
+@endif
 <!doctype html>
 <html lang="en">
 
@@ -35,6 +35,8 @@
     <link rel="icon" type="image/png" href="https://flowbite-admin-dashboard.vercel.app/favicon.ico">
     <link rel="manifest" href="https://flowbite-admin-dashboard.vercel.app/site.webmanifest">
     <link rel="mask-icon" href="https://flowbite-admin-dashboard.vercel.app/safari-pinned-tab.svg" color="#5bbad5">
+
+    @stack('css')
 
     <script>
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
@@ -103,75 +105,75 @@
     @endif
 
     {{-- Script untuk poplate data student di fitur update --}}
-   <script src="{{ asset('js/students.js') }}"></script>
+    <script src="{{ asset('js/students.js') }}"></script>
 
 
 
- {{-- Script untuk poplate data teacher di fitur update --}}
-     <script src="{{ asset('js/teacher.js') }}"></script>
+    {{-- Script untuk poplate data teacher di fitur update --}}
+    <script src="{{ asset('js/teacher.js') }}"></script>
 
-        {{-- Script untuk poplate data course di fitur update --}}
-        <script src="{{ asset('js/course.js') }}"></script>
-    
+    {{-- Script untuk poplate data course di fitur update --}}
+    <script src="{{ asset('js/course.js') }}"></script>
 
+    @stack('js')
 
-     {{-- script untuk absensi --}}
-     <script>
-document.getElementById('attendance-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+    {{-- script untuk absensi --}}
+    <script>
+        document.getElementById('attendance-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
 
-    // Gather form data
-    const form = event.target;
-    const formData = new FormData(form);
+            // Gather form data
+            const form = event.target;
+            const formData = new FormData(form);
 
-    // Construct the JSON object
-    const jsonData = {
-        day: "Tuesday", // Add static or dynamically retrieved values here
-        date: "2021-06-03",
-        time: "11:00",
-        course_id: 1,
-        teacher_id: 5,
-        attendances: [],
-    };
+            // Construct the JSON object
+            const jsonData = {
+                day: "Tuesday", // Add static or dynamically retrieved values here
+                date: "2021-06-03",
+                time: "11:00",
+                course_id: 1,
+                teacher_id: 5,
+                attendances: [],
+            };
 
-    // Process the form inputs
-    const students = document.querySelectorAll('tbody tr');
-    students.forEach((row, index) => {
-        const studentId = row.querySelector(`input[name^="student-"]`).name.match(/\d+/)[0];
-        const status = row.querySelector(`input[name="student-${studentId}"]:checked`);
-        
-        if (status) {
-            jsonData.attendances.push({
-                students_courses_id: studentId,
-                status: status.value
+            // Process the form inputs
+            const students = document.querySelectorAll('tbody tr');
+            students.forEach((row, index) => {
+                const studentId = row.querySelector(`input[name^="student-"]`).name.match(/\d+/)[0];
+                const status = row.querySelector(`input[name="student-${studentId}"]:checked`);
+
+                if (status) {
+                    jsonData.attendances.push({
+                        students_courses_id: studentId,
+                        status: status.value
+                    });
+                }
             });
-        }
-    });
 
-    console.log(JSON.stringify(jsonData, null, 2)); // For debugging purposes
+            console.log(JSON.stringify(jsonData, null, 2)); // For debugging purposes
 
-    // Send the JSON to your server
-    fetch(form.action, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value // Include CSRF token
-        },
-        body: JSON.stringify(jsonData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-        // Optionally handle success feedback
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        // Optionally handle error feedback
-    });
-});
-</script>
+            // Send the JSON to your server
+            fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]')
+                            .value // Include CSRF token
+                    },
+                    body: JSON.stringify(jsonData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    // Optionally handle success feedback
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    // Optionally handle error feedback
+                });
+        });
+    </script>
 
-     
 </body>
 
 </html>

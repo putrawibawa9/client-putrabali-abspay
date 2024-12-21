@@ -81,6 +81,10 @@ Route::get('/updated-students/detail/{id}', function () {
     return view('update-views.pages.students.detail')->with('activeRoute', 'students');
 });
 
+// Ini Route Baru Dari Saya Buat Halaman Dashboard
+Route::get('/updated-dashboard', function () {
+    return view('update-views.pages.dashboard.dashboard')->with('activeRoute', 'dashboard');
+});
 
 // Route::get('/absences' ,[AbsenceController::class, 'allCourses']);
 
