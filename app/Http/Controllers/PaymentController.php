@@ -39,9 +39,8 @@ class PaymentController extends Controller
      * Show the form for creating a new resource.
      */
     
-    public function paymentForm(Request $request)
+    public function paymentForm($id)
     {
-        $id = $request->input('id');
         $student = $this->studentService->getStudentById($id);
         return view('payments.show', compact('student'));
     }
@@ -72,9 +71,9 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        $allStudents = $this->studentService->getAllStudents();
-        $student = $this->studentCoursesService->getStudentCourses($id);
-        return view('payments.test', compact('allStudents', 'student'));
+        $student = $this->studentService->getStudentById($id);
+        // dd($student);
+        return view('payments-old.test', compact('student'));
     }
 
     /**
