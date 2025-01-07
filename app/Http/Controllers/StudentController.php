@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Services\AbsenceService;
+use App\Services\CourseService;
 use App\Services\PaymentService;
 use App\Services\StudentService;
 use Illuminate\Support\Facades\Http;
@@ -14,21 +15,27 @@ class StudentController extends Controller
     protected $studentService;
     protected $paymentService;
     protected $absenceService;
-     public function __construct(StudentService $studentService, PaymentService $paymentService, AbsenceService $absenceService)
+    protected $courseService;
+     public function __construct(StudentService $studentService, PaymentService $paymentService, AbsenceService $absenceService, CourseService $courseService)
     {
         $this->studentService = $studentService;
         $this->paymentService = $paymentService;
         $this->absenceService = $absenceService;
+        $this->courseService = $courseService;
     }
     /**
      * Display a listing of the resource.
      */
    public function index( Request $request){
+    // $page = $request->query('page', 1);
+    // $courses = $this->courseService->getAllCourses($page);
         $page = $request->query('page', 1);
-        // dd($page);
+    $englishCourses = $this->courseService->getCourseBySubject('english');
+    $mapelCourses = $this->courseService->getCourseBySubject('mapel');
+    // dd($mapelCourses);
          $students = $this->studentService->getAllStudents($page);
          $activeRoute = 'students';
-        return view('pages.students.index', compact('students', 'activeRoute'));
+        return view('pages.students.index', compact('students', 'activeRoute', 'englishCourses', 'mapelCourses'));
     }
 
     // public function pagination ($page){
@@ -49,27 +56,53 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   public function store(Request $request)
-    {
-        // dd($request->all());
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'wa_number' => 'required|string|max:255',
-            'gender' => 'required|string|max:255',
-            'school' => 'required|string|max:255',
-            'enroll_date' => 'required|string|max:255',
-        ]);
-        $validatedData['wa_number'] = $this->formatWaNumber($validatedData['wa_number']);
-
-        $error = $this->studentService->addNewStudent($validatedData);
-   
-        if ($error) {
-            return redirect('/students')->with('error', $error['message']);
-        }
-
-        return redirect('/students')->with('success', 'Student added successfully');
+  public function store(Request $request)
+{
+    // dd($request->all());
+    // Validate the incoming request data
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'wa_number' => 'required|string|max:255',
+        'gender' => 'required|string|max:255',
+        'school' => 'required|string|max:255',
+        'enroll_date' => 'required|date',
+        // 'courses' => 'required|array',
+        'course_id' => 'required',
+        'custom_payment_rate' => 'nullable',
+    ]);
+    // Format the WhatsApp number
+    $validatedData['wa_number'] = $this->formatWaNumber($validatedData['wa_number']);
+    // dd($validatedData);
+     $courses = [];
+    foreach ($validatedData['course_id'] as $index => $courseId) {
+        $courses[] = [
+            'course_id' => $courseId,
+            'custom_payment_rate' => $data['custom_payment_rate'][$index] ?? null,
+        ];
     }
+    // dd($courses);
+    // Prepare payload for the service
+    $payload = [
+        'name' => $validatedData['name'],
+        'wa_number' => $validatedData['wa_number'],
+        'gender' => $validatedData['gender'],
+        'school' => $validatedData['school'],
+        'enroll_date' => $validatedData['enroll_date'],
+        'courses' => $courses,
+    ];
+    // dd($payload);
+    // Pass payload to the service
+    $result = $this->studentService->addNewStudent($payload);
+
+    // check if the value is an integer
+    if (is_int($result)) {
+        return redirect("/students/$result")->with('success', 'Student added successfully');
+    }else{
+        return redirect('/students')->with('error', $result['message']);
+    }
+    
+    
+}
 
     /**
      * Display the specified resource.
@@ -120,13 +153,14 @@ class StudentController extends Controller
 
      // Proceed with the next process only if there are changes
     if (!empty($updatedData)) {
-       $error = $this->studentService->updateStudent($id, $updatedData);
+       $result = $this->studentService->updateStudent($id, $updatedData);
     }
 
-        if ($error) {
-            return redirect('/students')->with('error', $error['message']);
-        }
-        return redirect('/students')->with('success', 'Student updated successfully');
+        if (is_int($result)) {
+        return redirect("/students/$result")->with('success', 'Student changed successfully');
+    }else{
+        return redirect('/students')->with('error', $result['message']);
+    }
 }
 
     /**
@@ -148,11 +182,12 @@ class StudentController extends Controller
 public function searchStudentByNisOrName(Request $request)
 {
     $search = $request->input('search');
-
+  $englishCourses = $this->courseService->getAllCourses('english');
+    $mapelCourses = $this->courseService->getAllCourses('mapel');
     $students = $this->studentService->searchStudentByNisOrName($search);
     // also return the search value to be used in the view
     $activeRoute = 'students';
-       return view('pages.students.index', compact('students', 'search', 'activeRoute'));
+       return view('pages.students.index', compact('students', 'search', 'activeRoute', 'englishCourses', 'mapelCourses'));
 
 }
 

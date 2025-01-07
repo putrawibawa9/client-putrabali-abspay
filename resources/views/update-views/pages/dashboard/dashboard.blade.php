@@ -1,3 +1,4 @@
+{{-- @dd($activeRoute) --}}
 @extends('update-views.layouts.main')
 
 @section('content')
@@ -194,8 +195,8 @@
                     <div>
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
-                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Jumlah Siswa yang Belum
-                                Bayar
+                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Jumlah Siswa yang Belum Melunasi Pembayaran
+                                Bulan ini
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
                             <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">15 %</h5>

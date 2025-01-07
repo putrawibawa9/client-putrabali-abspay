@@ -91,4 +91,4 @@ Route::get('/updated-dashboard', function () {
 // Ini Route Baru Dari Saya Buat Halaman Input Absen (Statis)
 Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput'])->name('absences.input');
 
-Route::get('/test', [StudentController::class, 'studentPaginationTest']);
+Route::get('/dashboard', [RecapitulationController::class, 'index'])->name('dashboard');

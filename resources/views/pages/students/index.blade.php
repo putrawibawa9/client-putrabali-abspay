@@ -1,4 +1,4 @@
-
+{{-- @dd($courses) --}}
 @extends('update-views.layouts.main')
 
 @section('content')
@@ -413,65 +413,104 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="/students" method="POST">
-                    @csrf
-                    <div class="p-6 space-y-6">
-                        <div class="grid grid-cols-6 gap-6">
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="name"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Name</label>
-                                <input type="text" name="name" id="name"
-                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Bonnie" required>
-                            </div>
-                        
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="whatsapp_number"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">WhatsApp
-                                    Number</label>
-                                <input type="tel" name="wa_number" id="whatsapp_number"
-                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="+62 234 567 890" required>
-                            </div>
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="whatsapp_number"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enroll Date</label>
-                                <input type="date" name="enroll_date" id="whatsapp_number"
-                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="+62 234 567 890" required>
-                            </div>
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="position"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
-                                <select name="gender" id="gender"
-                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    required>
-                                    <option value="">Select gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                            <div class="col-span-6">
-                                <label for="school"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School</label>
-                                <input type="text" name="school" id="school"
-                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Enter school name" required>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
-                        <button
-                            class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                            type="submit">Add Student</button>
-                        <button
-                            class="text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
-                            type="reset">Reset Form</button>
-                    
-                    </div>
-                </form>
+           <form action="/students" method="POST">
+    @csrf
+    <div class="p-6 space-y-6">
+        <div class="grid grid-cols-6 gap-6">
+            <!-- Student Details -->
+            <div class="col-span-6 sm:col-span-3">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                <input type="text" name="name" id="name" 
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Bonnie" required>
+            </div>
+            
+            <div class="col-span-6 sm:col-span-3">
+                <label for="wa_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    WhatsApp Number</label>
+                <input type="tel" name="wa_number" id="wa_number" 
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="+62 234 567 890" required>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+                <label for="enroll_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Enroll Date</label>
+                <input type="date" name="enroll_date" id="enroll_date"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    required>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+                <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                <select name="gender" id="gender" 
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    required>
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="col-span-6">
+                <label for="school" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School</label>
+                <input type="text" name="school" id="school"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Enter school name" required>
+            </div>
+
+            <!-- English Course -->
+            <div class="col-span-6 sm:col-span-3">
+                <label for="english_course" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">English Course</label>
+                <select name="course_id[]" id="english_course" 
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    required>
+                    <option value="">Select English Course</option>
+                    @foreach ($englishCourses as $course)
+                        <option value="{{ $course['id'] }}">{{ $course['alias'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+                <label for="english_payment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Custom Payment Rate</label>
+                <input type="number" name="custom_payment_rate[]" id="english_payment" 
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="80000" required>
+            </div>
+
+            <!-- Mapel Course -->
+            <div class="col-span-6 sm:col-span-3">
+                <label for="mapel_course" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mapel Course</label>
+                <select name="course_id[]" id="mapel_course" 
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    required>
+                    <option value="">Select Mapel Course</option>
+                    @foreach ($mapelCourses as $course)
+                        <option value="{{ $course['id'] }}">{{ $course['alias'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+                <label for="mapel_payment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Custom Payment Rate</label>
+                <input type="number" name="custom_payment_rate[]" id="mapel_payment" 
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="80000" required>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Footer -->
+    <div class="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
+        <button
+            class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            type="submit">Add Student</button>
+        <button
+            class="text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
+            type="reset">Reset Form</button>
+    </div>
+</form>
+
             </div>
         </div>
     </div>

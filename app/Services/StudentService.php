@@ -101,9 +101,9 @@ class StudentService
 
    public function addNewStudent($data)
     {
-        
+    // dd($data);
         try{
-            $this->client->request('POST', $this->baseUrl . '/students', [
+            $response = $this->client->request('POST', $this->baseUrl . '/students', [
             'timeout' => 10, // Set a timeout for the request
             'headers' => [
                 'Accept' => 'application/json',
@@ -114,8 +114,14 @@ class StudentService
                 'gender' => $data['gender'],
                 'school' => $data['school'],
                 'enroll_date' => $data['enroll_date'],
+                'courses' => $data['courses']
             ],
         ]);
+
+           $id = json_decode($response->getBody()->getContents(), true);
+
+        return $id; // Return the parsed response
+        // /return student id from the response
 
         }catch(RequestException $e){
         
@@ -135,6 +141,10 @@ class StudentService
             ],
             'json' => $data
         ]);
+
+         $id = json_decode($response->getBody()->getContents(), true);
+
+        return $id; // Return the parsed response
        }catch(RequestException $e){
 
         // return error to Controller

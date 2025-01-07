@@ -76,13 +76,10 @@
         </svg>
         <span>No active courses available</span>
                             @endforelse
-                           
-                              
-                        
-                            
-                            
                         </ul>
+                        
                     </div>
+                    
                 </div>
             </div>
             <div class="sm:flex flex-col sm:flex-1 min-h-full">
