@@ -34,6 +34,7 @@ class StudentController extends Controller
     $mapelCourses = $this->courseService->getCourseBySubject('mapel');
     // dd($mapelCourses);
          $students = $this->studentService->getAllStudents($page);
+        //  dd($students);
          $activeRoute = 'students';
         return view('pages.students.index', compact('students', 'activeRoute', 'englishCourses', 'mapelCourses'));
     }

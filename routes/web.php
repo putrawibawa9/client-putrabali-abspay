@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AbsenceController;
+use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -15,6 +16,11 @@ use App\Http\Controllers\StudentCourseController;
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
+
+// authentications
+Route::get('/login', [AuthenticationController::class, 'loginPage']);
+Route::post('/login', [AuthenticationController::class, 'login']);
+Route::post('/register', [AuthenticationController::class, 'register']);
 
 // students
 Route::resource('/students', StudentController::class);
