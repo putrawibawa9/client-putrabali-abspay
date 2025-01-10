@@ -12,15 +12,10 @@ use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\RecapitulationController;
 use App\Http\Controllers\StudentCourseController;
+use App\Http\Middleware\CheckUserSession;
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
 
-// authentications
-Route::get('/login', [AuthenticationController::class, 'loginPage']);
-Route::post('/login', [AuthenticationController::class, 'login']);
-Route::post('/register', [AuthenticationController::class, 'register']);
+Route::middleware([CheckUserSession::class])->group(function () {
 
 // students
 Route::resource('/students', StudentController::class);
@@ -36,14 +31,12 @@ Route::get('/students/payment/form', [PaymentController::class, 'index']);
 Route::post('/students/payment/select', [PaymentController::class, 'paymentForm']);
 Route::post('/students/payment/search', [PaymentController::class, 'searchStudentByNisOrName']);
 
-// Teacher
+// teachers
 Route::resource('/teachers', TeacherController::class);
-
 
 // courses
 Route::resource('/courses', CourseController::class);
 Route::post('/courses/search', [CourseController::class, 'search'])->name('courses.search');
-
 
 // payments
 Route::resource('/payments', PaymentController::class);
@@ -53,23 +46,33 @@ Route::get('/public/payments', [PaymentController::class, 'checkPaymentFromParen
 Route::get('/public/payments/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
 
 // absences
+Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput']);
 Route::get('/absences', [AbsenceController::class, 'allCourses'])->name('absences.index');
 Route::post('/absence/courses/search', [AbsenceController::class, 'searchCourses'])->name('absence.courses.search');
-
 Route::post('/absences/search', [AbsenceController::class, 'searchCourse'])->name('absences.search');
-
 Route::get('/absences/{id}', [AbsenceController::class, 'absenceForm'])->name('absences.show');
-
 Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absences.store');
 
 // Meetings
 Route::get('/meetings/{id}', [MeetingController::class, 'getAbsencesByMeetingId']);
 
 // Recapitulation
-
 Route::get('/recapitulations', [RecapitulationController::class, 'index']);
 Route::post('/recapitulations/payment', [PaymentController::class, 'paymentRecapitulation'])->name('recapitulations.payment');
 Route::post('/students/monthly-paid-unpaid', [PaymentController::class, 'paidAndUnpaidStudentsMonthly']);
+
+// Dashboard
+Route::get('/dashboard', [RecapitulationController::class, 'index'])->name('dashboard')->middleware(CheckUserSession::class);
+});
+
+
+// authentications
+Route::get('/login', [AuthenticationController::class, 'loginPage'])->name('login');
+Route::post('/login', [AuthenticationController::class, 'login']);
+Route::post('/register', [AuthenticationController::class, 'register']);
+Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');
+
+
 
 
 // UPDATED VIEWS
@@ -92,9 +95,6 @@ Route::get('/updated-dashboard', function () {
     return view('update-views.pages.dashboard.dashboard')->with('activeRoute', 'dashboard');
 });
 
-// Route::get('/absences' ,[AbsenceController::class, 'allCourses']);
 
 // Ini Route Baru Dari Saya Buat Halaman Input Absen (Statis)
-Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput'])->name('absences.input');
 
-Route::get('/dashboard', [RecapitulationController::class, 'index'])->name('dashboard');

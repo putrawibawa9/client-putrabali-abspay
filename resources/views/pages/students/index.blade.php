@@ -1,5 +1,5 @@
-@dd(Session::all()); // Using the Session facade
-
+{{-- check session --}}
+{{-- check session --}}
 @extends('update-views.layouts.main')
 
 @section('content')

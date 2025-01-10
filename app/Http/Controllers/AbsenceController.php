@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\AbsenceService;
 use Illuminate\Http\Request;
-use App\Services\MeetingService;
 use App\Services\CourseService;
+use App\Services\AbsenceService;
+use App\Services\MeetingService;
 use App\Services\TeacherService;
+use Illuminate\Support\Facades\Session;
 
 class AbsenceController extends Controller
 {
@@ -50,6 +51,9 @@ class AbsenceController extends Controller
    
 
     public function absenceInput( $id){
+        //  if (!Session::has('user_logged_in')) {
+        //   return redirect()->route('login');
+        // }
            $data = $this->courseService->getCourseWithStudentsbyID($id);
            $teachers = $this->teacherService->getAllTeachers();
            $activeRoute = 'absences';

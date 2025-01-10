@@ -28,7 +28,8 @@ class AuthenticationController extends Controller
         ]);
 
       if ($this->authenticationService->login($credentials) ) {
-           Session::put('user_logged_in', true);
+           // After successful login
+Session::put('user_logged_in', true);
         // dd('login success');
         return redirect()->route('students.index');
       } 
@@ -48,4 +49,17 @@ class AuthenticationController extends Controller
       
         $this->authenticationService->register($request->all());
     }
+
+    public function logout()
+{
+    // Log out the user
+    Auth::logout();
+
+    // Clear all session data
+    session()->flush();
+
+    // Redirect to login page
+    return redirect()->route('login');
+}
+
 }
