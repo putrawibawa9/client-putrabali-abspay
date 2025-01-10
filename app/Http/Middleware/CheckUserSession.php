@@ -13,7 +13,7 @@ class CheckUserSession
             // Log::info('CheckUserSession middleware triggered.');
             // dd("CheckUserSession middleware triggered.");
         if (!Session::has('user_logged_in')) {
-            // route back to login
+            // route back to / route
             return redirect()->route('login');
         }
         return $next($request);

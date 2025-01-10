@@ -67,7 +67,7 @@ Route::get('/dashboard', [RecapitulationController::class, 'index'])->name('dash
 
 
 // authentications
-Route::get('/login', [AuthenticationController::class, 'loginPage'])->name('login');
+Route::get('/', [AuthenticationController::class, 'loginPage'])->name('login');
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');

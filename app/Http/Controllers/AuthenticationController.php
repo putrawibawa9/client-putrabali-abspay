@@ -48,6 +48,7 @@ Session::put('user_logged_in', true);
         ]);
       
         $this->authenticationService->register($request->all());
+        return redirect()->route('login');
     }
 
     public function logout()
