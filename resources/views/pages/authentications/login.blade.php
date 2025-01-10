@@ -79,5 +79,52 @@
     </div>
     </div>
   </div>
+
+  <!-- Modal Structure -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2 id="modal-title">Title</h2>
+    <p id="modal-message">Your message goes here.</p>
+    <button id="modal-action" class="modal-action-btn">OK</button>
+  </div>
+</div>
+
+ <script>
+        // JavaScript for modal
+        const modal = document.getElementById("modal");
+        const modalTitle = document.getElementById("modal-title");
+        const modalMessage = document.getElementById("modal-message");
+        const closeModalBtn = document.querySelector(".close-btn");
+        const modalActionBtn = document.getElementById("modal-action");
+
+        function showModal(title, message, actionCallback = null) {
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            modal.style.display = "block";
+
+            modalActionBtn.onclick = () => {
+                if (actionCallback) actionCallback();
+                modal.style.display = "none";
+            };
+        }
+
+        closeModalBtn.onclick = () => {
+            modal.style.display = "none";
+        };
+
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        // Laravel flash message handling
+        @if (session('error'))
+            showModal("Error", "{{ session('error') }}");
+        @elseif (session('success'))
+            showModal("Success", "{{ session('success') }}");
+        @endif
+    </script>
 </body>
 </html>

@@ -6,7 +6,7 @@
         <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
             <div class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                 <div class="flex items-center p-2 pl-3 text-base font-normal text-gray-900 rounded-lg dark:text-white">
-                    <img src="{{ asset('img/fotoProfesional.jpg') }}"
+                    <img src="{{ asset('img/admin.png') }}"
                         class="mr-3 w-10 h-10 rounded-full" alt="Flowbite Logo" />
 
                     <div class="flex flex-col justify-center gap-1">

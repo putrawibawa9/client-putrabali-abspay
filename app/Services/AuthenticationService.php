@@ -18,7 +18,7 @@ class AuthenticationService
     }
 
    public function login($data){
-    // dd($data);
+;
      try{
     $reponse =  $this->client->request('POST', $this->baseUrl . '/admin/login', [
             'timeout' => 10, // Set a timeout for the request
@@ -30,7 +30,10 @@ class AuthenticationService
                 'password' => $data['password'],
             ],
         ]);
-     return true;
+        // return user data as json
+        $user = json_decode($reponse->getBody()->getContents(), true);
+        // dd($user);
+        return $user;
      }catch(RequestException $e){
         // dd($e->getResponse()->getBody()->getContents());
             return false;

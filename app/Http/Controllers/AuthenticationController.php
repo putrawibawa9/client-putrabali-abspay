@@ -27,17 +27,18 @@ class AuthenticationController extends Controller
             'password' => 'required'
         ]);
 
-      if ($this->authenticationService->login($credentials) ) {
+      if ($response = $this->authenticationService->login($credentials) ) {
            // After successful login
-Session::put('user_logged_in', true);
+        // Set the user as logged in
+        $user = $response['user'];
+        // dd($user);
+        Session::put('user_logged_in', true);
+        Session::put('user', $user);
         // dd('login success');
         return redirect()->route('students.index');
       } 
        
-            
-        return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.',
-        ]);
+        return redirect()->route('login')->with('error', 'Invalid login credentials');
     }
 
     public function register(Request $request){
@@ -48,7 +49,7 @@ Session::put('user_logged_in', true);
         ]);
       
         $this->authenticationService->register($request->all());
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Registration successful');
     }
 
     public function logout()

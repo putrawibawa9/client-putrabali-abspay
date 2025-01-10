@@ -81,7 +81,7 @@
                             alt="User Image">
                     </div>
 
-                    <span class=" brand-link brand-text font-weight-light">Putra Wibawa</span>
+                    <span class=" brand-link brand-text font-weight-light">Putra Wibaw</span>
 
                 </div>
 
@@ -234,7 +234,7 @@
         <footer class="main-footer">
             Putra Bali English Course
             <div class="float-right d-none d-sm-inline-block">
-                I Gede Putra Wibawa
+                I Gede Putra Wibaw
             </div>
         </footer>
 
