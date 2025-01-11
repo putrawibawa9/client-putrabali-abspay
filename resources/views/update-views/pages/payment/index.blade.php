@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div class="sm:flex flex-col sm:flex-1 min-h-full">
+            <div class="sm:flex flex-col sm:flex-1 min-h-full bg-gray-800">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">
                     <div
                         class="px-12 py-8 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700">
@@ -149,78 +149,82 @@
                         </div>
                     </div>
 
-                    <div
-                        class="px-12 py-8 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700">
-                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">Mapel - 6sra</h3>
+                    @if ($classes > 1)
+                        <div
+                            class="px-12 py-8 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700">
+                            <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">Mapel - 6sra</h3>
 
-                        <div class="mt-6">
-                            <label for="tanggal"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
-                            <input type="date" id="tanggal"
-                                class="bg-gray-50 border py-3 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-calendar-picker-indicator]:dark:filter [&::-webkit-calendar-picker-indicator]:dark:invert"
-                                placeholder="" required />
-                        </div>
-
-                        <div class="mt-6">
-                            <label for="tipe"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipe</label>
-                            <select id="tipe"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>Pilih Tipe</option>
-                                <option value="1">Tipe 1</option>
-                                <option value="2">Tipe 2</option>
-                                <option value="3">Tipe 3</option>
-                                <option value="4">Tipe 4</option>
-                            </select>
-                        </div>
-
-                        <div class="mt-6">
-                            <label for="bulan"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan</label>
-                            <select id="bulan"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>Pilih Bulan</option>
-                                <option value="1">Januari</option>
-                                <option value="2">Februari</option>
-                                <option value="3">Maret</option>
-                                <option value="4">April</option>
-                                <option value="5">Mei</option>
-                                <option value="6">Juni</option>
-                                <option value="7">Juli</option>
-                                <option value="8">Agustus</option>
-                                <option value="9">September</option>
-                                <option value="10">Oktober</option>
-                                <option value="11">November</option>
-                                <option value="12">Desember</option>
-                            </select>
-                        </div>
-
-                        <div class="mt-6">
-                            <label for=""
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Bayar</label>
-
-                            <div class="flex gap-12 mt-4">
-                                <div class="flex items-center me-4">
-                                    <input id="inline-radio" type="radio" value="" name="inline-radio-group"
-                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="inline-radio"
-                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rp 80.000</label>
-                                </div>
-                                <div class="flex items-center me-4">
-                                    <input checked id="inline-checked-radio" type="radio" value=""
-                                        name="inline-radio-group"
-                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="inline-checked-radio"
-                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rp 70.000</label>
-                                </div>
+                            <div class="mt-6">
+                                <label for="tanggal"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
+                                <input type="date" id="tanggal"
+                                    class="bg-gray-50 border py-3 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-calendar-picker-indicator]:dark:filter [&::-webkit-calendar-picker-indicator]:dark:invert"
+                                    placeholder="" required />
                             </div>
 
+                            <div class="mt-6">
+                                <label for="tipe"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipe</label>
+                                <select id="tipe"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option selected>Pilih Tipe</option>
+                                    <option value="1">Tipe 1</option>
+                                    <option value="2">Tipe 2</option>
+                                    <option value="3">Tipe 3</option>
+                                    <option value="4">Tipe 4</option>
+                                </select>
+                            </div>
+
+                            <div class="mt-6">
+                                <label for="bulan"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan</label>
+                                <select id="bulan"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option selected>Pilih Bulan</option>
+                                    <option value="1">Januari</option>
+                                    <option value="2">Februari</option>
+                                    <option value="3">Maret</option>
+                                    <option value="4">April</option>
+                                    <option value="5">Mei</option>
+                                    <option value="6">Juni</option>
+                                    <option value="7">Juli</option>
+                                    <option value="8">Agustus</option>
+                                    <option value="9">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                            </div>
+
+                            <div class="mt-6">
+                                <label for=""
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah
+                                    Bayar</label>
+
+                                <div class="flex gap-12 mt-4">
+                                    <div class="flex items-center me-4">
+                                        <input id="inline-radio" type="radio" value="" name="inline-radio-group"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="inline-radio"
+                                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rp
+                                            80.000</label>
+                                    </div>
+                                    <div class="flex items-center me-4">
+                                        <input checked id="inline-checked-radio" type="radio" value=""
+                                            name="inline-radio-group"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="inline-checked-radio"
+                                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rp
+                                            70.000</label>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
-                <div class="flex items-center justify-end w-full mt-12">
-
-
+                <div
+                    class="flex items-center {{ $classes == 2 ? 'justify-end' : 'justify-start' }} w-full h-full my-12 flex-1">
                     <button type="button"
                         class="inline-flex items-center justify-center gap-2 px-8 py-2 text-sm font-semibold text-white bg-primary-700 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 transition-all dark:focus:ring-offset-gray-800">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
