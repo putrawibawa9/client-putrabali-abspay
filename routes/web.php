@@ -104,5 +104,8 @@ Route::get('/updated-dashboard', function () {
 
 // Ini Route Payment
 Route::get('/updated-payment', function () {
-    return view('update-views.pages.payment.index')->with('activeRoute', 'payment');
+    return view('update-views.pages.payment.index')->with([
+        'activeRoute' => 'payment',
+        'classes' => 1
+    ]);
 });
