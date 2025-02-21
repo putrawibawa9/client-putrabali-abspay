@@ -1,6 +1,3 @@
-{{-- check session --}}
-{{-- check session --}}
-
 @extends('update-views.layouts.main')
 
 @section('content')

@@ -1,5 +1,5 @@
+{{-- @dd($student) --}}
 @extends('update-views.layouts.main')
-
 @section('content')
     <div
         class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
@@ -49,9 +49,10 @@
                     <div class="w-20 h-20 rounded-full bg-gray-100"></div>
 
                     <div class="flex-1 flex flex-col justify-center ml-5">
-                        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">Aprilia Dewi</h1>
+                        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">{{ $student['name'] }}</h1>
 
                         <ul class="flex items-center gap-6">
+                            @foreach ($student['active_courses'] as $course )    
                             <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
                                 <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -61,28 +62,22 @@
                                         clip-rule="evenodd" />
                                 </svg>
 
-                                <span>English - 6sra</span>
+                                <span>{{ $course['subject'] }} - {{ $course['alias'] }}</span>
                             </li>
-                            <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd"
-                                        d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
-                                        clip-rule="evenodd" />
-                                </svg>
-
-                                <span>Mapel - 6sra</span>
-                            </li>
+                            @endforeach
+                           
                         </ul>
                     </div>
                 </div>
             </div>
+
+            {{-- Card --}}
             <div class="sm:flex flex-col sm:flex-1 min-h-full">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">
+                    @foreach ($student['active_courses'] as $course)
                     <div
                         class="px-12 py-8 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700">
-                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">English - 6sra</h3>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $course['subject'] }} - {{ $course['alias'] }}</h3>
 
                         <div class="mt-6">
                             <label for="tanggal"
@@ -149,11 +144,13 @@
                         </div>
                     </div>
 
+                    @endforeach
                
                 </div>
-                <div class="flex items-center justify-end w-full mt-12">
-
-
+                
+            </div>
+            {{-- End Card --}}
+            <div class="flex items-center justify-end w-full mt-12">
                     <button type="button"
                         class="inline-flex items-center justify-center gap-2 px-8 py-2 text-sm font-semibold text-white bg-primary-700 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 transition-all dark:focus:ring-offset-gray-800">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -166,7 +163,6 @@
                         <span>Simpan</span>
                     </button>
                 </div>
-            </div>
         </div>
     </div>
 @endsection

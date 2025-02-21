@@ -17,11 +17,11 @@ class PaymentService
     }
 
 
-    public function getStudentsWithActiveCourse($page)
+    public function getStudentsWithActiveCourse()
     {
         try {
             // Make the API request
-            $response = $this->client->request('GET', $this->baseUrl . "/student/with-active-course?page=$page", [
+            $response = $this->client->request('GET', $this->baseUrl . "/student/with-active-course", [
                 'timeout' => 10,
                  // Set a timeout for the request
             ]);

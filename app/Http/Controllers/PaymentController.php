@@ -31,6 +31,7 @@ class PaymentController extends Controller
         $page = $request->query('page', 1);
         // dd($page);
          $students = $this->paymentService->getStudentsWithActiveCourse($page);
+  
          $activeRoute = 'payments';
         return view('pages.payment.index', compact('students', 'activeRoute'));
     }
@@ -73,7 +74,8 @@ class PaymentController extends Controller
     {
         $student = $this->studentService->getStudentById($id);
         // dd($student);
-        return view('payments-old.test', compact('student'));
+       $activeRoute = 'payments';
+        return view('pages.payment.show', compact('student', 'activeRoute'));
     }
 
     /**
