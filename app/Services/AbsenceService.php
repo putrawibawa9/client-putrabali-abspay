@@ -18,6 +18,8 @@ class AbsenceService
 
     public function store($data){
         try {
+    // dd($data);
+
             // Make the API request
             $response = $this->client->request('POST', $this->baseUrl . '/absences', [
                 'timeout' => 10, // Set a timeout for the request
