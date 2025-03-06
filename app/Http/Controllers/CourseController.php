@@ -36,7 +36,8 @@ class CourseController extends Controller
 
      public function index( Request $request){
         $page = $request->query('page', 1);
-         $courses = $this->courseService->getAllCourses(null);
+       
+         $courses = $this->courseService->getAllCourses($page);
          $activeRoute = 'courses';
         return view('pages.courses.index', compact('courses', 'activeRoute'));
     }
