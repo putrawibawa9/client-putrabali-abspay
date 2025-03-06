@@ -62,7 +62,7 @@ class AbsenceController extends Controller
 
     public function store(Request $request)
 {
-    // dd($request->all());
+
     // Extract day from the date
     $date = $request->input('date');
     $day = date('l', strtotime($date));
@@ -77,25 +77,11 @@ class AbsenceController extends Controller
         "course_id" => (int)$data["course_id"],
         "teacher_id" => (int)$data["teacher_id"],
     ];
-    // dd($data);
-    // Prepare attendances array
-    $attendances = [];
-    foreach ($data as $key => $value) {
-        // Check if the key matches the attendance field pattern
-        // dd($key);
-        if (str_starts_with($key, "_token")) {
-            $studentsCoursesId = (int)str_replace("students_courses_id-", "", $key);
-            // dd($studentsCoursesId);
-            $attendances[] = [
-                "students_courses_id" => $studentsCoursesId,
-                "status" => $value,
-            ];
-        }
-    }
+    
     // Add attendances to the request data
-    $apiRequestData["attendances"] = $attendances;
+    $apiRequestData["attendances"] = $data["attendances"];
 
-    dd($apiRequestData);
+    // dd($apiRequestData);
 
     // Now you can pass $apiRequestData to your service or API client
     $error = $this->absenceService->store($apiRequestData);
