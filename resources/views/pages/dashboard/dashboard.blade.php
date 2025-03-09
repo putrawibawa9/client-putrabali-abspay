@@ -1,4 +1,4 @@
-{{-- @dd($recapitulation) --}}
+{{-- @dd($recapitulations) --}}
 @extends('update-views.layouts.main')
 
 @section('content')
@@ -20,6 +20,7 @@
                                 Home
                             </a>
                         </li>
+                       
                         <li>
                             <div class="flex items-center">
                                 <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
@@ -28,27 +29,14 @@
                                         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <a href="#"
-                                    class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Students</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center">
-                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">Enroll
-                                    Student</span>
+                                <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">Recapitulations</span>
                             </div>
                         </li>
                     </ol>
                 </nav>
             </div>
             <div class="sm:flex flex-col sm:flex-1 min-h-full">
-                <h2 class="text-3xl font-semibold text-gray-900 dark:text-white mt-4">Dashboard</h2>
+                {{-- <h2 class="text-3xl font-semibold text-gray-900 dark:text-white mt-4">Dashboard</h2> --}}
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8 items-end">
                     <div>
@@ -59,7 +47,7 @@
                             <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Siswa Daftar Bulan Ini
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_enroll_students_in_current_month'] }} Siswa</h5>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_enroll_students_in_given_month'] }} Siswa</h5>
                         </div>
                     </div>
 
@@ -106,7 +94,7 @@
 
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
-                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Total Pemasukan Bulan Ini
+                            {{-- <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Total Pemasukan Bulan Ini
                             </p>
 
                             <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
@@ -172,7 +160,7 @@
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Desember</a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> --}}
 
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
                             <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Rp. 15.000.000</h5>
@@ -227,7 +215,7 @@
                                 Bulan Ini
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_meetings_current_month'] }} Pertemuan</h5>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_meetings_in_given_month'] }} Pertemuan</h5>
                         </div>
                     </div>
                 </div>

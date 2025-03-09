@@ -24,6 +24,7 @@ class RecapitulationController extends Controller
     public function index(Request $request)
 {
     $recapitulations = $this->recapitulationService->getRecapitulations();
+    // dd($recapitulations);
    $currentMonth = Carbon::now()->format('F'); // Full month name
    $activeRoute ='dashboard';
    return view('pages.dashboard.dashboard', compact('activeRoute', 'recapitulations', 'currentMonth'));

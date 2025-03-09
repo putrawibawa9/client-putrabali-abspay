@@ -34,7 +34,7 @@ class RecapitulationService
             // Handle unexpected status codes
             dd($response->getStatusCode());
             return [
-           
+                
                 'error' => 'Unexpected response status code: ' . $response->getStatusCode(),
             ];
         } catch (RequestException $e) {
@@ -43,7 +43,9 @@ class RecapitulationService
 
             // Return a user-friendly error message
             return [
-                'error' => 'Failed to fetch students. Please try again later.',
+               dd($e->getMessage())
+                
+                // 'error' => 'Failed to fetch students. Please try again later.',
             ];
         } catch (\Exception $e) {
             // Log unexpected errors
