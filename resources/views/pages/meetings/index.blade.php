@@ -1,5 +1,5 @@
 {{-- @dd($meetings) --}}
-@extends('update-views.layouts.main')
+@extends('layouts.main')
 
 @section('content')
     <div

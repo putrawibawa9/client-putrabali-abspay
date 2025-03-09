@@ -6,7 +6,7 @@
         <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
             <div class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                 <div class="flex items-center p-2 pl-3 text-base font-normal text-gray-900 rounded-lg dark:text-white">
-                    <img src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                    <img src="{{ asset('img/admin.png') }}"
                         class="mr-3 w-10 h-10 rounded-full" alt="Flowbite Logo" />
 
                     <div class="flex flex-col justify-center gap-1">
@@ -18,18 +18,18 @@
                 <ul class="py-2 space-y-2">
                     <li>
                         <a href="/dashboard"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                             class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'dashboard' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
                             <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                                 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                                 <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                             </svg>
-                            <span class="ml-3" sidebar-toggle-item>Dashboard</span>
+                            <span class="ml-3" sidebar-toggle-item>Recapitulation</span>
                         </a>
                     </li>
                     <li>
-                        <a href="https://flowbite-admin-dashboard.vercel.app/settings/"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                        <a href="/absences"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'absences' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
@@ -38,12 +38,12 @@
                                     clip-rule="evenodd" />
                             </svg>
 
-                            <span class="ml-3" sidebar-toggle-item>Attendance</span>
+                            <span class="ml-3" sidebar-toggle-item>Absences</span>
                         </a>
                     </li>
                     <li>
-                        <a href="https://flowbite-admin-dashboard.vercel.app/settings/"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                        <a href="/payments"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ $activeRoute == 'payments' ? 'bg-gray-100 dark:bg-gray-700' : '' }} dark:text-gray-200 dark:hover:bg-gray-700 ">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
@@ -58,7 +58,7 @@
                     <li>
                         <button type="button"
                             class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                            aria-controls="dropdown-crud" data-collapse-toggle="dropdown-crud">
+                            aria-controls="dropdown-crud-teacher" data-collapse-toggle="dropdown-crud-students">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
@@ -74,60 +74,75 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-crud" class="space-y-2 py-2 ">
+                        <ul id="dropdown-crud-students" class="space-y-2 py-2 ">
                             <li>
-                                <a href="https://flowbite-admin-dashboard.vercel.app/crud/products/"
-                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 bg-gray-100 dark:bg-gray-700 ">All
+                                <a href="/students"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'students' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">All
                                     Student</a>
                             </li>
-                            <li>
-                                <a href="https://flowbite-admin-dashboard.vercel.app/crud/users/"
-                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 ">Enrollment</a>
-                            </li>
+                           
                         </ul>
                     </li>
-                    <li>
-                        <a href="https://flowbite-admin-dashboard.vercel.app/settings/"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path fill-rule="evenodd"
-                                    d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
-                                    clip-rule="evenodd" />
-                            </svg>
 
-                            <span class="ml-3" sidebar-toggle-item>Courses</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://flowbite-admin-dashboard.vercel.app/settings/"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+
+             <li>
+                        <button type="button"
+                            class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                            aria-controls="dropdown-crud-teacher" data-collapse-toggle="dropdown-crud-teacher">
+                           <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
                                 <path fill-rule="evenodd"
                                     d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
                                     clip-rule="evenodd" />
                             </svg>
-
-                            <span class="ml-3" sidebar-toggle-item>Teacher</span>
-                        </a>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Teachers</span>
+                            <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <ul id="dropdown-crud-teacher" class="space-y-2 py-2 ">
+                            <li>
+                                <a href="/teachers"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'teachers' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">All
+                                    Teachers</a>
+                            </li>
+                        </ul>
                     </li>
+
                     <li>
-                        <a href="https://flowbite-admin-dashboard.vercel.app/settings/"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                        <button type="button"
+                            class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                            aria-controls="dropdown-crud-courses" data-collapse-toggle="dropdown-crud-courses">
+                           <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
                                 <path fill-rule="evenodd"
-                                    d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                                    d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
                                     clip-rule="evenodd" />
                             </svg>
-
-                            <span class="ml-3" sidebar-toggle-item>Schedule</span>
-                        </a>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Courses</span>
+                            <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <ul id="dropdown-crud-courses" class="space-y-2 py-2 ">
+                            <li>
+                                <a href="/courses"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'courses' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">All
+                                    Courses</a>
+                            </li>
+                        </ul>
                     </li>
+                    
+                 
+                  
                 </ul>
             </div>
         </div>
