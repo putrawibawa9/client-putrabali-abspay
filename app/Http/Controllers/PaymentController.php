@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Services\CourseService;
 use App\Services\PaymentService;
@@ -116,8 +117,14 @@ class PaymentController extends Controller
 
     public function formPembayaranPrint($id)
     {
+        
         $student = $this->studentService->getStudentById($id);
-        return view('payments.paymentForm', compact('student'));
+        // dd($student);
+        $pdf = PDF::loadView('pages.payment.paymentForm', compact('student'));
+        return $pdf->stream('form-pembayaran.pdf');
+        
+        
+        // return view('pages.payment.paymentForm', compact('student'));
     
     }
 

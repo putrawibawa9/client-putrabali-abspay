@@ -86,7 +86,7 @@
                 <div class="flex items-center justify-between w-full mt-12">
                     <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Payment</h2>
 
-                    <button type="button"
+                    <a href="{{ route('formPembayaran.print', $student['id']) }}"
                         class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-primary-700 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 transition-all dark:focus:ring-offset-gray-800">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -96,8 +96,8 @@
                                 clip-rule="evenodd" />
                         </svg>
 
-                        <span>Payment Record</span>
-                    </button>
+                        <span>Print Payment Form</span>
+                    </a>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">

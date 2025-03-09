@@ -1,4 +1,4 @@
-@dd($student)
+{{-- @dd($student) --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
