@@ -135,7 +135,8 @@
     <div
         class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
         <div class="flex items-center mb-4 sm:mb-0">
-            <a href="#"
+              @if ($courses['prev_page_url'])
+            <a href="?page={{ $courses['current_page'] - 1 }}"
                 class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                 <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -143,7 +144,9 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </a>
-            <a href="#"
+             @endif
+            @if ($courses['next_page_url'])
+            <a href="?page={{ $courses['current_page'] + 1 }}"
                 class="inline-flex justify-center p-1 mr-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                 <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -151,12 +154,15 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </a>
-            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
-                    class="font-semibold text-gray-900 dark:text-white">1-20</span> of <span
-                    class="font-semibold text-gray-900 dark:text-white">2290</span> Data</span>
+             @endif
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
+                    class="font-semibold text-gray-900 dark:text-white">{{ $courses['from'] }}- {{ $courses['to'] }}</span> of <span
+                    class="font-semibold text-gray-900 dark:text-white">{{ $courses['total'] }}</span> Data
+                </span>
         </div>
         <div class="flex items-center space-x-3">
-            <a href="#"
+             @if ($courses['prev_page_url'])
+            <a href="?page={{ $courses['current_page'] - 1 }}"
                 class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 <svg class="w-5 h-5 mr-1 -ml-1"" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
@@ -166,7 +172,9 @@
                 </svg>
                 Previous
             </a>
-            <a href="#"
+             @endif
+           @if ($courses['next_page_url'])
+            <a href="?page={{ $courses['current_page'] + 1 }}"
                 class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 Next
                 <svg class="w-5 h-5 ml-1 -mr-1" fill="currentColor" viewBox="0 0 20 20"
@@ -176,6 +184,7 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </a>
+             @endif
         </div>
     </div>
 @endsection

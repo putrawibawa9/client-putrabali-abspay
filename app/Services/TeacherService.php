@@ -16,26 +16,21 @@ class TeacherService{
          $this->baseUrl = config('services.api.base_url');
     }
 
-         public function getAllTeachers()
+         public function getAllTeachers($page)
     {
         try {
+            // dd($page);
             // Make the API request
-            $response = $this->client->request('GET', $this->baseUrl . '/teachers', [
+            $response = $this->client->request('GET', $this->baseUrl . "/teachers?page=$page", [
                 'timeout' => 10, // Set a timeout for the request
-                'headers' => [
-                    'Accept' => 'application/json',
-                ],
-                // Optional: Add query parameters if needed
-                'query' => [
-                    // 'param1' => 'value1',
-                ],
+                
             ]);
 
             // Check if the response status code is 200 (OK)
             if ($response->getStatusCode() === 200) {
                 // Decode the JSON response into an associative array
                 $data = json_decode($response->getBody()->getContents(), true);
-                
+             
                 return $data;
             }
 

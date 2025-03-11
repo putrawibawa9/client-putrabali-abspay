@@ -38,7 +38,7 @@
             <div class="sm:flex sm:flex-1 min-h-full">
                 <div
                     class="items-center hidden sm:flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                    <form class="lg:pr-3 w-full" action="/students/search" method="POST">
+                    <form class="lg:pr-3 w-full" action="{{ route('payments.search') }}" method="POST">
     @csrf
     <label for="student-search" class="sr-only">Search</label>
     <div class="relative mt-1">

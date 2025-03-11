@@ -17,8 +17,10 @@ class TeacherController extends Controller
     /**
      * Display a listing of the resource.
      */
-   public function index(){
-        $teachers = $this->teacherService->getAllTeachers();
+   public function index(Request $request){
+   $page = $request->query('page', 1);
+   
+        $teachers = $this->teacherService->getAllTeachers($page);
         $activeRoute = 'teachers';
         return view('pages.teachers.index', compact('teachers', 'activeRoute'));
     }

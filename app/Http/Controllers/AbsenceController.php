@@ -43,6 +43,7 @@ class AbsenceController extends Controller
 
 
  public function allCourses(Request $request){
+    // dd($request);
      $page = $request->query('page', 1);
         $courses = $this->courseService->getAllCourses($page);
         $activeRoute = 'absences';

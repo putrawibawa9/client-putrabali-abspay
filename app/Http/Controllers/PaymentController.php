@@ -138,7 +138,7 @@ class PaymentController extends Controller
 
     $students = $this->studentService->searchStudentByNisOrName($search);
     // also return the search value to be used in the view
-    $activeRoute = 'students';
+    $activeRoute = 'payments';
        return view('pages.payment.index', compact('students', 'search', 'activeRoute'));
 
 }

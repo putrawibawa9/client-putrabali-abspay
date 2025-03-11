@@ -260,7 +260,8 @@
              @endif
             <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
                     class="font-semibold text-gray-900 dark:text-white">{{ $students['from'] }}- {{ $students['to'] }}</span> of <span
-                    class="font-semibold text-gray-900 dark:text-white">{{ $students['total'] }}</span> Data</span>
+                    class="font-semibold text-gray-900 dark:text-white">{{ $students['total'] }}</span> Data
+                </span>
         </div>
         {{-- @dd($students) --}}
         <div class="flex items-center space-x-3">
