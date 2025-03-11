@@ -19,18 +19,19 @@ class CourseController extends Controller
 
      public function search(Request $request)
     {
-    //    dd($request->all());
-        $courses = $this->courseService->search($request->all());
-       
+        $page = $request->query('page', 1);
+        $courses = $this->courseService->search($request->all(), $page);
+      
         if(isset($courses['message'])){
             return redirect()->route('courses.index')->with('error', $courses['message']);
         }
-        $level = $request->input('level');
-        $section = $request->input('section');
-        $subject = $request->input('subject');
-        // dd($courses);
+        $level = $request->input('level', '');
+        $section = $request->input('section', '');
+        $subject = $request->input('subject', '');
+        
+        $isSearch = true;
         $activeRoute = 'courses';
-        return view('pages.courses.index', compact('courses', 'activeRoute', 'level', 'section', 'subject'));
+        return view('pages.courses.index', compact('courses', 'activeRoute', 'level', 'section', 'subject', 'isSearch'));
 
     }
 

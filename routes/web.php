@@ -36,7 +36,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
 
     // courses
     Route::resource('/courses', CourseController::class);
-    Route::post('/courses/search', [CourseController::class, 'search'])->name('courses.search');
+    Route::get('/courses-search', [CourseController::class, 'search'])->name('courses.search');
 
     // payments
     Route::resource('/payments', PaymentController::class);

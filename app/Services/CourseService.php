@@ -99,21 +99,24 @@ class CourseService
             ];
         }
     }
-    public function search($data){
-        // dd($data);
+    public function search($data, $page){
+    // Extract and filter out null or empty values
+    $queryParams = array_filter([
+        'level' => $data['level'] ?? null,
+        'section' => $data['section'] ?? null,
+        'subject' => $data['subject'] ?? null,
+        'page' => $page
+    ]);
+    // dd($queryParams);
+
         try {
             // Make the API request
-            $response = $this->client->request('POST', $this->baseUrl . '/courses/search', [
+            $response = $this->client->request('GET', $this->baseUrl . "/courses-search?".http_build_query($queryParams), [
                 'timeout' => 10, // Set a timeout for the request
                 'headers' => [
                     'Accept' => 'application/json',
                 ],
-                // Optional: Add query parameters if needed
-                'json' => [
-                    'level' => $data['level'],
-                    'section' => $data['section'],
-                    'subject' => $data['subject'],
-                ]
+             
             ]);
             return json_decode($response->getBody()->getContents(), true);
            
