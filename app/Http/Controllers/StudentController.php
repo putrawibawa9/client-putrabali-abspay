@@ -182,13 +182,17 @@ class StudentController extends Controller
 
 public function searchStudentByNisOrName(Request $request)
 {
+    // get the search value from the request
+    $page = $request->query('page', 1);
+
     $search = $request->input('search');
   $englishCourses = $this->courseService->getAllCourses('english');
     $mapelCourses = $this->courseService->getAllCourses('mapel');
-    $students = $this->studentService->searchStudentByNisOrName($search);
+    $students = $this->studentService->searchStudentByNisOrName($search, $page);
+    $search = $request->input('search');
     // also return the search value to be used in the view
     $activeRoute = 'students';
-       return view('pages.students.index', compact('students', 'search', 'activeRoute', 'englishCourses', 'mapelCourses'));
+       return view('pages.students.index', compact('students', 'search', 'activeRoute', 'englishCourses', 'mapelCourses', 'search'));
 
 }
 

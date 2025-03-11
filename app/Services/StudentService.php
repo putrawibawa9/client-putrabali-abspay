@@ -156,11 +156,11 @@ class StudentService
        }
     }
 
-    public function searchStudentByNisOrName($search){
+    public function searchStudentByNisOrName($search, $page){
         // dd($search);
         try {
             // Make the API request
-            $response = $this->client->request('POST', $this->baseUrl . '/students/search', [
+            $response = $this->client->request('GET', $this->baseUrl . "/students-search?search=$search&page=$page", [
                 'timeout' => 10, // Set a timeout for the request
                 'headers' => [
                     'Accept' => 'application/json',
