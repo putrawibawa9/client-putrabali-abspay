@@ -26,18 +26,21 @@ class AbsenceController extends Controller
 
     public function searchCourses(Request $request)
     {
-       
-        $courses = $this->courseService->search($request->all());
+
+       $page = $request->query('page', 1);
+        $courses = $this->courseService->search($request->all(), $page);
        
         if(isset($courses['message'])){
             return redirect()->route('absences.index')->with('error', $courses['message']);
         }
+        
         $level = $request->input('level');
         $section = $request->input('section');
         $subject = $request->input('subject');
-        // dd($courses);
+        $isSearch = true;
+       
         $activeRoute = 'absences';
-        return view('pages.absences.index', compact('courses', 'activeRoute', 'level', 'section', 'subject'));
+        return view('pages.absences.index', compact('courses', 'activeRoute', 'level', 'section', 'subject', 'isSearch'));
 
     }
 

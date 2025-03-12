@@ -101,6 +101,7 @@ class CourseService
     }
     public function search($data, $page){
     // Extract and filter out null or empty values
+   
     $queryParams = array_filter([
         'level' => $data['level'] ?? null,
         'section' => $data['section'] ?? null,

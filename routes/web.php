@@ -40,7 +40,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
 
     // payments
     Route::resource('/payments', PaymentController::class);
-    Route::post('/payments/search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
+    Route::get('/payments-search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
     Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembayaranPrint'])->name('formPembayaran.print');
     Route::get('/public/payments', [PaymentController::class, 'checkPaymentFromParents']);
     Route::get('/public/payments/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
@@ -48,7 +48,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
     // absences
     Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput']);
     Route::get('/absences', [AbsenceController::class, 'allCourses'])->name('absences.index');
-    Route::post('/absence/courses/search', [AbsenceController::class, 'searchCourses'])->name('absence.courses.search');
+    Route::get('/absence/courses/search', [AbsenceController::class, 'searchCourses'])->name('absence.courses.search');
     Route::post('/absences/search', [AbsenceController::class, 'searchCourse'])->name('absences.search');
     Route::get('/absences/{id}', [AbsenceController::class, 'absenceForm'])->name('absences.show');
     Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absences.store');

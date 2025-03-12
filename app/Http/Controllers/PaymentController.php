@@ -134,12 +134,14 @@ class PaymentController extends Controller
 
     public function searchStudentByNisOrName(Request $request)
 {
+    
     $search = $request->input('search');
-
-    $students = $this->studentService->searchStudentByNisOrName($search);
+    $page = $request->query('page', 1);
+    $students = $this->studentService->searchStudentByNisOrName($search, $page);
     // also return the search value to be used in the view
+    
     $activeRoute = 'payments';
-       return view('pages.payment.index', compact('students', 'search', 'activeRoute'));
+       return view('pages.payment.index', compact('students', 'search', 'activeRoute', 'search'));
 
 }
 
