@@ -20,7 +20,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
     // students
     Route::resource('/students', StudentController::class);
     Route::get('/students-search', [StudentController::class, 'searchStudentByNisOrName'])->name('students.search');
-    Route::post('/teachers/search', [TeacherController::class, 'searchTeacherByNameOrAlias'])->name('teachers.search');
+    Route::get('/teachers-search', [TeacherController::class, 'searchTeacherByNameOrAlias'])->name('teachers.search');
     Route::get('/student/payment/{id}', [PaymentController::class, 'getStudentPayment'])->name('student.payment');
     Route::get('/students-schedules-check', [ScheduleController::class, 'index'])->name('students-schedules-check');
     Route::get('/students-schedules', [ScheduleController::class, 'getStudentsSchedules'])->name('students.schedules');

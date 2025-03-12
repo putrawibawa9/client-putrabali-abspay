@@ -120,9 +120,10 @@ class TeacherController extends Controller
 
     public function searchTeacherByNameOrAlias(Request $request)
 {
+    $page = $request->query('page', 1);
     $search = $request->input('search');
-    $teachers = $this->teacherService->searchTeacherByNameOrAlias($search);
-    // also return the search value to be used in the view
+    $teachers = $this->teacherService->searchTeacherByNameOrAlias($search, $page);
+  
     $activeRoute = 'teachers';
        return view('pages.teachers.index', compact('teachers', 'search', 'activeRoute'));
 

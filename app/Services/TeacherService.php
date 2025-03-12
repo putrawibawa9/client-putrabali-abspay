@@ -179,19 +179,16 @@ class TeacherService{
        }
     }
 
-       public function searchTeacherByNameOrAlias($search){
-        // dd($search);
+       public function searchTeacherByNameOrAlias($search, $page){
+      
         try {
             // Make the API request
-            $response = $this->client->request('POST', $this->baseUrl . '/teachers/search', [
+            $response = $this->client->request('GET', $this->baseUrl . "/teachers-search?search=$search&page=$page", [
                 'timeout' => 10, // Set a timeout for the request
                 'headers' => [
                     'Accept' => 'application/json',
                 ],
-                // Optional: Add query parameters if needed
-              'json' => [
-                'search' => $search
-              ],
+              
             ]);
 
             // Check if the response status code is 200 (OK)
