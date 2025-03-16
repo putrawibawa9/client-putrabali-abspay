@@ -101,7 +101,7 @@ class StudentService
 
    public function addNewStudent($data)
     {
-    // dd($data);
+ 
         try{
             $response = $this->client->request('POST', $this->baseUrl . '/students', [
             'timeout' => 10, // Set a timeout for the request
@@ -156,7 +156,7 @@ class StudentService
        }
     }
 
-    public function searchStudentByNisOrName($search, $page){
+    public function searchStudentByNisOrName($search, $page = ''){
         // dd($search);
         try {
             // Make the API request

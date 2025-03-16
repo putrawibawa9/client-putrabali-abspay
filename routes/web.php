@@ -42,8 +42,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::resource('/payments', PaymentController::class);
     Route::get('/payments-search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
     Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembayaranPrint'])->name('formPembayaran.print');
-    Route::get('/public/payments', [PaymentController::class, 'checkPaymentFromParents']);
-    Route::get('/public/payments/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
+  
 
     // absences
     Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput']);
@@ -72,40 +71,7 @@ Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');
 
+  Route::get('/public/check-status', [PaymentController::class, 'checkPaymentFromParents'])->name('check-status');
+    Route::get('/public/check-status/search', [PaymentController::class, 'searchStudentFromParents'])->name('check-status.search');
+    Route::get('/public/check-status/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
 
-
-
-// UPDATED VIEWS
-Route::get('/updated-students', function () {
-    return view('pages.students.index')->with('error', 'Fill all required fields!');
-});
-
-Route::get('/sufyan', function () {
-    return view('update-views.pages.students.index')->with('activeRoute', 'students');
-});
-
-
-// Ini Route Baru Dari Saya Buat Halaman Student Detail (Statis)
-Route::get('/updated-students/detail/{id}', function () {
-    return view('update-views.pages.students.detail')->with('activeRoute', 'students');
-});
-
-// Ini Route Baru Dari Saya Buat Halaman Dashboard
-Route::get('/updated-dashboard', function () {
-    return view('update-views.pages.dashboard.dashboard')->with('activeRoute', 'dashboard');
-});
-
-
-// Ini Route Baru Dari Saya Buat Halaman Input Absen (Statis)
-
-
-
-
-
-// Ini Route Payment
-Route::get('/updated-payment', function () {
-    return view('update-views.pages.payment.index')->with([
-        'activeRoute' => 'payment',
-        'classes' => 1
-    ]);
-});

@@ -97,9 +97,10 @@ class CourseController extends Controller
      */
      public function update(Request $request, $id)
 {
-    // dd($request->all());
+    // dd($id);
     // implement the logic to compare the old data and new data
-    $oldData = $this->courseService->getCoursebyId($id);
+    $oldData = $this->courseService->getCourseWithStudentsbyID($id);
+ 
     $newData = $request->all();
 
     // Initialize an array to store only the changed data

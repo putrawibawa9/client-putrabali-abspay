@@ -57,9 +57,8 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-  public function store(Request $request)
+ public function store(Request $request)
 {
-    // dd($request->all());
     // Validate the incoming request data
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
@@ -67,21 +66,33 @@ class StudentController extends Controller
         'gender' => 'required|string|max:255',
         'school' => 'required|string|max:255',
         'enroll_date' => 'required|date',
-        // 'courses' => 'required|array',
-        'course_id' => 'required',
-        'custom_payment_rate' => 'nullable',
+        'course_id' => 'required|array', // Ensure course_id is an array
+        'custom_payment_rate' => 'nullable|array', // Ensure custom_payment_rate is an array
     ]);
+
     // Format the WhatsApp number
     $validatedData['wa_number'] = $this->formatWaNumber($validatedData['wa_number']);
-    // dd($validatedData);
-     $courses = [];
+
+    // Prepare the courses array
+    $courses = [];
     foreach ($validatedData['course_id'] as $index => $courseId) {
+        // Skip if course_id is null or empty
+        if (empty($courseId)) {
+            continue;
+        }
+
+        // Add to courses array if course_id is valid
         $courses[] = [
             'course_id' => $courseId,
-            'custom_payment_rate' => $data['custom_payment_rate'][$index] ?? null,
+            'custom_payment_rate' => $validatedData['custom_payment_rate'][$index] ?? null,
         ];
     }
-    // dd($courses);
+
+    // Remove any null or empty arrays from $courses
+    $courses = array_filter($courses, function ($course) {
+        return !empty($course['course_id']); // Keep only arrays with a non-empty course_id
+    });
+
     // Prepare payload for the service
     $payload = [
         'name' => $validatedData['name'],
@@ -91,18 +102,16 @@ class StudentController extends Controller
         'enroll_date' => $validatedData['enroll_date'],
         'courses' => $courses,
     ];
-    // dd($payload);
-    // Pass payload to the service
-    $result = $this->studentService->addNewStudent($payload);
 
-    // check if the value is an integer
+    // Call the service to add a new student
+    $result = $this->studentService->addNewStudent($payload);
+    
+    // Check if the result is an integer (student ID)
     if (is_int($result)) {
         return redirect("/students/$result")->with('success', 'Student added successfully');
-    }else{
+    } else {
         return redirect('/students')->with('error', $result['message']);
     }
-    
-    
 }
 
     /**

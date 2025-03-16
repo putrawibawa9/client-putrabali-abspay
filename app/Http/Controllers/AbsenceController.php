@@ -55,10 +55,9 @@ class AbsenceController extends Controller
    
 
     public function absenceInput( $id){
-        //  if (!Session::has('user_logged_in')) {
-        //   return redirect()->route('login');
-        // }
+     
            $data = $this->courseService->getCourseWithStudentsbyID($id);
+            // dd($data);
            $teachers = $this->teacherService->getAllTeachers();
            $activeRoute = 'absences';
              return view('pages.absences.input', compact('data', 'teachers', 'activeRoute'));
@@ -66,7 +65,7 @@ class AbsenceController extends Controller
 
     public function store(Request $request)
 {
-
+    // dd($request->all());
     // Extract day from the date
     $date = $request->input('date');
     $day = date('l', strtotime($date));

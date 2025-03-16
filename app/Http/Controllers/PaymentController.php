@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Services\CourseService;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\AbsenceService;
 use App\Services\PaymentService;
 use App\Services\StudentService;
 use App\Services\StudentCourseService;
@@ -18,12 +19,14 @@ class PaymentController extends Controller
     protected $courseService;
     protected $studentCoursesService;
     protected $paymentService;
-    public function __construct(StudentService $studentService, CourseService $courseService, StudentCourseService $studentCoursesService, PaymentService $paymentService)
+    protected $absenceService;
+    public function __construct(StudentService $studentService, CourseService $courseService, StudentCourseService $studentCoursesService, PaymentService $paymentService, AbsenceService $absenceService)
     {
         $this->studentService = $studentService;
         $this->courseService = $courseService;
         $this->studentCoursesService = $studentCoursesService;
         $this->paymentService = $paymentService;
+        $this->absenceService = $absenceService;
     }
     /**
      * Display a listing of the resource.
@@ -52,20 +55,9 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-         // validate the request
-        //  dd(    $request->all());
-        $request->validate([
-            'student_id' => 'required|numeric',
-            'user_id' => 'required|numeric',
-            'course_id' => 'required|numeric',
-            'type' => 'required|string',
-            'payment_amount' => 'required|numeric',
-            'payment_month' => 'required',
-        ]);
-        // call the payment services
+      
         $this->paymentService->store($request->all());
-        // return the response
-        // return redirect()->route('/students');
+        return redirect()->route('students.show',$request->student_id )->with('success', 'Payment has been successfully added');
     }
 
     /**
@@ -111,8 +103,10 @@ class PaymentController extends Controller
 
     public function getStudentPaymentFromParents($id)
     {
-        $data = $this->paymentService->getStudentPayment($id);
-        return view('public.detail', compact('data'));
+        $payment = $this->paymentService->getStudentPayment($id);
+         $absenceHistory = $this->absenceService->getStudentAbsencesHistory($id);
+    
+        return view('public.detail', compact('payment', 'absenceHistory'));
     }
 
     public function formPembayaranPrint($id)
@@ -129,7 +123,17 @@ class PaymentController extends Controller
     }
 
     public function checkPaymentFromParents(){
+
         return view('public.search');
+    }
+
+    public function searchStudentFromParents(Request $request)
+    {
+        
+        $search = $request->input('search');
+        $students = $this->studentService->searchStudentByNisOrName($search);
+       
+        return view('public.search', compact('students', 'search'));
     }
 
     public function searchStudentByNisOrName(Request $request)

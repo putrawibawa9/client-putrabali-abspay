@@ -58,7 +58,7 @@
         <div>
             <label for="date" class="sr-only">Date</label>
             <div class="relative mt-1">
-                <input type="date" name="date" id="date"
+                <input required type="date" name="date" id="date"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
             </div>
         </div>
@@ -66,7 +66,7 @@
         <div>
             <label for="time" class="sr-only">Jam</label>
             <div class="relative mt-1">
-                <select name="time" id="time"
+                <select required name="time" id="time"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                     <option value="" disabled selected>Jam</option>
                     <option value="14:30">14:30</option>
@@ -81,7 +81,7 @@
         <div>
             <label for="teacher_id" class="sr-only">Guru</label>
             <div class="relative mt-1">
-                <select name="teacher_id" id="teacher_id"
+                <select required name="teacher_id" id="teacher_id"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                     <option value="" disabled selected>Guru</option>
                     @foreach ($teachers['data'] as $teacher)
@@ -124,7 +124,7 @@
                                     {{ $student['name'] }}
                                 </td>
                                 <td class="p-4 text-center">
-                                    <input type="hidden" name="attendances[{{ $index }}][students_courses_id]" value="{{ $student['id'] }}">
+                                    <input type="hidden" name="attendances[{{ $index }}][students_courses_id]" value="{{ $student['pivot']['id'] }}">
                                     <input id="radio-{{ $student['id'] }}-1" type="radio" value="present"
                                         name="attendances[{{ $index }}][status]"
                                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">

@@ -16,7 +16,7 @@ class TeacherService{
          $this->baseUrl = config('services.api.base_url');
     }
 
-         public function getAllTeachers($page)
+         public function getAllTeachers($page = '')
     {
         try {
             // dd($page);
