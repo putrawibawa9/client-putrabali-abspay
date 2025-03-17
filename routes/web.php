@@ -44,13 +44,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembayaranPrint'])->name('formPembayaran.print');
   
 
-    // absences
-    Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput']);
-    Route::get('/absences', [AbsenceController::class, 'allCourses'])->name('absences.index');
-    Route::get('/absence/courses/search', [AbsenceController::class, 'searchCourses'])->name('absence.courses.search');
-    Route::post('/absences/search', [AbsenceController::class, 'searchCourse'])->name('absences.search');
-    Route::get('/absences/{id}', [AbsenceController::class, 'absenceForm'])->name('absences.show');
-    Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absences.store');
+    
 
     // Meetings
     Route::get('/meetings/{id}', [MeetingController::class, 'getAbsencesByMeetingId']);
@@ -71,7 +65,18 @@ Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');
 
+
+// for student or parents
   Route::get('/public/check-status', [PaymentController::class, 'checkPaymentFromParents'])->name('check-status');
     Route::get('/public/check-status/search', [PaymentController::class, 'searchStudentFromParents'])->name('check-status.search');
     Route::get('/public/check-status/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
 
+
+
+    // for teachers
+    Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput']);
+    Route::get('/absences', [AbsenceController::class, 'allCourses'])->name('absences.index');
+    Route::get('/absence/courses/search', [AbsenceController::class, 'searchCourses'])->name('absence.courses.search');
+    Route::post('/absences/search', [AbsenceController::class, 'searchCourse'])->name('absences.search');
+    Route::get('/absences/{id}', [AbsenceController::class, 'absenceForm'])->name('absences.show');
+    Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absences.store');

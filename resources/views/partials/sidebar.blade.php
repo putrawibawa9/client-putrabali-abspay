@@ -16,17 +16,10 @@
                 </div>
 
                 <ul class="py-2 space-y-2">
-                    <li>
-                        <a href="/dashboard"
-                             class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'dashboard' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
-                            <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                            </svg>
-                            <span class="ml-3" sidebar-toggle-item>Recapitulation</span>
-                        </a>
-                    </li>
+                 
+                  
+                    @if (!Session::has('user_logged_in'))
+                        
                     <li>
                         <a href="/absences"
                             class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'absences' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
@@ -41,7 +34,20 @@
                             <span class="ml-3" sidebar-toggle-item>Absences</span>
                         </a>
                     </li>
-                    <li>
+
+                    @else
+                       <li>
+                        <a href="/dashboard"
+                             class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'dashboard' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
+                            <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                            </svg>
+                            <span class="ml-3" sidebar-toggle-item>Recapitulation</span>
+                        </a>
+                    </li>
+ <li>
                         <a href="/payments"
                             class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ $activeRoute == 'payments' ? 'bg-gray-100 dark:bg-gray-700' : '' }} dark:text-gray-200 dark:hover:bg-gray-700 ">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -84,8 +90,7 @@
                         </ul>
                     </li>
 
-
-             <li>
+                      <li>
                         <button type="button"
                             class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                             aria-controls="dropdown-crud-teacher" data-collapse-toggle="dropdown-crud-teacher">
@@ -112,8 +117,7 @@
                             </li>
                         </ul>
                     </li>
-
-                    <li>
+                     <li>
                         <button type="button"
                             class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                             aria-controls="dropdown-crud-courses" data-collapse-toggle="dropdown-crud-courses">
@@ -140,6 +144,12 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+
+                   
+           
+
+                   
                     
                  
                   

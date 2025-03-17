@@ -27,8 +27,8 @@ class StudentController extends Controller
      * Display a listing of the resource.
      */
    public function index( Request $request){
-    // $page = $request->query('page', 1);
-    // $courses = $this->courseService->getAllCourses($page);
+    //    return current user session
+     
         $page = $request->query('page', 1);
     $englishCourses = $this->courseService->getCourseBySubject('english');
     $mapelCourses = $this->courseService->getCourseBySubject('mapel');
