@@ -368,7 +368,7 @@
                                     Alias</label>
                                 <input type="text" name="alias" id="alias"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="6sra" required>
+                                    placeholder="Enter course's alias" required>
                             </div>
                         
                             <div class="col-span-6 sm:col-span-3">
@@ -376,7 +376,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Level</label>
                                 <input type="tel" name="level" id="level"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="6" required>
+                                    placeholder="Enter course's level" required>
                             </div>
 
                             <div class="col-span-6 sm:col-span-3">
@@ -384,7 +384,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
                                 <input type="text" name="section" id="section"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="A" required>
+                                    placeholder="Enter course's section" required>
                             </div>
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="position"
@@ -403,7 +403,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Rate</label>
                                 <input type="number" name="payment_rate" id="payment_rate"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="90000" required>
+                                    placeholder="Enter course's payment rate" required>
                             </div>
                        
                         </div>
@@ -455,7 +455,7 @@
                                     Alias</label>
                                 <input type="text" name="alias" id="name"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="6sra" required>
+                                    placeholder="Enter course's alias" required>
                             </div>
                         
                             <div class="col-span-6 sm:col-span-3">
@@ -463,7 +463,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Level</label>
                                 <input type="tel" name="level" id="whatsapp_number"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="6" required>
+                                    placeholder="Enter course's level" required>
                             </div>
 
                             <div class="col-span-6 sm:col-span-3">
@@ -471,7 +471,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
                                 <input type="text" name="section" id="whatsapp_number"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="A" required>
+                                    placeholder="Enter course's section" required>
                             </div>
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="position"
@@ -490,7 +490,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Rate</label>
                                 <input type="number" name="payment_rate" id="school"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="90000" required>
+                                    placeholder="Enter course's payment rate" required>
                             </div>
                        
                         </div>

@@ -64,11 +64,11 @@
         </div>
 
         <div>
-            <label for="time" class="sr-only">Jam</label>
+            <label for="time" class="sr-only">Time</label>
             <div class="relative mt-1">
                 <select required name="time" id="time"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    <option value="" disabled selected>Jam</option>
+                    <option value="" disabled selected>Time</option>
                     <option value="14:30">14:30</option>
                     <option value="15:50">15:50</option>
                     <option value="17:10">17:10</option>
@@ -79,11 +79,11 @@
         </div>
 
         <div>
-            <label for="teacher_id" class="sr-only">Guru</label>
+            <label for="teacher_id" class="sr-only">Teachers</label>
             <div class="relative mt-1">
                 <select required name="teacher_id" id="teacher_id"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    <option value="" disabled selected>Guru</option>
+                    <option value="" disabled selected>Teachers</option>
                     @foreach ($teachers['data'] as $teacher)
                         <option value="{{ $teacher['id'] }}">{{ $teacher['name'] }}</option>
                     @endforeach

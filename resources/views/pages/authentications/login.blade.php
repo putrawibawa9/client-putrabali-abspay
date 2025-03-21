@@ -32,7 +32,7 @@
     <div class="forms">
         <div class="form-content">
           <div class="login-form">
-            <div class="title">Login</div>
+            <div class="title">Login Admin</div>
           <form action="/login" method="POST">
             @csrf
             <div class="input-boxes">
@@ -46,33 +46,30 @@
               </div>
          
               <div class="button input-box">
-                <input type="submit" value="Sumbit">
+                <input type="submit" value="Submit">
               </div>
-              <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label></div>
+              <div class="text sign-up-text">Not an admin? <label for="flip">Login as teacher</label></div>
             </div>
         </form>
       </div>
         <div class="signup-form">
-          <div class="title">Register</div>
-        <form action="/register" method="POST">
+          <div class="title">Login Teacher</div>
+        <form action="{{ route('login.teacher') }}" method="POST">
           @csrf
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-user"></i>
-                <input type="text" name="name" placeholder="Enter your name" required>
+                <input type="text" name="username" placeholder="Enter your username" required>
               </div>
-              <div class="input-box">
-                <i class="fas fa-envelope"></i>
-                <input type="email" name="email" placeholder="Enter your email" required>
-              </div>
+             
               <div class="input-box">
                 <i class="fas fa-lock"></i>
                 <input type="password" name="password" placeholder="Enter your password" required>
               </div>
               <div class="button input-box">
-                <input type="submit" value="Sumbit">
+                <input type="submit" value="Submit">
               </div>
-              <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+              <div class="text sign-up-text">Not a teacher? <label for="flip">Login as admin</label></div>
             </div>
       </form>
     </div>

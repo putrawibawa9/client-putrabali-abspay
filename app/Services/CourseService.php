@@ -60,9 +60,10 @@ class CourseService
     }
      public function getCourseBySubject($subject)
     {
+    
         try {
             // Make the API request
-            $response = $this->client->request('GET', $this->baseUrl . "/courses?subject=$subject", [
+            $response = $this->client->request('GET', $this->baseUrl . "/courses-search?subject=$subject", [
                 'timeout' => 10, // Set a timeout for the request
                 'headers' => [
                     'Accept' => 'application/json',

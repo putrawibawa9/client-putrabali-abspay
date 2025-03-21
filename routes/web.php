@@ -62,6 +62,8 @@ Route::middleware([CheckUserSession::class])->group(function () {
 // authentications
 Route::get('/', [AuthenticationController::class, 'loginPage'])->name('login');
 Route::post('/login', [AuthenticationController::class, 'login']);
+Route::post('/login/teacher', [AuthenticationController::class, 'loginTeacher'])->name('login.teacher');
+
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');
 

@@ -66,17 +66,17 @@
                                 <input type="hidden" name="courses[{{ $index }}][course_id]" value="{{ $course['id'] }}">
 
                                 <div class="mt-6">
-                                    <label for="tanggal_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
+                                    <label for="tanggal_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
                                     <input type="date" id="tanggal_{{ $index }}" name="courses[{{ $index }}][payment_date]"
                                         class="bg-gray-50 border py-3 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [&::-webkit-calendar-picker-indicator]:dark:filter [&::-webkit-calendar-picker-indicator]:dark:invert"
                                         required />
                                 </div>
 
                                 <div class="mt-6">
-                                    <label for="tipe_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipe</label>
+                                    <label for="tipe_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
                                     <select id="tipe_{{ $index }}" name="courses[{{ $index }}][type]"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Tipe</option>
+                                        <option selected>Select Type</option>
                                         <option value="spp">Pembayaran SPP</option>
                                         <option value="modul">Modul || Rp.50.000</option>
                                         <option value="pendaftaran">Pendaftaran || Rp.50.000</option>
@@ -85,27 +85,27 @@
                                 </div>
 
                                 <div class="mt-6">
-                                    <label for="bulan_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan</label>
+                                    <label for="bulan_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Month</label>
                                     <select id="bulan_{{ $index }}" name="courses[{{ $index }}][payment_month]"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Bulan</option>
-                                        <option value="january">Januari</option>
-                                        <option value="february">Februari</option>
-                                        <option value="march">Maret</option>
+                                        <option selected>Select Month</option>
+                                        <option value="january">January</option>
+                                        <option value="february">February</option>
+                                        <option value="march">March</option>
                                         <option value="april">April</option>
-                                        <option value="may">Mei</option>
-                                        <option value="june">Juni</option>
-                                        <option value="july">Juli</option>
-                                        <option value="august">Agustus</option>
+                                        <option value="may">May</option>
+                                        <option value="june">June</option>
+                                        <option value="july">July</option>
+                                        <option value="august">August</option>
                                         <option value="september">September</option>
-                                        <option value="october">Oktober</option>
+                                        <option value="october">October</option>
                                         <option value="november">November</option>
-                                        <option value="december">Desember</option>
+                                        <option value="december">December</option>
                                     </select>
                                 </div>
 
                                 <div class="mt-6">
-                                    <label for="payment_amount_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Bayar</label>
+                                    <label for="payment_amount_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Amount</label>
                                     <div class="flex gap-12 mt-4">
                                         <div class="flex items-center me-4">
                                             <input id="inline-radio-normal_{{ $index }}" type="radio" value="{{ $course['payment_rate'] }}" name="courses[{{ $index }}][payment_amount]"
@@ -123,7 +123,7 @@
                                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                 <label for="inline-radio-diskon_{{ $index }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                                     <div class="flex flex-col">
-                                                        <span>Diskon</span>
+                                                        <span>Discount</span>
                                                         <span>{{ $course['pivot']['custom_payment_rate'] }}</span>
                                                     </div>
                                                 </label>
@@ -143,7 +143,7 @@
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M11 16h2m6.707-9.293-2.414-2.414A1 1 0 0 0 16.586 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.414a1 1 0 0 0-.293-.707ZM16 20v-6a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v6h8ZM9 4h6v3a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V4Z" />
                         </svg>
-                        <span>Simpan</span>
+                        <span>Save</span>
                     </button>
                 </div>
             </form>

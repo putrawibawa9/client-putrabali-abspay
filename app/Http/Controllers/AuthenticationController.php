@@ -29,13 +29,13 @@ class AuthenticationController extends Controller
 
       if ($response = $this->authenticationService->login($credentials) ) {
            // After successful login
-        // Set the user as logged in
+        // Set the user as log`ged in
         $user = $response['user'];
         // dd($user);
         Session::put('user_logged_in', true);
         Session::put('user', $user);
         // dd('login success');
-        return redirect()->route('students.index');
+        return redirect()->route('dashboard');
       } 
        
         return redirect()->route('login')->with('error', 'Invalid login credentials');
@@ -62,6 +62,20 @@ class AuthenticationController extends Controller
 
     // Redirect to login page
     return redirect()->route('login');
+}
+
+
+public function loginTeacher(Request $request){
+   
+
+    if ($response = $this->authenticationService->loginTeacher($request->all()) ) {
+      
+     
+      return redirect()->route('absences.index');
+    } 
+    
+      return redirect()->route('login')->with('error', 'Invalid login credentials');
+
 }
 
 }

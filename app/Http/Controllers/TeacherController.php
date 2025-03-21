@@ -78,6 +78,7 @@ class TeacherController extends Controller
     // dd($id);
     // implement the logic to compare the old data and new data
     $oldData = $this->teacherService->getTeacherByID($id);
+
     $newData = $request->all();
 
     // Initialize an array to store only the changed data

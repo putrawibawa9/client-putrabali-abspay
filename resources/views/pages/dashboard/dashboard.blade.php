@@ -40,57 +40,57 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8 items-end">
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Siswa</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Students</h3>
 
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
-                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Siswa Daftar Bulan Ini
+                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Enrolled Student This Month
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_enroll_students_in_given_month'] }} Siswa</h5>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_enroll_students_in_given_month'] }} Students</h5>
                         </div>
                     </div>
 
                     <div>
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
-                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Total Siswa Keseluruhan
+                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Total Students
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_students'] }} Siswa</h5>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_students'] }} Students</h5>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8 items-end">
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Guru</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Teachers</h3>
 
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
-                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Total Guru
+                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Total Teachers
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_teachers'] }} Guru</h5>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_teachers'] }} Teachers</h5>
                         </div>
                     </div>
 
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Kelas</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Courses</h3>
 
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
-                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Total Kelas Aktif
+                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Active Courses
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_active_courses'] }} Kelas</h5>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_active_courses'] }} Courses</h5>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 mt-8 items-end">
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Pembayaran</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Payments</h3>
 
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
@@ -162,7 +162,7 @@
                                 </ul>
                             </div> --}}
 
-                            <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
+                            <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total This Month :</p>
                             <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Rp. 15.000.000</h5>
                         </div>
                     </div>
@@ -172,8 +172,7 @@
                     <div>
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
-                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Persentase Siswa yang
-                                Sudah Membayar Bulan Ini
+                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4"> Students who have paid this month
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
                             <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">15 %</h5>
@@ -183,7 +182,7 @@
                     <div>
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
-                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Jumlah Siswa yang Belum Melunasi Pembayaran
+                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Students who have not paid this month
                                 Bulan ini
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
@@ -194,12 +193,11 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8 items-end">
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Absensi</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Absences</h3>
 
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
-                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Persentase Siswa yang
-                                Hadir Bulan Ini
+                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Students who are absent this month
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
                             <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">15 %</h5>
@@ -207,15 +205,15 @@
                     </div>
 
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Pertemuan</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Meetings</h3>
 
                         <div
                             class="p-12 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700 text-center">
-                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Total Jumlah Pertemuan
+                            <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Meetings This Month
                                 Bulan Ini
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_meetings_in_given_month'] }} Pertemuan</h5>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $recapitulations['total_meetings_in_given_month'] }} Meetings</h5>
                         </div>
                     </div>
                 </div>

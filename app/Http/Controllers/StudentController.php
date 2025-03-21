@@ -32,7 +32,7 @@ class StudentController extends Controller
         $page = $request->query('page', 1);
     $englishCourses = $this->courseService->getCourseBySubject('english');
     $mapelCourses = $this->courseService->getCourseBySubject('mapel');
-    // dd($mapelCourses);
+    
          $students = $this->studentService->getAllStudents($page);
         //  dd($students);
          $activeRoute = 'students';
