@@ -19,6 +19,8 @@ Route::middleware([CheckUserSession::class])->group(function () {
 
     // students
     Route::resource('/students', StudentController::class);
+    Route::resource('/student-course', StudentCourseController::class)->only(['destroy', 'store']);
+    
     Route::get('/students-search', [StudentController::class, 'searchStudentByNisOrName'])->name('students.search');
     Route::get('/teachers-search', [TeacherController::class, 'searchTeacherByNameOrAlias'])->name('teachers.search');
     Route::get('/student/payment/{id}', [PaymentController::class, 'getStudentPayment'])->name('student.payment');

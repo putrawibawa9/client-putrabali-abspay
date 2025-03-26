@@ -195,8 +195,9 @@ public function searchStudentByNisOrName(Request $request)
     $page = $request->query('page', 1);
 
     $search = $request->input('search');
-  $englishCourses = $this->courseService->getAllCourses('english');
-    $mapelCourses = $this->courseService->getAllCourses('mapel');
+    $englishCourses = $this->courseService->getCourseBySubject('english');
+    $mapelCourses = $this->courseService->getCourseBySubject('mapel');
+    
     $students = $this->studentService->searchStudentByNisOrName($search, $page);
     $search = $request->input('search');
     // also return the search value to be used in the view

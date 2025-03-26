@@ -55,9 +55,29 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-      
-        $this->paymentService->store($request->all());
-        return redirect()->route('students.show',$request->student_id )->with('success', 'Payment has been successfully added');
+        // dd($request->all());
+         $studentId = $request->input('student_id');
+    $courses = $request->input('courses');
+
+      // Filter out courses with invalid payment data
+    $validPayments = array_filter($courses, function ($course) {
+        return !empty($course['payment_date']);
+    });
+// dd($validPayments);
+    // put studentId and vaildPayments in a variable
+    $data = [
+        'student_id' => $studentId,
+        'courses' => $validPayments,   
+    ];
+
+    $error = $this->paymentService->store($data);
+
+    
+      if($error['message']){
+          return redirect()->back()->with('error', $error['message']);
+      }else{
+          return redirect()->route('students.show',$request->student_id )->with('success', 'Payment has been successfully added');
+      }
     }
 
     /**

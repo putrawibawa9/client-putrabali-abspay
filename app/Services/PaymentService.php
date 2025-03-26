@@ -63,7 +63,8 @@ class PaymentService
 
     public function store($data)
     {
-  
+        
+
         try {
             // Make the API request
             $response = $this->client->request('POST', $this->baseUrl . '/payments', [
@@ -78,23 +79,19 @@ class PaymentService
             if ($response->getStatusCode() === 201) {
                 // Decode the JSON response into an associative array
                 $data = json_decode($response->getBody()->getContents(), true);
-                    
-                return $data;
+               
             }
-
-            // Handle unexpected status codes
-            return [
-                'error' => 'Unexpected response status code: ' . $response->getStatusCode(),
-            ];
         } catch (RequestException $e) {
-            // Log the error details
-            Log::error('API Request Failed: ' . $e->getMessage());
-dd($e->getMessage());
-            // Return a user-friendly error message
-            return [
-                'error' =>  $e->getMessage(),
-            ];
-        } catch (\Exception $e) {
+            
+    if ($e->hasResponse()) {
+        $response = $e->getResponse();
+        $body = json_decode($response->getBody()->getContents(), true);
+dd($body);
+      return $body;
+    }
+
+    return response()->json(['message' => 'An error occurred while processing the request.'], 500);
+}catch (\Exception $e) {
             // Log unexpected errors
             Log::error('Unexpected Error: ' . $e->getMessage());
 dd($e->getMessage());

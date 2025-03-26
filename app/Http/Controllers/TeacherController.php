@@ -80,6 +80,8 @@ class TeacherController extends Controller
     $oldData = $this->teacherService->getTeacherByID($id);
 
     $newData = $request->all();
+    // hash the password
+    $newData['password'] = bcrypt($newData['password']);
 
     // Initialize an array to store only the changed data
     $updatedData = [];

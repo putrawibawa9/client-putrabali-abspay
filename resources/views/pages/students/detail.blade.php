@@ -1,4 +1,4 @@
-{{-- @dd($absenceHistory) --}}
+{{-- @dd($student) --}}
 @extends('layouts.main')
 
 @section('content')
@@ -46,41 +46,53 @@
                         </li>
                     </ol>
                 </nav>
-                <div class="bg-gray-200 dark:bg-gray-700 w-full py-6 px-8 flex items-center rounded">
-                    
+               <div class="bg-gray-200 dark:bg-gray-700 w-full py-6 px-8 flex items-center rounded">
+    <div class="flex-1 flex flex-col justify-center ml-5">
+        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">{{ $student['name'] }}</h1>
 
-                    <div class="flex-1 flex flex-col justify-center ml-5">
-                        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">{{ $student['name'] }}</h1>
-
-                        <ul class="flex items-center gap-6">
-                            @forelse ( $student['active_courses'] as $row)
-                                  <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd"
-                                        d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
-                                        clip-rule="evenodd" />
-                                </svg>
-
-                                <span>{{ $row['subject'] }} - {{ $row['alias'] }}</span>
-                            </li>
-                            @empty
-                                  <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
-        <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-            viewBox="0 0 24 24">
-            <path fill-rule="evenodd"
-                d="M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20ZM8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"
-                clip-rule="evenodd" />
-        </svg>
-        <span>No active courses available</span>
-                            @endforelse
-                        </ul>
-                        
-                    </div>
-                    
+        <ul class="flex items-center gap-6">
+            @forelse ($student['active_courses'] as $row)
+            <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                <div class="flex flex-col">
+                    <span>{{ $row['subject'] }} - {{ $row['alias'] }}</span>
+                    <!-- Drop Out Button -->
+                    <form action="{{ route('student-course.destroy', $row['pivot']['id']) }}" method="POST" onsubmit="return confirm('Are you sure you want to drop out from this course?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 transition-all dark:focus:ring-offset-gray-800">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                            <span>Drop Out</span>
+                        </button>
+                    </form>
                 </div>
+            </li>
+            @empty
+            <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                        d="M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20ZM8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span>No active courses available</span>
+            </li>
+            @endforelse
+        </ul>
+    </div>
+    
+    <!-- Enroll to New Class Button -->
+    <div class="ml-auto">
+        <a class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition-all dark:focus:ring-offset-gray-800">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            <span>Enroll to a New Class</span>
+        </a>
+    </div>
+</div>
             </div>
             <div class="sm:flex flex-col sm:flex-1 min-h-full">
                 <div class="flex items-center justify-between w-full mt-12">
@@ -111,6 +123,7 @@
                             <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-400">
                                 {{ $row['course']['subject'] }} - {{ $row['course']['alias'] }}
                             </h3>
+                          
                         </div>
                         <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
                             <thead class="bg-gray-100 dark:bg-gray-700">

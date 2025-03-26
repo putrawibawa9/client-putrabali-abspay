@@ -162,8 +162,11 @@
                                 </ul>
                             </div> --}}
 
-                            <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total This Month :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Rp. 15.000.000</h5>
+                            <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total Revenue This Month :</p>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+    Rp. {{ number_format($recapitulations['total_revenue'], 0, ',', '.') }}
+</h5>
+
                         </div>
                     </div>
                 </div>
@@ -175,7 +178,7 @@
                             <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4"> Students who have paid this month
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">15 %</h5>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{$recapitulations['total_students_who_paid']}}%</h5>
                         </div>
                     </div>
 
@@ -186,7 +189,7 @@
                                 Bulan ini
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">15 %</h5>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{$recapitulations['total_students_who_have_not_paid']}}%</h5>
                         </div>
                     </div>
                 </div>
@@ -200,7 +203,7 @@
                             <p class="font-normal text-base text-gray-700 dark:text-gray-400 mb-4">Students who are absent this month
                             </p>
                             <p class="font-semibold text-xl text-gray-900 dark:text-white mb-6">Total :</p>
-                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">15 %</h5>
+                            <h5 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{$recapitulations['total_students_who_are_absent']}}%</h5>
                         </div>
                     </div>
 
