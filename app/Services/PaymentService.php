@@ -64,7 +64,7 @@ class PaymentService
     public function store($data)
     {
         
-
+dd($data);
         try {
             // Make the API request
             $response = $this->client->request('POST', $this->baseUrl . '/payments', [
@@ -86,7 +86,7 @@ class PaymentService
     if ($e->hasResponse()) {
         $response = $e->getResponse();
         $body = json_decode($response->getBody()->getContents(), true);
-dd($body);
+
       return $body;
     }
 
@@ -94,7 +94,7 @@ dd($body);
 }catch (\Exception $e) {
             // Log unexpected errors
             Log::error('Unexpected Error: ' . $e->getMessage());
-dd($e->getMessage());
+
             // Return a generic error message
             return [
                 'error' =>  $e->getMessage(),

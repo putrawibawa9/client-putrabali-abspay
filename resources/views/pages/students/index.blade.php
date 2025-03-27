@@ -63,6 +63,7 @@
     @endif
 </div>
                 </div>
+
                 <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
                     <button type="button" data-modal-toggle="add-user-modal"
                         class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
@@ -74,7 +75,6 @@
                         </svg>
                         Add Student
                     </button>
-                 
                 </div>
             </div>
         </div>

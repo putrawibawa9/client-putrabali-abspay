@@ -38,4 +38,10 @@ public function destroy($id){
     return redirect()->back()->with('success', "Student has been dropped out from the course");
 }
 
+public function store(Request $request){
+
+    $this->studentCourseService->enroll($request->all());
+    return redirect()->back()->with('success', "Student has enroll enrolled to the course");
+
+}
 }

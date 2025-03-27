@@ -118,12 +118,14 @@ class StudentController extends Controller
      * Display the specified resource.
      */
    public function show($id){
+     $englishCourses = $this->courseService->getCourseBySubject('english');
+    $mapelCourses = $this->courseService->getCourseBySubject('mapel');
         // use student service to get student by id
         $student = $this->studentService->getStudentById($id);
         $payment = $this->paymentService->getStudentPayment($id);
         $absenceHistory = $this->absenceService->getStudentAbsencesHistory($id);
         $activeRoute = 'students';
-        return view('pages.students.detail', compact('student', 'payment', 'absenceHistory', 'activeRoute'));
+        return view('pages.students.detail', compact('student', 'payment', 'absenceHistory', 'activeRoute', 'englishCourses', 'mapelCourses'));
    }
 
     /**
