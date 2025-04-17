@@ -72,8 +72,8 @@ class PaymentController extends Controller
 
     $error = $this->paymentService->store($data);
 
-    
-      if($error['message']){
+    // dd($error);
+      if(isset($error['message'])){
           return redirect()->back()->with('error', $error['message']);
       }else{
           return redirect()->route('students.show',$request->student_id )->with('success', 'Payment has been successfully added');

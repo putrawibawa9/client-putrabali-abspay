@@ -105,7 +105,7 @@ class StudentController extends Controller
 
     // Call the service to add a new student
     $result = $this->studentService->addNewStudent($payload);
-    
+   
     // Check if the result is an integer (student ID)
     if (is_int($result)) {
         return redirect("/students/$result")->with('success', 'Student added successfully');

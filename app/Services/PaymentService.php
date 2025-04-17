@@ -64,7 +64,7 @@ class PaymentService
     public function store($data)
     {
         
-dd($data);
+
         try {
             // Make the API request
             $response = $this->client->request('POST', $this->baseUrl . '/payments', [
