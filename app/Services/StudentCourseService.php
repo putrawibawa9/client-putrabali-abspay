@@ -156,7 +156,7 @@ class StudentCourseService
     }
 
     public function enroll($data){
-        
+        // dd($data);
         try {
             // Make the API request
             $response = $this->client->request('POST', $this->baseUrl . '/enrollments', [
@@ -172,7 +172,7 @@ class StudentCourseService
                 // Decode the JSON response into an associative array
                 $data = json_decode($response->getBody()->getContents(), true);
                 
-                return $data;
+              
             }
 
             // Handle unexpected status codes
@@ -182,11 +182,10 @@ class StudentCourseService
         } catch (RequestException $e) {
             // Log the error details
             Log::error('API Request Failed: ' . $e->getMessage());
-
-            // Return a user-friendly error message
-            return [
-                'error' => 'Failed to fetch students. Please try again later.',
-            ];
+        
+               $error = json_decode($e->getResponse()->getBody()->getContents(), true);
+             return $error;
+           
         } catch (\Exception $e) {
             // Log unexpected errors
             Log::error('Unexpected Error: ' . $e->getMessage());

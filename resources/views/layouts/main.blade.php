@@ -5,7 +5,11 @@
             text: "{{ Session::get('error') ?? ($error ?? '') }}",
             icon: 'error',
             confirmButtonText: 'OK',
-            confirmButtonColor: 'rgb(37, 99, 235)',
+            customClass: {
+                confirmButton: 'custom-decline-button'
+            },
+            buttonsStyling: true,
+            confirmButtonColor: '#dc3545'
         })
     </script>
 @endif
@@ -47,6 +51,16 @@
         }
     </script>
 
+    <style>
+        .custom-confirm-button {
+            background-color: #1d4ed8;
+        }
+
+        .custom-decline-button {
+            background-color: #dc3545;
+        }
+    </style>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -85,6 +99,10 @@
                 text: "{{ Session::get('error') ?? ($error ?? '') }}",
                 icon: 'error',
                 confirmButtonText: 'OK',
+                 customClass: {
+                    confirmButton: 'custom-confirm-button'
+                },
+                buttonsStyling: true,
                 confirmButtonColor: 'rgb(37, 99, 235)',
             })
         </script>
@@ -92,14 +110,17 @@
     @if (Session::has('success'))
         {{-- Untuk !empty dapat dihilangkan nanti saat redirect page sudah diimplementasikan (untuk menghindari bug alert) --}}
         {{-- Contoh @if (Session::has('success')) --}}
-
         <script>
             Swal.fire({
                 title: 'Success!',
                 text: "{{ Session::get('success') ?? ($success ?? '') }}",
                 icon: 'success',
                 confirmButtonText: 'OK',
-                confirmButtonColor: 'rgb(37, 99, 235)',
+                customClass: {
+                    confirmButton: 'custom-confirm-button'
+                },
+                buttonsStyling: true,
+                confirmButtonColor: '#1d4ed8' // Change this to your desired color
             })
         </script>
     @endif

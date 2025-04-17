@@ -40,8 +40,13 @@ public function destroy($id){
 
 public function store(Request $request){
  
-    $this->studentCourseService->enroll($request->all());
-    return redirect()->back()->with('success', "Student has enroll enrolled to the course");
+    $error =$this->studentCourseService->enroll($request->all());
+    // dd($error);
+    if(isset($error['errors'])){
+        return redirect()->back()->with('error', $error['message']);
+    }else{
+        return redirect()->back()->with('success', "Student has enroll enrolled to the course");
+    }
 
 }
 }
