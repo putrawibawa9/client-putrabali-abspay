@@ -26,6 +26,52 @@
                 </nav>
             </div>
 
+
+              <!-- Filter Form -->
+                <div class="mt-8">
+                    <form method="GET" action="/recapitulations" class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="col-span-1">
+                                <label for="month" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Month</label>
+                                <select id="month" name="month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+
+                                   <option value="">-- Select Month --</option>
+                                    <option value="january" {{ request('month') == 'january' ? 'selected' : '' }}>January</option>
+                                    <option value="february" {{ request('month') == 'february' ? 'selected' : '' }}>February</option>
+                                    <option value="march" {{ request('month') == 'march' ? 'selected' : '' }}>March</option>
+                                    <option value="april" {{ request('month') == 'april' ? 'selected' : '' }}>April</option>
+                                    <option value="may" {{ request('month') == 'may' ? 'selected' : '' }}>May</option>
+                                    <option value="june" {{ request('month') == 'june' ? 'selected' : '' }}>June</option>
+                                    <option value="july" {{ request('month') == 'july' ? 'selected' : '' }}>July</option>
+                                    <option value="august" {{ request('month') == 'august' ? 'selected' : '' }}>August</option>
+                                    <option value="september" {{ request('month') == 'september' ? 'selected' : '' }}>September</option>
+                                    <option value="october" {{ request('month') == 'october' ? 'selected' : '' }}>October</option>
+                                    <option value="november" {{ request('month') == 'november' ? 'selected' : '' }}>November</option>
+                                    <option value="december" {{ request('month') == 'december' ? 'selected' : '' }}>December</option>
+
+                                </select>
+                            </div>
+                            
+                            <div class="col-span-1">
+                                <label for="year" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Year</label>
+                                <select id="year" name="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                 <option value="">-- Select Year --</option>
+@for ($y = 2023; $y <= 2029; $y++)
+    <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
+@endfor
+
+                                </select>
+                            </div>
+                            
+                            <div class="col-span-1 flex items-end">
+                                <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
             <div class="flex flex-col min-h-full">
                 <!-- Students Section -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
@@ -69,47 +115,7 @@
                     </div>
                 </div>
 
-                <!-- Filter Form -->
-                {{-- <div class="mt-8">
-                    <form method="GET" action="" class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="col-span-1">
-                                <label for="month" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Month</label>
-                                <select id="month" name="month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">-- Select Month --</option>
-                                    <option value="january">January</option>
-                                    <option value="february">February</option>
-                                    <option value="march">March</option>
-                                    <option value="april">April</option>
-                                    <option value="may">May</option>
-                                    <option value="june">June</option>
-                                    <option value="july">July</option>
-                                    <option value="august">August</option>
-                                    <option value="september">September</option>
-                                    <option value="october">October</option>
-                                    <option value="november">November</option>
-                                    <option value="december">December</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-span-1">
-                                <label for="year" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Year</label>
-                                <select id="year" name="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">-- Select Year --</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-span-1 flex items-end">
-                                <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
-                                    Search
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div> --}}
+              
 
                 <!-- Payments Section -->
                 <div class="mt-8">

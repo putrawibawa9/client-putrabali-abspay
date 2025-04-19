@@ -16,10 +16,11 @@ class RecapitulationService
          $this->baseUrl = config('services.api.base_url');
     }
 
-    public function getRecapitulations(){
+    public function getRecapitulations($month = null, $year = null){
         try {
+            // dd($month, $year);
             // Make the API request
-            $response = $this->client->request('GET', $this->baseUrl . "/recapitulations", [
+            $response = $this->client->request('GET', $this->baseUrl . "/recapitulations?month=$month&year=$year", [
                 'timeout' => 10,
                  // Set a timeout for the request
             ]);

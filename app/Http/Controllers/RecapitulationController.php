@@ -23,7 +23,10 @@ class RecapitulationController extends Controller
    
     public function index(Request $request)
 {
-    $recapitulations = $this->recapitulationService->getRecapitulations();
+    // dd($request->all());
+    $month = $request->input('month');
+    $year = $request->input('year');
+    $recapitulations = $this->recapitulationService->getRecapitulations($month, $year);
     // dd($recapitulations);
    $currentMonth = Carbon::now()->format('F'); // Full month name
    $activeRoute ='dashboard';
