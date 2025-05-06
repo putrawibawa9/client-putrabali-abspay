@@ -61,8 +61,8 @@
                             class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                             id="user-menu-button-2" aria-expanded="false" data-dropdown-toggle="dropdown-2">
                             <span class="sr-only">Open user menu</span>
-                            <img class="w-8 h-8 rounded-full"
-                                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                          <img src="{{ asset('img/admin.png') }}"
+                        class="mr-3 w-10 h-10 rounded-full" alt="Flowbite Logo" />
                         </button>
                     </div>
 
@@ -70,23 +70,14 @@
                         id="dropdown-2">
                         <div class="px-4 py-3" role="none">
                             <p class="text-base font-bold text-gray-900 dark:text-white" role="none">
-                                Putra Wibawa
+                              {{ session('user')['name'] ?? 'Teacher' }}
                             </p>
                             <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                putrawibawa@gmail.com
+                                {{ session('user')['username'] ?? 'Admin' }}
                             </p>
                         </div>
                         <ul class="py-1" role="none">
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    role="menuitem">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    role="menuitem">Profile</a>
-                            </li>
+                          
                             <li>
                                 <a href="/logout"
                                     class="block px-4 py-2 text-sm text-red-500 hover:bg-gray-100 dark:text-red-500 dark:hover:bg-gray-600 dark:hover:text-white"

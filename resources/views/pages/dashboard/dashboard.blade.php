@@ -1,3 +1,4 @@
+
 @extends('layouts.main')
 
 @section('content')
@@ -74,25 +75,64 @@
 
             <div class="flex flex-col min-h-full">
                 <!-- Students Section -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Students</h3>
-                        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-                            <p class="text-gray-700 dark:text-gray-400 mb-3">Enrolled Student This Month</p>
-                            <p class="font-semibold text-gray-900 dark:text-white mb-2">Total:</p>
-                            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $recapitulations['total_enroll_students_in_given_month'] }} Students</h5>
-                        </div>
-                    </div>
+             <!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-                    <div >
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3 lg:opacity-0">Total</h3>
-                        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-                            <p class="text-gray-700 dark:text-gray-400 mb-3">Total Students</p>
-                            <p class="font-semibold text-gray-900 dark:text-white mb-2">Total:</p>
-                            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $recapitulations['total_students'] }} Students</h5>
-                        </div>
-                    </div>
-                </div>
+<div class="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-8">
+    <div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Student Statistics</h3>
+        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
+            <canvas id="studentChart" height="120"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('studentChart').getContext('2d');
+    const studentChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Enrolled This Month', 'Total Students'],
+            datasets: [{
+                label: 'Students',
+                data: [
+                    {{ $recapitulations['total_enroll_students_in_given_month'] }},
+                    {{ $recapitulations['total_students'] }}
+                ],
+                backgroundColor: [
+                    'rgba(59, 130, 246, 0.5)', // blue-500
+                    'rgba(16, 185, 129, 0.5)'  // green-500
+                ],
+                borderColor: [
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(16, 185, 129, 1)'
+                ],
+                borderWidth: 1,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.parsed.y} Students`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 10 }
+                }
+            }
+        }
+    });
+</script>
+
 
                 <!-- Teachers & Courses Section -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
@@ -129,24 +169,65 @@
                     </div>
                 </div>
 
-                <!-- Payment Status Section -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
-                    <div>
-                        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-                            <p class="text-gray-700 dark:text-gray-400 mb-3">Students who have paid this month</p>
-                            <p class="font-semibold text-gray-900 dark:text-white mb-2">Total:</p>
-                            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">{{$recapitulations['total_students_who_paid']}}%</h5>
-                        </div>
-                    </div>
+              <div class="mt-6">
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Payment Status This Month</h3>
+    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
+        <div class="flex flex-col items-center justify-center">
+            <!-- Smaller canvas container -->
+            <div class="w-40 h-40">
+                <canvas id="paymentStatusChart"></canvas>
+            </div>
 
-                    <div>
-                        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-                            <p class="text-gray-700 dark:text-gray-400 mb-3">Students who have not paid this month</p>
-                            <p class="font-semibold text-gray-900 dark:text-white mb-2">Total:</p>
-                            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">{{$recapitulations['total_students_who_have_not_paid']}}%</h5>
-                        </div>
-                    </div>
-                </div>
+            <div class="mt-4 space-y-1 text-sm">
+                <p class="text-gray-700 dark:text-gray-400">
+                    <span class="inline-block w-3 h-3 rounded-full bg-green-500 mr-2"></span>
+                    Paid: <strong class="text-gray-900 dark:text-white">{{ $recapitulations['total_students_who_paid'] }}%</strong>
+                </p>
+                <p class="text-gray-700 dark:text-gray-400">
+                    <span class="inline-block w-3 h-3 rounded-full bg-red-500 mr-2"></span>
+                    Not Paid: <strong class="text-gray-900 dark:text-white">{{ $recapitulations['total_students_who_have_not_paid'] }}%</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const paymentStatusCtx = document.getElementById('paymentStatusChart').getContext('2d');
+    new Chart(paymentStatusCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Paid', 'Not Paid'],
+            datasets: [{
+                data: [
+                    {{ $recapitulations['total_students_who_paid'] }},
+                    {{ $recapitulations['total_students_who_have_not_paid'] }}
+                ],
+                backgroundColor: [
+                    'rgba(34, 197, 94, 0.8)',  // green-500
+                    'rgba(239, 68, 68, 0.8)'   // red-500
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            cutout: '70%',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.raw}%`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
 
                 <!-- Absences & Meetings Section -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8 mb-6">

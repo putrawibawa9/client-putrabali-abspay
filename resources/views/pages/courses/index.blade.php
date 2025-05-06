@@ -401,7 +401,7 @@
                           <div class="col-span-6">
                                 <label for="school"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Rate</label>
-                                <input type="number" name="payment_rate" id="payment_rate"
+                                <input type="number" min="0" name="payment_rate" id="payment_rate"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Enter course's payment rate" required>
                             </div>
@@ -488,7 +488,7 @@
                           <div class="col-span-6">
                                 <label for="school"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Rate</label>
-                                <input type="number" name="payment_rate" id="school"
+                                <input type="number" min="0" name="payment_rate" id="school"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Enter course's payment rate" required>
                             </div>

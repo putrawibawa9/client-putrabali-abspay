@@ -1,8 +1,9 @@
+@dd($user)
 @extends('layouts.main')
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>Revenue Report</h1>
+        <h1>Revenue dasd</h1>
     </section>
 
     <section class="content">

@@ -1,3 +1,4 @@
+{{-- @dd(session('user')) --}}
 <aside id="sidebar"
     class="fixed top-0 left-0 z-20 flex-col flex-shrink-0 hidden w-64 h-full pt-20 lg:pt-16 font-normal duration-75 lg:flex transition-width"
     aria-label="Sidebar">
@@ -10,8 +11,8 @@
                         class="mr-3 w-10 h-10 rounded-full" alt="Flowbite Logo" />
 
                     <div class="flex flex-col justify-center gap-1">
-                        <h3 class="font-bold text-lg">Putra Wibawa</h3>
-                        <p class="text-sm text-gray-400">Admin</p>
+                        <h3 class="font-bold text-lg">{{ session('user')['name'] ?? 'Teacher' }}</h3>
+                       
                     </div>
                 </div>
 

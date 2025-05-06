@@ -69,8 +69,15 @@ public function loginTeacher(Request $request){
    
 
     if ($response = $this->authenticationService->loginTeacher($request->all()) ) {
-      
-     
+      // dd($response);
+       $teacher_name = $response['teacher'];
+      //  dd($teacher_name);
+        $teacher_id =  $response['teacher']['id'];
+        // dd($teacher_name);
+        Session::put('teacher_logged_in', true);
+        Session::put('user', $teacher_name);
+        Session::put('teacher_id', $teacher_id);
+        // dd('login success');
       return redirect()->route('absences.index');
     } 
     
