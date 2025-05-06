@@ -107,6 +107,7 @@
                                 <div class="mt-6">
                                     <label for="payment_amount_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Amount</label>
                                     <div class="flex gap-12 mt-4">
+                                        @if ( is_null($course['pivot']['custom_payment_rate']) )
                                         <div class="flex items-center me-4">
                                             <input id="inline-radio-normal_{{ $index }}" type="radio" value="{{ $course['payment_rate'] }}" name="courses[{{ $index }}][payment_amount]"
                                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -117,6 +118,8 @@
                                                 </div>
                                             </label>
                                         </div>
+                                        @endif
+                                        {{-- @dd($course['pivot']['custom_payment_rate']) --}}
                                         @isset($course['pivot']['custom_payment_rate'])
                                             <div class="flex items-center me-4">
                                                 <input id="inline-radio-diskon_{{ $index }}" type="radio" value="{{ $course['pivot']['custom_payment_rate'] }}" name="courses[{{ $index }}][payment_amount]"
