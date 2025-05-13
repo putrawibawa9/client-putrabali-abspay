@@ -150,7 +150,36 @@
                     </button>
                 </div>
             </form>
-            
+            <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const courseCount = {{ count($student['active_courses']) }};
+
+        for (let i = 0; i < courseCount; i++) {
+            const typeSelect = document.getElementById(`tipe_${i}`);
+            const monthSelect = document.getElementById(`bulan_${i}`);
+            const paymentRadios = document.getElementsByName(`courses[${i}][payment_amount]`);
+
+            const toggleFields = () => {
+                const isSPP = typeSelect.value === 'spp';
+
+                // Enable/disable month dropdown
+                monthSelect.disabled = !isSPP;
+
+                // Enable/disable payment amount radios
+                paymentRadios.forEach(radio => {
+                    radio.disabled = !isSPP;
+                });
+            };
+
+            // Initial state on page load
+            toggleFields();
+
+            // Update on change
+            typeSelect.addEventListener('change', toggleFields);
+        }
+    });
+</script>
+
         </div>
     </div>
 @endsection
