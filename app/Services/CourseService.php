@@ -63,7 +63,7 @@ class CourseService
     
         try {
             // Make the API request
-            $response = $this->client->request('GET', $this->baseUrl . "/courses-search?subject=$subject", [
+            $response = $this->client->request('GET', $this->baseUrl . "/courses-filter?subject=$subject", [
                 'timeout' => 10, // Set a timeout for the request
                 'headers' => [
                     'Accept' => 'application/json',

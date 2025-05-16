@@ -74,6 +74,10 @@
                         <thead class="bg-gray-100 dark:bg-gray-700">
                             <tr>
                                 <th scope="col"
+                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                Actions
+                            </th>
+                                <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                     NIS
                                 </th>
@@ -97,10 +101,7 @@
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                     Enroll Date
                                 </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Actions
-                                </th>
+                              
                             </tr>
                         </thead>
 
@@ -109,6 +110,24 @@
                             @foreach ($students['data'] as $student)                             
                            
                                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">    
+                                    <td class="p-4 space-x-2 whitespace-nowrap">
+
+                                        <a href="{{ route('payments.show', $student['id']) }}"
+ class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+ <svg class="w-4 h-4 mr-2" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+     <path stroke="currentColor" stroke-width="2"
+         d="M3 10c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v4c0 1.1-.9 2-2 2H5a2 2 0 0 1-2-2v-4Zm2 0h14v4H5v-4Zm3 2a2 2 0 1 0 4 0 2 2 0 0 0-4 0Zm7 0h3" />
+ </svg>
+ Create Payment
+</a>
+
+
+                                    
+
+                                 
+
+                                 </td>
+
                                     <td
                                         class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
                                         {{ $student['nis'] }}
@@ -129,24 +148,7 @@
                                     <td class="p-4 text-base font-normal text-gray-900 whitespace-nowrap dark:text-white">
                                      {{ $student['enroll_date'] }}
                                     </td>
-                                    <td class="p-4 space-x-2 whitespace-nowrap">
-
-                                           <a href="{{ route('payments.show', $student['id']) }}"
-    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-    <svg class="w-4 h-4 mr-2" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-width="2"
-            d="M3 10c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v4c0 1.1-.9 2-2 2H5a2 2 0 0 1-2-2v-4Zm2 0h14v4H5v-4Zm3 2a2 2 0 1 0 4 0 2 2 0 0 0-4 0Zm7 0h3" />
-    </svg>
-    Create Payment
-</a>
-
-
-                                       
-
-                                    
-
-                                    </td>
-                                </tr>
+                                                                    </tr>
                       
                              @endforeach
                            

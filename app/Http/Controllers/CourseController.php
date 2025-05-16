@@ -19,6 +19,7 @@ class CourseController extends Controller
 
      public function search(Request $request)
     {
+    
         $page = $request->query('page', 1);
         $courses = $this->courseService->search($request->all(), $page);
       
@@ -31,6 +32,7 @@ class CourseController extends Controller
         
         $isSearch = true;
         $activeRoute = 'courses';
+       
         return view('pages.courses.index', compact('courses', 'activeRoute', 'level', 'section', 'subject', 'isSearch'));
 
     }

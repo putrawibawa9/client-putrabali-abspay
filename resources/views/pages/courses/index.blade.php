@@ -80,9 +80,13 @@
                             <div>
                            
                                 <div class="relative mt-1">
-                                    <input type="subject" name="subject" id="student-search" value="{{ $subject ?? '' }}"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Subject">
+                                    <select name="subject" id="student-search"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option value="">Select Subject</option>
+                                    <option value="mapel" {{ (old('subject', $subject ?? '') == 'mapel') ? 'selected' : '' }}>Mapel</option>
+                                    <option value="english" {{ (old('subject', $subject ?? '') == 'english') ? 'selected' : '' }}>English</option>
+                                </select>
+                                
                                 </div>
                             </div>
                            
@@ -461,7 +465,7 @@
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="whatsapp_number"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Level</label>
-                                <input type="tel" name="level" id="whatsapp_number"
+                                <input type="number" name="level" id="whatsapp_number"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Enter course's level" required>
                             </div>

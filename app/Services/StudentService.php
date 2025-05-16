@@ -132,7 +132,7 @@ class StudentService
 
     public function updateStudent($id, $data)
     {
-
+        
        try{
           $data['_method'] = 'PUT'; // Add the method override
          $response = $this->client->post("$this->baseUrl/students/{$id}", [
