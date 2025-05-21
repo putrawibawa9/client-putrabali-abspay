@@ -196,5 +196,48 @@ class StudentCourseService
             ];
         }
     }
+
+    public function changeCustomPaymentRate($id,$data){
+dd($id);
+        try {
+            // Make the API request
+            $response = $this->client->request('POST', $this->baseUrl . "/students-courses/change-custom-payment-rate/$id", [
+                'timeout' => 10, // Set a timeout for the request
+                'headers' => [
+                    'Accept' => 'application/json',
+                ],
+                'json' => [
+                    'custom_payment_rate' => $data['custom_payment_rate'],
+                ],
+            ]);
+
+            // Check if the response status code is 200 (OK)
+            if ($response->getStatusCode() === 200) {
+                // Decode the JSON response into an associative array
+                $data = json_decode($response->getBody()->getContents(), true);
+                
+            }
+
+            // Handle unexpected status codes
+            return [
+                'error' => 'Unexpected response status code: ' . $response->getStatusCode(),
+            ];
+        } catch (RequestException $e) {
+            // Log the error details
+            Log::error('API Request Failed: ' . $e->getMessage());
+        
+               $error = json_decode($e->getResponse()->getBody()->getContents(), true);
+             return $error;
+           
+        } catch (\Exception $e) {
+            // Log unexpected errors
+            Log::error('Unexpected Error: ' . $e->getMessage());
+
+            // Return a generic error message
+            return [
+                'error' => 'An unexpected error occurred. Please try again later.',
+            ];
+        }
+    }
    
 }

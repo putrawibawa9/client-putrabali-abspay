@@ -136,6 +136,8 @@
     {{-- Script untuk poplate data course di fitur update --}}
     <script src="{{ asset('js/course.js') }}"></script>
 
+    
+
     @stack('js')
 
     {{-- script untuk absensi --}}

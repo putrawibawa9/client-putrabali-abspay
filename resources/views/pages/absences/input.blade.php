@@ -78,20 +78,10 @@
             </div>
         </div>
 
-        <div>
-            <label for="teacher_id" class="sr-only">Teachers</label>
-            <div class="relative mt-1">
-                <select required name="teacher_id" id="teacher_id"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    <option value="" disabled selected>Teachers</option>
-                    @foreach ($teachers['data'] as $teacher)
-                        <option value="{{ $teacher['id'] }}">{{ $teacher['name'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
+       
     </div>
-
+{{-- get teacher id on cookie --}}
+    <input type="hidden" name="teacher_id" value="{{ session('teacher_id') }}" >
     <input type="hidden" name="course_id" value="{{ $data['id'] }}">
 
     <div class="overflow-x-auto p-4 lg:p-0 bg-white dark:bg-gray-800">

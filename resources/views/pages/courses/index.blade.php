@@ -195,12 +195,23 @@
     </svg>
     Edit Course
 </button>
-                                        <a href="/courses/{{ $course['id'] }}"
+
+<a href="/courses/{{ $course['id'] }}"
+class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900">
+    <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z" />
+    </svg>
+    Meetings
+</a>
+
+
+
+                                        <a href="{{ route('courses.students',$course['id'] ) }}"
     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
     <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
         <path d="M13.5 8.5a3.5 3.5 0 1 0-7 0 3.5 3.5 0 0 0 7 0ZM20.5 10.5a3 3 0 1 0-6 0 3 3 0 0 0 6 0ZM12 12.5c-3.25 0-6.5 1.5-6.5 4.5v1c0 .55.45 1 1 1h11c.55 0 1-.45 1-1v-1c0-3-3.25-4.5-6.5-4.5ZM20.5 16c-1.5 0-2.8.4-3.6 1h5.2c.55 0 1-.45 1-1v-.5c0-.83-1.97-1.5-2.6-1.5Z" />
     </svg>
-    Meetings
+    Students
 </a>
 
 

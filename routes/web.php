@@ -19,7 +19,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
 
     // students
     Route::resource('/students', StudentController::class);
-    Route::resource('/student-course', StudentCourseController::class)->only(['destroy', 'store']);
+    Route::resource('/student-course', StudentCourseController::class)->only(['destroy', 'store', 'update']);
     
     Route::get('/students-search', [StudentController::class, 'searchStudentByNisOrName'])->name('students.search');
     Route::get('/teachers-search', [TeacherController::class, 'searchTeacherByNameOrAlias'])->name('teachers.search');
@@ -39,12 +39,13 @@ Route::middleware([CheckUserSession::class])->group(function () {
     // courses
     Route::resource('/courses', CourseController::class);
     Route::get('/courses-search', [CourseController::class, 'search'])->name('courses.search');
+    Route::get('/courses/{id}/students', [CourseController::class, 'showCourseWithStudents'])->name('courses.students');
 
     // payments
     Route::resource('/payments', PaymentController::class);
     Route::get('/payments-search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
     Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembayaranPrint'])->name('formPembayaran.print');
-  
+   
 
     
 

@@ -38,6 +38,18 @@ public function destroy($id){
     return redirect()->back()->with('success', "Student has been dropped out from the course");
 }
 
+public function update(Request $request, $id){
+
+
+    $error = $this->studentCourseService->changeCustomPaymentRate($id, $request->all());
+   
+    if(isset($error['errors'])){
+        return redirect()->back()->with('error', $error['message']);
+    }else{
+        return redirect()->back()->with('success', "Student has been updated");
+    }
+}
+
 public function store(Request $request){
  
     $error =$this->studentCourseService->enroll($request->all());
