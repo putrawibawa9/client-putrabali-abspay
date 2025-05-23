@@ -40,7 +40,7 @@ public function destroy($id){
 
 public function update(Request $request, $id){
 
-
+dd($request->all());
     $error = $this->studentCourseService->changeCustomPaymentRate($id, $request->all());
    
     if(isset($error['errors'])){

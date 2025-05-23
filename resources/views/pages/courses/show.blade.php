@@ -59,6 +59,9 @@
                     </ol>
                 </nav>
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Kelas {{ $students['alias'] }}</h1>
+                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Jumlah siswa = {{ $students['studentCount'] }} Siswa</p>
+
+
             </div>
            
         
