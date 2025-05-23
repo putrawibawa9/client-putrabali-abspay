@@ -338,7 +338,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form method="POST">
+                <form method="POST" onsubmit="return confirm('Apakah anda yakin untuk mengganti detail siswa?');">
                     @csrf
                     @method('PUT')
                     <div class="p-6 space-y-6">
@@ -425,7 +425,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-           <form action="/students" method="POST">
+           <form action="/students" method="POST" onsubmit="return confirm('Apakah anda yakin untuk menambah murid baru?');">
     @csrf
     <div class="p-6 space-y-6">
         <div class="grid grid-cols-6 gap-6">

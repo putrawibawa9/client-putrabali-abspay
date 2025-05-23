@@ -59,7 +59,8 @@
 
                         <div class="ml-auto">
                             <button type="button"
-                            data-id="{{ $row['pivot']['id'] }}"
+                            data-student_id ="{{ $student['id'] }}"
+                            data-student_course_id="{{ $row['pivot']['id'] }}"
                             data-alias="{{ $row['alias'] }}"
                             data-custom_payment_rate="{{ $row['pivot']['custom_payment_rate'] }}"
                                            class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition-all dark:focus:ring-offset-gray-800"
@@ -125,7 +126,7 @@
                 <div class="flex items-center justify-between w-full mt-12">
                     <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Payment</h2>
 
-                    <a href="{{ route('formPembayaran.print', $student['id']) }}"
+                    <a target="_blank" href="{{ route('formPembayaran.print', $student['id']) }}"
                         class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-primary-700 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 transition-all dark:focus:ring-offset-gray-800">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -328,7 +329,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-          <form action="{{ route('student-course.store') }}" method="POST">
+          <form action="{{ route('student-course.store') }}" method="POST" onsubmit="return confirm('Apakah anda yakin untuk menambah kelas baru?');">
 
     @csrf
     <input type="hidden" name="student_id" value="{{ $student['id'] }}">
@@ -392,7 +393,7 @@
     </div>
 
 
-    <!-- Enroll Modal -->
+    <!-- Change Custom rate modal -->
     <div class="fixed bg-gray-200/50 dark:bg-gray-800/50 left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto top-4 md:inset-0 h-modal sm:h-full"
         id="edit-modal">
         <div class="relative w-full h-full max-w-2xl px-4 md:h-auto">
@@ -414,17 +415,17 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-          <form action="{{ route('student-course.update', $student['id'])}}" method="POST">
+          <form id="editForm" action="{{ route('student-course.update', $student['id'])}}" method="POST" onsubmit="return confirm('Apakah anda yakin untuk mengganti potongan harga?');">
             @method('PUT')
     @csrf
-    <input type="hidden" name="student_course_id" value="id">
+    <input type="hidden" name="student_course_id" id="student_course_id" value="id">
     <div class="p-6 space-y-6">
         <div class="grid grid-cols-6 gap-6">
             
          
             <div class="col-span-6 sm:col-span-3">
                 <label for="english_payment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Old Discount Rate</label>
-                <input type="number" disabled value="custom_payment_rate" id="english_payment" 
+                <input type="number" disabled value="" id="old_custom_payment_rate" 
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="No Discount Rate">
             </div>
@@ -451,6 +452,7 @@
             type="reset">Reset Form</button>
     </div>
 </form>
+{{-- modal end --}}
 
 
             </div>

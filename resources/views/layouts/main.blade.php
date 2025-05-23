@@ -92,6 +92,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+  
     @if (Session::has('error'))
         <script>
             Swal.fire({
@@ -135,6 +137,8 @@
 
     {{-- Script untuk poplate data course di fitur update --}}
     <script src="{{ asset('js/course.js') }}"></script>
+
+    <script src="{{ asset('js/change-custom-payment-rate.js') }}"></script>
 
     
 

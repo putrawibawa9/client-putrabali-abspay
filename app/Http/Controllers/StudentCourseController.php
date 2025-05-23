@@ -39,10 +39,10 @@ public function destroy($id){
 }
 
 public function update(Request $request, $id){
-
-dd($request->all());
+  
+    $id = $request->student_course_id;
     $error = $this->studentCourseService->changeCustomPaymentRate($id, $request->all());
-   
+ 
     if(isset($error['errors'])){
         return redirect()->back()->with('error', $error['message']);
     }else{

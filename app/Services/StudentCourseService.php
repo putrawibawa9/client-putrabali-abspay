@@ -198,8 +198,8 @@ class StudentCourseService
     }
 
     public function changeCustomPaymentRate($id,$data){
-dd($id);
         try {
+            // dd($data);
             // Make the API request
             $response = $this->client->request('POST', $this->baseUrl . "/students-courses/change-custom-payment-rate/$id", [
                 'timeout' => 10, // Set a timeout for the request

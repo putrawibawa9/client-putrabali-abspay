@@ -51,7 +51,7 @@
             </div>
 
             {{-- Combined Form --}}
-            <form action="{{ route('payments.store') }}" method="POST">
+            <form action="{{ route('payments.store') }}" method="POST" onsubmit="return confirm('Apakah pembayaran sudah benar?');" >
                 @csrf
                 <input type="hidden" name="student_id" value="{{ $student['id'] }}">
 

@@ -311,7 +311,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form method="POST">
+                <form method="POST" onsubmit="return confirm('Apakah anda yakin untuk mengubah detail guru?');">
                     @csrf
                     @method('PUT')
                     <div class="p-6 space-y-6">
@@ -388,7 +388,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="/teachers" method="POST">
+                <form action="/teachers" method="POST" onsubmit="return confirm('Apakah anda yakin untuk menambah  guru?');">
                     @csrf
                     <div class="p-6 space-y-6">
                         <div class="grid grid-cols-6 gap-6">
@@ -476,7 +476,7 @@
     <!-- Buttons container -->
     <div class="flex justify-center space-x-4">
         <!-- Confirm delete button -->
-        <form id="delete-teacher-form" method="POST">
+        <form id="delete-teacher-form" method="POST" >
             @csrf
             @method('DELETE')
             <button type="submit"

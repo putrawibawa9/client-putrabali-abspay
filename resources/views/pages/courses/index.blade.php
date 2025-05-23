@@ -372,7 +372,7 @@ class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-w
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form method="POST">
+                <form method="POST" onsubmit="return confirm('Apakah anda yakin untuk mengubah detail kursus?');">
                     @csrf
                     @method('PUT')
                         <div class="p-6 space-y-6">
@@ -460,7 +460,7 @@ class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-w
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="/courses" method="POST">
+                <form action="/courses" method="POST" onsubmit="return confirm('Apakah anda yakin untuk menambah kursus?');">
                     @csrf
                     <div class="p-6 space-y-6">
                         <div class="grid grid-cols-6 gap-6">
