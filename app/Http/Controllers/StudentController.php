@@ -140,40 +140,41 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   public function update(Request $request, $id)
-{
-    // implement the logic to compare the old data and new data
-    $oldData = $this->studentService->getStudentById($id);
-    $newData = $request->all();
-
-    // Initialize an array to store only the changed data
-    $updatedData = [];
-
-    // Compare each field in the new data with the old data
-    foreach ($newData as $key => $value) {
-        // Skip if the key is not present in the old data
-        if (!array_key_exists($key, $oldData)) {
-            continue;
+    public function update(Request $request, $id)
+    {
+        $oldData = $this->studentService->getStudentById($id);
+        $newData = $request->all();
+    
+        // Initialize an array to store only the changed data
+        $updatedData = [];
+    
+        // Compare each field in the new data with the old data
+        foreach ($newData as $key => $value) {
+            // Skip if the key is not present in the old data
+            if (!array_key_exists($key, $oldData)) {
+                continue;
+            }
+    
+            // Compare the values and only add the changed ones
+            if ($value != $oldData[$key]) {
+                $updatedData[$key] = $value;
+            }
         }
-
-        // Compare the values and only add the changed ones
-        if ($value != $oldData[$key]) {
-            $updatedData[$key] = $value;
+    
+        // If no fields were changed
+        if (empty($updatedData)) {
+            return redirect("/students")->with('success', 'Tidak ada data yang berubah.');
         }
-    }
-
-
-     // Proceed with the next process only if there are changes
-    if (!empty($updatedData)) {
-       $result = $this->studentService->updateStudent($id, $updatedData);
-    }
-
+    
+        // Proceed with the update only if there are changes
+        $result = $this->studentService->updateStudent($id, $updatedData);
+    
         if (is_int($result)) {
-        return redirect("/students/$result")->with('success', 'Student changed successfully');
-    }else{
-        return redirect('/students')->with('error', $result['message']);
+            return redirect("/students/$result")->with('success', 'Sukses merubah data siswa');
+        } else {
+            return redirect('/students')->with('error', $result['message']);
+        }
     }
-}
 
     /**
      * Remove the specified resource from storage.

@@ -35,7 +35,7 @@
                         </li>
                     </ol>
                 </nav>
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All Teacher</h1>
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Semua Guru</h1>
             </div>
             <div class="sm:flex sm:flex-1 min-h-full">
                 <div
@@ -46,7 +46,7 @@
     <div class="relative mt-1">
         <input type="text" name="search" id="teacher-search" value="{{ $search ?? '' }}"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            placeholder="Search for Teacher">
+            placeholder="Cari Guru">
         <button type="submit" 
             class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 bg-transparent hover:text-primary-500 text-sm focus:outline-none">
             Search
@@ -73,7 +73,7 @@
                                 d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                 clip-rule="evenodd"></path>
                         </svg>
-                        Add Teacher
+                        Tambah Guru
                     </button>
                  
                 </div>
@@ -126,6 +126,12 @@
                                     </td>
                                    
                                     <td class="p-4 space-x-2 whitespace-nowrap">
+
+                                        <a href="/recap-teacher-absences?teacher_id={{ $teacher['id'] }}"
+                                        class="inline-block px-4 py-2 bg-primary-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-200">
+                                        Riwayat Mengajar
+                                     </a>
+                                     
                                         <button type="button" data-modal-toggle="edit-user-modal-teacher"
                                             data-id="{{ $teacher['id'] }}"
                                           data-name="{{ $teacher['name'] }}"
@@ -142,7 +148,7 @@
                                                     d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
                                                     clip-rule="evenodd"></path>
                                             </svg>
-                                            Edit Teacher
+                                            Edit 
                                         </button>
 
                                     <button type="button" data-id="{{ $teacher['id'] }}" data-modal-toggle="delete-user-modal"
@@ -151,7 +157,7 @@
                                 <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                     d="M21 5H3M10 11v6M14 11v6M5 7h14l-1 14H6L5 7Zm3 0V4h8v3" />
                             </svg>
-                            Delete
+                            Hapus
                         </button>
 
                                     </td>

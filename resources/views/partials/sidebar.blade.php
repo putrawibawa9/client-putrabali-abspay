@@ -35,6 +35,20 @@
                             <span class="ml-3" sidebar-toggle-item>Absences</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="/recap-teacher-absences?teacher_id={{ session('user')['id'] ?? '' }}"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'recap-teacher-absences' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" 
+                                    d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm1-13a1 1 0 1 0-2 0v4.414l-2.293 2.293a1 1 0 0 0 1.414 1.414L12 11.414l2.293 2.293a1 1 0 0 0 1.414-1.414L13 9.414V7Z" 
+                                    clip-rule="evenodd"/>
+                            </svg>
+                            <span class="ml-3" sidebar-toggle-item>Riwayat Mengajar</span>
+                        </a>
+                    </li>
+                      
 
                     @else
                        <li>
@@ -102,7 +116,7 @@
                                     d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Teachers</span>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Guru</span>
                             <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -113,10 +127,11 @@
                         <ul id="dropdown-crud-teacher" class="space-y-2 py-2 ">
                             <li>
                                 <a href="/teachers"
-                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'teachers' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">All
-                                    Teachers</a>
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'teachers' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
+                                    Semua Guru</a>
                             </li>
                         </ul>
+                      
                     </li>
                      <li>
                         <button type="button"

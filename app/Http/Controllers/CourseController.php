@@ -105,41 +105,41 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-     public function update(Request $request, $id)
-{
-    // dd($id);
-    // implement the logic to compare the old data and new data
-    $oldData = $this->courseService->getCourseWithStudentsbyID($id);
- 
-    $newData = $request->all();
-
-    // Initialize an array to store only the changed data
-    $updatedData = [];
-
-    // Compare each field in the new data with the old data
-    foreach ($newData as $key => $value) {
-        // Skip if the key is not present in the old data
-        if (!array_key_exists($key, $oldData)) {
-            continue;
+    public function update(Request $request, $id)
+    {
+        $oldData = $this->courseService->getCourseWithStudentsbyID($id);
+        $newData = $request->all();
+    
+        // Initialize an array to store only the changed data
+        $updatedData = [];
+    
+        // Compare each field in the new data with the old data
+        foreach ($newData as $key => $value) {
+            // Skip if the key is not present in the old data
+            if (!array_key_exists($key, $oldData)) {
+                continue;
+            }
+    
+            // Compare the values and only add the changed ones
+            if ($value != $oldData[$key]) {
+                $updatedData[$key] = $value;
+            }
         }
-
-        // Compare the values and only add the changed ones
-        if ($value != $oldData[$key]) {
-            $updatedData[$key] = $value;
+    
+        // If no fields were changed
+        if (empty($updatedData)) {
+            return redirect("/courses")->with('success', 'Tidak ada perubahan data.');
         }
-    }
-
-    // dd($updatedData);
-     // Proceed with the next process only if there are changes
-    if (!empty($updatedData)) {
-       $error = $this->courseService->updateCourse($id, $updatedData);
-    }
+    
+        // Proceed with the update only if there are changes
+        $error = $this->courseService->updateCourse($id, $updatedData);
     
         if ($error) {
             return redirect('/courses')->with('error', $error['message']);
         }
+        
         return redirect('/courses')->with('success', 'Course updated successfully');
-}
+    }
 
     /**
      * Remove the specified resource from storage.

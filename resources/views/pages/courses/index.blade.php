@@ -175,7 +175,8 @@
                                         {{ $course['subject'] }}
                                     </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $course['payment_rate'] }}
+                                      {{-- make it in rupiah --}}
+                                       Rp. {{ number_format($course['payment_rate'], 0, ',', '.') }}
                                     </td>
 
                                     <td class="p-4 space-x-2 whitespace-nowrap">

@@ -114,7 +114,8 @@
                                             <label for="inline-radio-normal_{{ $index }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                                 <div class="flex flex-col">
                                                     <span>Normal</span>
-                                                    <span>{{ $course['payment_rate'] }}</span>
+                                                    
+                                                    <span>  Rp. {{ number_format($course['payment_rate'], 0, ',', '.') }}</span>
                                                 </div>
                                             </label>
                                         </div>
@@ -127,7 +128,8 @@
                                                 <label for="inline-radio-diskon_{{ $index }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                                     <div class="flex flex-col">
                                                         <span>Discount</span>
-                                                        <span>{{ $course['pivot']['custom_payment_rate'] }}</span>
+                                                        <span>Rp. {{ number_format($course['pivot']['custom_payment_rate'], 0, ',', '.') }}</span>
+                                                      
                                                     </div>
                                                 </label>
                                             </div>

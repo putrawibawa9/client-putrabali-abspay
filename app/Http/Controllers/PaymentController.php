@@ -56,6 +56,12 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+    //   if request has 'payment_month' value, return error
+    foreach ($request->courses as $course) {
+        if (empty($course['payment_month']) || $course['payment_month'] === 'Select Month') {
+            return redirect()->back()->with('error', 'Tolong masukan bulan pembayaran');
+        }
+    }
          $studentId = $request->input('student_id');
     $courses = $request->input('courses');
 
@@ -125,7 +131,7 @@ class PaymentController extends Controller
     {
         $payment = $this->paymentService->getStudentPayment($id);
          $absenceHistory = $this->absenceService->getStudentAbsencesHistory($id);
-    
+    // dd($payment);
         return view('public.detail', compact('payment', 'absenceHistory'));
     }
 
@@ -152,7 +158,7 @@ class PaymentController extends Controller
         
         $search = $request->input('search');
         $students = $this->studentService->searchStudentByNisOrName($search);
-       
+      
         return view('public.search', compact('students', 'search'));
     }
 

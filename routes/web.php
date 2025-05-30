@@ -35,6 +35,8 @@ Route::middleware([CheckUserSession::class])->group(function () {
 
     // teachers
     Route::resource('/teachers', TeacherController::class);
+   
+
 
     // courses
     Route::resource('/courses', CourseController::class);
@@ -85,3 +87,4 @@ Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout
     Route::post('/absences/search', [AbsenceController::class, 'searchCourse'])->name('absences.search');
     Route::get('/absences/{id}', [AbsenceController::class, 'absenceForm'])->name('absences.show');
     Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absences.store');
+    Route::get('/recap-teacher-absences', [TeacherController::class, 'recapTeacherAbsences'])->name('recap-teacher-absences');

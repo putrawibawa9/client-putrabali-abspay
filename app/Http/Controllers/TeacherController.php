@@ -131,4 +131,13 @@ class TeacherController extends Controller
        return view('pages.teachers.index', compact('teachers', 'search', 'activeRoute'));
 
 }
+
+public function recapTeacherAbsences(Request $request){
+
+    $activeRoute = 'recap-teacher-absences';
+ 
+   $teacher = $this->teacherService->recapTeacherAbsences($request->teacher_id);
+
+    return view('pages.recap-teacher-absences.show', compact('activeRoute', 'teacher'));
+}
 }
