@@ -133,11 +133,18 @@ class TeacherController extends Controller
 }
 
 public function recapTeacherAbsences(Request $request){
-
+// dd($request->all());
     $activeRoute = 'recap-teacher-absences';
- 
-   $teacher = $this->teacherService->recapTeacherAbsences($request->teacher_id);
 
-    return view('pages.recap-teacher-absences.show', compact('activeRoute', 'teacher'));
+   $teacher = $this->teacherService->recapTeacherAbsences([
+        'id' => $request->input('id'),
+        'month' => $request->input('month'),
+    ]);
+    $filterMonth = $request->input('month');
+  
+    if (isset($teacher['error'])) {
+        return redirect()->back()->with('error', $teacher['error']);
+    }
+    return view('pages.recap-teacher-absences.show', compact('activeRoute', 'teacher', 'filterMonth'));
 }
 }

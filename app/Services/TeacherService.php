@@ -223,45 +223,29 @@ class TeacherService{
         }
     }
 
-    public function recapTeacherAbsences($id){
+    public function recapTeacherAbsences(array $data)
+    {
+        // dd($data);
         try {
-            // dd($id);
-            // Make the API request
-            $response = $this->client->request('GET', $this->baseUrl . "/teachers/recap-teacher-absences/$id", [
-                'timeout' => 10, // Set a timeout for the request
+            $response = $this->client->request('GET', $this->baseUrl . "/recap-teacher-absences", [
                 'headers' => [
                     'Accept' => 'application/json',
                 ],
+                'query' => [
+                    'id' => $data['id'],
+                    'month' => $data['month'],
+                ],
+                'timeout' => 10,
             ]);
-
-            // Check if the response status code is 200 (OK)
-            if ($response->getStatusCode() === 200) {
-                // Decode the JSON response into an associative array
-                $data = json_decode($response->getBody()->getContents(), true);
-                
-                return $data;
-            }
-
-            // Handle unexpected status codes
-            return [
-                'error' => 'Unexpected response status code: ' . $response->getStatusCode(),
-            ];
+    
+            return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
-            // Log the error details
-            Log::error('API Request Failed: ' . $e->getMessage());
-
-            // Return a user-friendly error message
-            return [
-                'error' => 'Failed to fetch students. Please try again later.',
-            ];
+           
+            return ['error' => $e->getMessage()];
         } catch (\Exception $e) {
-            // Log unexpected errors
             Log::error('Unexpected Error: ' . $e->getMessage());
-
-            // Return a generic error message
-            return [
-                'error' => 'An unexpected error occurred. Please try again later.',
-            ];
+            return ['error' => 'An unexpected error occurred.'];
         }
     }
+    
 }

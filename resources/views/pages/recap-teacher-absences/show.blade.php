@@ -9,13 +9,40 @@
             <h2 class="text-3xl font-bold text-white">Riwayat Mengajar</h2>
             <p class="mt-2 text-lg text-gray-300"><span class="font-semibold text-blue-400">{{ $teacher['teacher']['name'] }}</span></p>
        
-            <div class="text-white mt-3 inline-flex items-center px-4 py-2 bg-gray-800 border border-gray-700 rounded-md font-semibold text-blue-400">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                {{-- bulan dan tahun --}}
-                {{ $teacher['month'] }}  {{ $teacher['year'] }}
+            <div class="text-white mt-3 px-4 py-2 bg-gray-800 border border-gray-700 rounded-md font-semibold text-blue-400">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="hidden sm:inline">Select Month:</span>
+                    </div>
+                    
+                    <form action="/recap-teacher-absences" method="GET" class="flex flex-col sm:flex-row gap-2 w-full">
+                        <input type="hidden" name="id" value="{{ $teacher['teacher']['id'] }}">
+                        
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
+                            <label for="month" class="sm:hidden text-sm">Select Month:</label>
+                            <input 
+                                type="month" 
+                                name="month" 
+                                id="month" 
+                                value="{{ request('month', now()->format('Y-m')) }}"
+                                required
+                                class="bg-gray-100 text-black dark:bg-gray-700 dark:text-white dark:border-gray-600 border rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" 
+                            >
+                            <button 
+                                type="submit" 
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-1.5 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
+            
+            
         </div>
 
         <!-- Absence Card -->
@@ -54,7 +81,7 @@
                             </th>
                         </tr>
                     </thead>
-                    @foreach ($teacher['teacher']['meetings'] as $meeting)
+                    @forelse ($teacher['teacher']['meetings'] as $meeting)
                         
                  
                     <tbody class="bg-gray-800 divide-y divide-gray-700">
@@ -76,7 +103,15 @@
                             </td>
                         </tr>
                     </tbody>
-                    @endforeach
+                    @empty
+                        <tbody class="bg-gray-800 divide-y divide-gray-700">
+                            <tr>
+                                <td colspan="5" class="px-4 py-4 text-center text-sm text-gray-400">
+                                    Tidak ada mengajar pada bulan ini.
+                                </td>
+                            </tr>
+                        </tbody>
+                    @endforelse
                 </table>
             </div>
         </div>
