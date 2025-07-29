@@ -105,37 +105,60 @@
                                 </div>
 
                                 <div class="mt-6">
-                                    <label for="payment_amount_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Amount</label>
-                                    <div class="flex gap-12 mt-4">
-                                        @if ( is_null($course['pivot']['custom_payment_rate']) )
-                                        <div class="flex items-center me-4">
-                                            <input id="inline-radio-normal_{{ $index }}" type="radio" value="{{ $course['payment_rate'] }}" name="courses[{{ $index }}][payment_amount]"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="inline-radio-normal_{{ $index }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                <div class="flex flex-col">
-                                                    <span>Normal</span>
-                                                    
-                                                    <span>  Rp. {{ number_format($course['payment_rate'], 0, ',', '.') }}</span>
-                                                </div>
-                                            </label>
-                                        </div>
-                                        @endif
-                                        {{-- @dd($course['pivot']['custom_payment_rate']) --}}
-                                        @isset($course['pivot']['custom_payment_rate'])
-                                            <div class="flex items-center me-4">
-                                                <input id="inline-radio-diskon_{{ $index }}" type="radio" value="{{ $course['pivot']['custom_payment_rate'] }}" name="courses[{{ $index }}][payment_amount]"
-                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="inline-radio-diskon_{{ $index }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                    <label for="payment_amount_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Payment Amount
+                                    </label>
+                                
+                                    <div class="flex flex-col gap-4 mt-4 md:flex-row md:gap-12">
+                                        {{-- Normal Course Rate --}}
+                                      
+                                            <div class="flex items-start gap-2">
+                                                <input
+                                                    id="inline-radio-normal_{{ $index }}"
+                                                    type="checkbox"
+                                                    name="courses[{{ $index }}][payment_amount]"
+                                                    value="{{ $course['payment_rate'] }}"
+                                                    class="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                                                >
+                                                <label for="inline-radio-normal_{{ $index }}" class="text-sm font-medium text-gray-900 dark:text-gray-300">
                                                     <div class="flex flex-col">
-                                                        <span>Discount</span>
-                                                        <span>Rp. {{ number_format($course['pivot']['custom_payment_rate'], 0, ',', '.') }}</span>
-                                                      
+                                                        <span>Harga Normal Kursus</span>
+                                                        <span>Rp. {{ number_format($course['payment_rate'], 0, ',', '.') }}</span>
                                                     </div>
                                                 </label>
                                             </div>
-                                        @endisset
+                                     
+                                
+                                        {{-- Custom Discounted Rate --}}
+                                        <div class="flex items-start gap-2">
+                                            <input
+                                                id="inline-radio-diskon_{{ $index }}"
+                                                type="checkbox"
+                                                name="courses[{{ $index }}][payment_amount]"
+                                                value="{{ $course['pivot']['custom_payment_rate'] }}"
+                                                class="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                                            >
+                                            <label for="inline-radio-diskon_{{ $index }}" class="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                <div class="flex flex-col">
+                                                    <span>Diskon Perorangan</span>
+                                                    <span>Rp. {{ number_format($course['pivot']['custom_payment_rate'], 0, ',', '.') }}</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                
+                                        {{-- Manual Payment Input --}}
+                                        <div class="flex flex-col gap-1 w-full md:w-64">
+                                            <label class="text-sm text-gray-700 dark:text-gray-300">Input jumlah pembayaran manual</label>
+                                            <input
+                                                type="number"
+                                               name="courses[{{ $index }}][payment_amount]"
+                                                placeholder="Masukkan jumlah pembayaran"
+                                                class="w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         @endforeach
                     </div>
@@ -153,34 +176,92 @@
                 </div>
             </form>
             <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const courseCount = {{ count($student['active_courses']) }};
-
-        for (let i = 0; i < courseCount; i++) {
-            const typeSelect = document.getElementById(`tipe_${i}`);
-            const monthSelect = document.getElementById(`bulan_${i}`);
-            const paymentRadios = document.getElementsByName(`courses[${i}][payment_amount]`);
-
-            const toggleFields = () => {
-                const isSPP = typeSelect.value === 'spp';
-
-                // Enable/disable month dropdown
-                monthSelect.disabled = !isSPP;
-
-                // Enable/disable payment amount radios
-                paymentRadios.forEach(radio => {
-                    radio.disabled = !isSPP;
+                document.addEventListener('DOMContentLoaded', function () {
+                    const courseCount = {{ count($student['active_courses']) }};
+            
+                    for (let i = 0; i < courseCount; i++) {
+                        const typeSelect = document.getElementById(`tipe_${i}`);
+                        const monthSelect = document.getElementById(`bulan_${i}`);
+                        const paymentForm = document.querySelector('form');
+                        
+                        // Get all payment amount inputs for this course
+                        const normalPriceInput = document.querySelector(`input[name="courses[${i}][payment_amount]"][value="{{ $course['payment_rate'] }}"]`);
+                        const discountPriceInput = document.querySelector(`input[name="courses[${i}][payment_amount]"][value="{{ $course['pivot']['custom_payment_rate'] }}"]`);
+                        const manualInput = document.querySelector(`input[name="courses[${i}][payment_amount]"][type="number"]`);
+            
+                        // Function to toggle fields based on payment type
+                        const toggleFields = () => {
+                            const isSPP = typeSelect.value === 'spp';
+            
+                            // Enable/disable month dropdown
+                            monthSelect.disabled = !isSPP;
+            
+                            // Enable/disable payment amount options
+                            [normalPriceInput, discountPriceInput].forEach(input => {
+                                if (input) {
+                                    input.disabled = !isSPP;
+                                    if (!isSPP) input.checked = false;
+                                }
+                            });
+            
+                            // Enable/disable manual input
+                            if (manualInput) {
+                                manualInput.disabled = !isSPP;
+                                if (!isSPP) manualInput.value = '';
+                            }
+                        };
+            
+                        // Function to handle payment selection
+                        const handlePaymentSelection = (event) => {
+                            if (event.target === normalPriceInput && normalPriceInput.checked) {
+                                if (discountPriceInput) discountPriceInput.checked = false;
+                                if (manualInput) manualInput.value = '';
+                            } 
+                            else if (event.target === discountPriceInput && discountPriceInput.checked) {
+                                if (normalPriceInput) normalPriceInput.checked = false;
+                                if (manualInput) manualInput.value = '';
+                            }
+                            else if (event.target === manualInput && manualInput.value !== '') {
+                                if (normalPriceInput) normalPriceInput.checked = false;
+                                if (discountPriceInput) discountPriceInput.checked = false;
+                            }
+                        };
+            
+                        // Modify form submission to ensure proper data is sent
+                        paymentForm.addEventListener('submit', function(e) {
+                            // For each course, ensure only one payment amount is sent
+                            for (let j = 0; j < courseCount; j++) {
+                                const currentManualInput = document.querySelector(`input[name="courses[${j}][payment_amount]"][type="number"]`);
+                                const currentNormalInput = document.querySelector(`input[name="courses[${j}][payment_amount]"][value="{{ $course['payment_rate'] }}"]`);
+                                const currentDiscountInput = document.querySelector(`input[name="courses[${j}][payment_amount]"][value="{{ $course['pivot']['custom_payment_rate'] }}"]`);
+            
+                                // If manual input has value, remove the name attribute from checkbox inputs
+                                if (currentManualInput && currentManualInput.value !== '') {
+                                    if (currentNormalInput) currentNormalInput.removeAttribute('name');
+                                    if (currentDiscountInput) currentDiscountInput.removeAttribute('name');
+                                }
+                                // If a checkbox is checked, remove the name attribute from manual input
+                                else if ((currentNormalInput && currentNormalInput.checked) || 
+                                        (currentDiscountInput && currentDiscountInput.checked)) {
+                                    if (currentManualInput) currentManualInput.removeAttribute('name');
+                                }
+                            }
+                        });
+            
+                        // Add event listeners
+                        typeSelect.addEventListener('change', toggleFields);
+                        if (normalPriceInput) normalPriceInput.addEventListener('change', handlePaymentSelection);
+                        if (discountPriceInput) discountPriceInput.addEventListener('change', handlePaymentSelection);
+                        if (manualInput) {
+                            manualInput.addEventListener('input', handlePaymentSelection);
+                            manualInput.addEventListener('change', handlePaymentSelection);
+                        }
+            
+                        // Initial state on page load
+                        toggleFields();
+                    }
                 });
-            };
-
-            // Initial state on page load
-            toggleFields();
-
-            // Update on change
-            typeSelect.addEventListener('change', toggleFields);
-        }
-    });
-</script>
+            </script>
 
         </div>
     </div>

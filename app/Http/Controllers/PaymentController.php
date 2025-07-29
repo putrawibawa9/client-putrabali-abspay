@@ -58,7 +58,7 @@ class PaymentController extends Controller
         // dd($request->all());
     //   if request has 'payment_month' value, return error
     foreach ($request->courses as $course) {
-        if (empty($course['payment_month']) || $course['payment_month'] === 'Select Month') {
+        if ($course['type'] === 'spp' && $course['payment_month'] === 'Select Month') {
             return redirect()->back()->with('error', 'Tolong masukan bulan pembayaran');
         }
     }

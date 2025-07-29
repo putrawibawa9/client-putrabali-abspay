@@ -401,9 +401,11 @@
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
                 <!-- Modal header -->
                 <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-700">
+                    @if (isset($student['active_courses'][0]['alias']))
                     <h3 class="text-xl font-semibold dark:text-white">
                 {{ $student['active_courses'][0]['alias'] }}
                     </h3>
+                    @endif
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white"
                         data-modal-toggle="edit-modal">

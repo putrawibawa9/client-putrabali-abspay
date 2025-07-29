@@ -74,65 +74,21 @@
                 </div>
 
             <div class="flex flex-col min-h-full">
-                <!-- Students Section -->
-             <!-- Chart.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Enrolled This Month</h3>
+        <p class="text-3xl font-bold text-blue-500 dark:text-blue-400">
+            {{ $recapitulations['total_enroll_students_in_given_month'] }}
+        </p>
+    </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-8">
-    <div>
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Student Statistics</h3>
-        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-            <canvas id="studentChart" height="120"></canvas>
-        </div>
+    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Total Students</h3>
+        <p class="text-3xl font-bold text-green-500 dark:text-green-400">
+            {{ $recapitulations['total_students'] }}
+        </p>
     </div>
 </div>
-
-<script>
-    const ctx = document.getElementById('studentChart').getContext('2d');
-    const studentChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Enrolled This Month', 'Total Students'],
-            datasets: [{
-                label: 'Students',
-                data: [
-                    {{ $recapitulations['total_enroll_students_in_given_month'] }},
-                    {{ $recapitulations['total_students'] }}
-                ],
-                backgroundColor: [
-                    'rgba(59, 130, 246, 0.5)', // blue-500
-                    'rgba(16, 185, 129, 0.5)'  // green-500
-                ],
-                borderColor: [
-                    'rgba(59, 130, 246, 1)',
-                    'rgba(16, 185, 129, 1)'
-                ],
-                borderWidth: 1,
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return `${context.parsed.y} Students`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 10 }
-                }
-            }
-        }
-    });
-</script>
-
 
                 <!-- Teachers & Courses Section -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">

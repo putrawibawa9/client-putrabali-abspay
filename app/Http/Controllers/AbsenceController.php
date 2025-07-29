@@ -93,7 +93,9 @@ class AbsenceController extends Controller
         return redirect()->route("absences.index")->with('error', $error['message']);
     }
 
-    return redirect()->route("absences.index")->with('success', 'Absence recorded successfully');
+   
+    return redirect()->route('recap-teacher-absences', ['id' => (int)$data["teacher_id"] ])
+    ->with('success', 'Absence recorded successfully');
 }
 
 
