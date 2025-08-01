@@ -108,14 +108,15 @@
 
                         <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                             @forelse ( $students['students'] as $student )
+                           
                                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">    
 
                                     <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-           
-                                        <form action="/students/{{ $student['id'] }}" method="POST" class="inline-block">
+
+                                        <form action="{{ route('student-course.destroy', $student['pivot']['id']) }}" method="POST" class="inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" disabled
+                                            <button type="submit" 
                                                 class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
                                                 Keluarkan
                                             </button>

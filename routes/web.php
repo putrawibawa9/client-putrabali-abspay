@@ -33,6 +33,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::post('/students/payment/select', [PaymentController::class, 'paymentForm']);
     Route::post('/students/payment/search', [PaymentController::class, 'searchStudentByNisOrName']);
 
+
     // teachers
     Route::resource('/teachers', TeacherController::class);
    
