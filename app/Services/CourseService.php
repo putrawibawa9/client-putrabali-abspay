@@ -136,6 +136,52 @@ class CourseService
         }
     }
 
+ public function searchByAlias($alias)
+{
+$alias = $alias['alias'] ?? null;
+
+    try {
+        $response = $this->client->request('GET', $this->baseUrl . "/courses-search-by-alias?alias=$alias", [
+            'timeout' => 10,
+            'headers' => [
+                'Accept' => 'application/json',
+            ]
+        ]);
+   
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode === 200) {
+            return json_decode($response->getBody()->getContents(), true);
+        }
+
+        return [
+            'error' => "Unexpected status code: $statusCode",
+            'code' => $statusCode
+        ];
+    } catch (RequestException $e) {
+        $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 500;
+        $body = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : null;
+
+        Log::error("API Request Failed [{$statusCode}]: " . $e->getMessage());
+
+        return [
+            'error' => 'Request failed: ' . $e->getMessage(),
+            'code' => $statusCode,
+            'body' => $body
+        ];
+    } catch (\Exception $e) {
+        Log::error('Unexpected Error: ' . $e->getMessage());
+
+        return [
+            'error' => 'Unexpected error: ' . $e->getMessage(),
+            'code' => 500
+        ];
+    }
+}
+
+
+
    public function getCourseWithStudentsbyID($id)
     {
         try {

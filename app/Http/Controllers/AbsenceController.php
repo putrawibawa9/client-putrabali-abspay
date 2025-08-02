@@ -44,6 +44,28 @@ class AbsenceController extends Controller
 
     }
 
+    public function searchCoursesByAlias(Request $request)
+{
+    $page = $request->query('page', 1);
+
+    // Use 'alias' input directly
+    $alias = $request->input('alias');
+
+    // If your CourseService accepts a unified 'alias' key
+    $courses = $this->courseService->searchByAlias(['alias' => $alias], $page);
+
+    if (isset($courses['message'])) {
+        return redirect()->route('absences.index')->with('error', $courses['message']);
+    }
+
+    $isSearch = true;
+    $activeRoute = 'absences';
+ 
+    // Pass alias to the view instead of level/section/subject
+    return view('pages.absences.index', compact('courses', 'activeRoute', 'alias', 'isSearch'));
+}
+
+
 
  public function allCourses(Request $request){
     // dd($request);

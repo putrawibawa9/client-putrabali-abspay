@@ -85,6 +85,7 @@ Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout
     Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput']);
     Route::get('/absences', [AbsenceController::class, 'allCourses'])->name('absences.index');
     Route::get('/absence/courses/search', [AbsenceController::class, 'searchCourses'])->name('absence.courses.search');
+    Route::get('/absence/courses/search-by-alias', [AbsenceController::class, 'searchCoursesByAlias'])->name('absence.courses.search-by-alias');
     Route::post('/absences/search', [AbsenceController::class, 'searchCourse'])->name('absences.search');
     Route::get('/absences/{id}', [AbsenceController::class, 'absenceForm'])->name('absences.show');
     Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absences.store');

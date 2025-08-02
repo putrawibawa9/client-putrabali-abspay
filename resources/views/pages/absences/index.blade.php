@@ -41,50 +41,33 @@
                 </div>
             </div>
             <div class="sm:flex sm:flex-1 min-h-full">
-                <div class="items-center flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                   <form class="lg:pr-3 w-full" action="{{ route('absence.courses.search') }}" method="GET">
- 
- 
-     <div class="grid grid-cols-2 gap-4 mb-4">
-                            <div>
-                           
-                                <div class="relative mt-1">
-                                    <input type="text" name="level" id="student-search" value="{{ $level ?? '' }}"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Level">
-                                </div>
-                            </div>
-                            <div>
-                           
-                                <div class="relative mt-1">
-                                    <input type="text" name="section" id="student-search" value="{{ $section ?? '' }}"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Section">
-                                </div>
-                            </div>
-                            <div>
-                           
-                                <div class="relative mt-1">
-                                    <input type="subject" name="subject" id="student-search" value="{{ $subject ?? '' }}"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Subject">
-                                </div>
-                            </div>
-                           
-                        </div>
+    <div class="items-center flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
+    <form class="w-full sm:flex sm:items-center sm:space-x-4" action="{{ route('absence.courses.search-by-alias') }}" method="GET">
+        <div class="relative w-full sm:max-w-xs">
+            <input type="text" name="alias" id="alias-search" value="{{ request('alias') }}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Nama Grup">
+            {{-- Tombol X --}}
+            <a href="{{ route('absences.index') }}" 
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-red-600">
+                &#10005;
+            </a>
+        </div>
 
-                        <button type="submit"
-                            class="inline-flex items-center justify-center w-full lg:w-full px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                            <svg class="w-5 h-5 mr-2 -ml-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-                            </svg>
-                            Search
-                        </button>
-</form>
-                </div>
-            </div>
+        <button type="submit"
+            class="inline-flex items-center justify-center w-full sm:w-auto px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+            <svg class="w-5 h-5 mr-2 -ml-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+            </svg>
+            Search
+        </button>
+    </form>
+</div>
+
+</div>
+
         </div>
     </div>
     <div class="flex flex-1 flex-col">
@@ -179,7 +162,7 @@
            </a>
            @endif
             @if ($courses['next_page_url'])
-           <a href="?level={{ $level }}&section={{ $section }}&subject={{ $subject }}&page={{ $courses['current_page'] + 1 }}"
+           <a href="?alias={{ $alias }}&page={{ $courses['current_page'] + 1 }}"
                class="inline-flex justify-center p-1 mr-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                    <path fill-rule="evenodd"
@@ -238,7 +221,7 @@
             </a>
                @endif
                @if ($courses['next_page_url'])
-            <a href="?level={{ $level }}&section={{ $section }}&subject={{ $subject }}&page={{ $courses['current_page'] + 1 }}"
+            <a href="?alias={{ $alias }}&page={{ $courses['current_page'] + 1 }}"
                 class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 Next
                 <svg class="w-5 h-5 ml-1 -mr-1" fill="currentColor" viewBox="0 0 20 20"
