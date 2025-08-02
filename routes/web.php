@@ -59,6 +59,8 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::get('/recapitulations', [RecapitulationController::class, 'index']);
     Route::post('/recapitulations/payment', [PaymentController::class, 'paymentRecapitulation'])->name('recapitulations.payment');
     Route::post('/students/monthly-paid-unpaid', [PaymentController::class, 'paidAndUnpaidStudentsMonthly']);
+    Route::get('/daily-recap', [RecapitulationController::class, 'dailyRecap'])->name('daily-recap.index');
+
 
     // Dashboard
     Route::get('/dashboard', [RecapitulationController::class, 'index'])->name('dashboard')->middleware(CheckUserSession::class);
