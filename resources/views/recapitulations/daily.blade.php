@@ -19,14 +19,18 @@
 
     <!-- Meeting Summary -->
     <div class="mb-4">
-        <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            Meetings for {{ $date }}
-        </h3>
-        @if($totalMeetings > 0)
+         @if($totalMeetings > 0)
             <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                 Total: {{ $totalMeetings }} meeting{{ $totalMeetings > 1 ? 's' : '' }}
             </div>
         @endif
+        <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            
+            Total Teacher Fee:
+            <span class="text-blue-600 dark:text-blue-400">Rp. {{ number_format($totalTeacherFee, 0, ',', '.') }} </span>
+
+        </h3>
+       
     </div>
 
     <!-- Meetings Display -->
@@ -36,11 +40,12 @@
             <table class="min-w-full table-auto text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th class="px-4 py-3">Course</th>
-                        <th class="px-4 py-3">Teacher</th>
-                        <th class="px-4 py-3">Day</th>
-                        <th class="px-4 py-3">Date</th>
-                        <th class="px-4 py-3">Time</th>
+                        <th class="px-4 py-3">Kelas</th>
+                        <th class="px-4 py-3">Guru</th>
+                        <th class="px-4 py-3">Hari</th>
+                        <th class="px-4 py-3">Tanggal</th>
+                        <th class="px-4 py-3">Waktu</th>
+                        <th class="px-4 py-3">Upah</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,6 +56,7 @@
                         <td class="px-4 py-3">{{ $meeting['day'] }}</td>
                         <td class="px-4 py-3">{{ $meeting['date'] }}</td>
                         <td class="px-4 py-3">{{ $meeting['time'] }}</td>
+                        <td class="px-4 py-3">{{ $meeting['course_teacher_fee'] }}</td>
                     </tr>
                     @endforeach
                 </tbody>

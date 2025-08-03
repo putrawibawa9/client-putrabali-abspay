@@ -46,7 +46,9 @@ public function dailyRecap(Request $request)
     $meetings = $response->successful() ? $response->json() : [];
     $activeRoute ='dashboard';
     $totalMeetings = count($meetings);
-    return view('recapitulations.daily', compact('meetings', 'date', 'activeRoute', 'totalMeetings'));
+    $totalTeacherFee = array_sum(array_column($meetings, 'course_teacher_fee'));
+    // dd($totalTeacherFee);
+    return view('recapitulations.daily', compact('meetings', 'date', 'activeRoute', 'totalMeetings', 'totalTeacherFee'));
     }
 
 }
