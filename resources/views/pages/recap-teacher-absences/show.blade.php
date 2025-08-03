@@ -51,10 +51,12 @@
             <div class="px-4 py-5 sm:px-6 bg-gray-700">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <h3 class="text-lg font-medium text-white">
-                      Detail 
+                     Total:
+                        <span class="text-blue-400">Rp. {{ number_format($teacher['total_fee'], 0, ',', '.') }}</span>
+
                     </h3>
                     <span class=" text-white mt-2 sm:mt-0 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-600 text-blue-300">
-                        Total: {{ $teacher['total_absences'] }} Pertemuan
+                      {{ $teacher['total_absences'] }} Kelas
                     </span>
                 </div>
             </div>
@@ -68,16 +70,19 @@
                                 #
                             </th>
                             <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                Date
+                                Tanggal
                             </th>
                             <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                Day
+                                Hari
                             </th>
                             <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                Time
+                                Waktu
                             </th>
                             <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                                Course
+                                Kelas
+                            </th>
+                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                Upah
                             </th>
                         </tr>
                     </thead>
@@ -100,6 +105,9 @@
                             </td>
                             <td class=" text-white px-4 py-4 whitespace-nowrap text-sm font-medium text-blue-400">
                               {{ $meeting['course']['alias'] }}
+                            </td>
+                            <td class=" text-white px-4 py-4 whitespace-nowrap text-sm font-medium text-blue-400">
+                              {{ $meeting['course']['teaching_rate'] }}
                             </td>
                         </tr>
                     </tbody>

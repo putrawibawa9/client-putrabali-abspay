@@ -145,6 +145,7 @@ public function recapTeacherAbsences(Request $request){
     if (isset($teacher['error'])) {
         return redirect()->back()->with('error', $teacher['error']);
     }
+    // dd($teacher);
     return view('pages.recap-teacher-absences.show', compact('activeRoute', 'teacher', 'filterMonth'));
 }
 }
