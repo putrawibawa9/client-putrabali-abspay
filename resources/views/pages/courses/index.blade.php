@@ -126,23 +126,21 @@
                             <tr>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Alias
+                                Nama
                                 </th>
+                              
+                              
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                  Level
-                                </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Section
-                                </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Subject
+                                    Jenis
                                 </th>
                                        <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Payment Rate
+                                    Harga Kelas
+                                </th>
+                                       <th scope="col"
+                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                    Upah Guru 
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -163,20 +161,19 @@
                                         class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
                                         {{ $course['alias'] }}
                                     </td>
-                                    <td
-                                        class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                        {{ $course['level'] }}
-                                    </td>
+                                   
                                   
-                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $course['section'] }}
-                                    </td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {{ $course['subject'] }}
                                     </td>
+                                   
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                       {{-- make it in rupiah --}}
                                        Rp. {{ number_format($course['payment_rate'], 0, ',', '.') }}
+                                    </td>
+                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                      {{-- make it in rupiah --}}
+                                       Rp. {{ number_format($course['teaching_rate'], 0, ',', '.') }}
                                     </td>
 
                                     <td class="p-4 space-x-2 whitespace-nowrap">
