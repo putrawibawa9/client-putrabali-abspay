@@ -87,7 +87,7 @@ class AbsenceController extends Controller
 
     public function store(Request $request)
 {
-    // dd($request->all());
+// dd($request->all());
     // Extract day from the date
     $date = $request->input('date');
     $day = date('l', strtotime($date));
@@ -98,7 +98,7 @@ class AbsenceController extends Controller
     $apiRequestData = [
         "day" => $data["day"],
         "date" => $data["date"],
-        "time" => $data["time"],
+        "time" => $data["final_time"],
         "course_id" => (int)$data["course_id"],
         "teacher_id" => (int)$data["teacher_id"],
     ];

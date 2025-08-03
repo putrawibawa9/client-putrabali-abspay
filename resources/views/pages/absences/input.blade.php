@@ -54,7 +54,7 @@
                 <div class="items-center flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
                     <form class="w-full" action="{{ route('absences.store') }}" method="POST" onsubmit="return confirm('Apakah yakin untuk menyimpan absen ini?');">
                         @csrf
-                        <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="grid grid-cols-1 gap-4 mb-4">
                             <div>
                                 <label for="date" class="sr-only">Date</label>
                                 <div class="relative mt-1">
@@ -62,13 +62,15 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 </div>
                             </div>
-                    
+                            
+                            <!-- Preset Time Selection -->
                             <div>
-                                <label for="time" class="sr-only">Time</label>
+                                <label for="time" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Pilih Jam</label>
                                 <div class="relative mt-1">
-                                    <select required name="time" id="time"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                        <option value="" disabled selected>Time</option>
+                                    <select name="time" id="time"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        onchange="handleTimeSelection()">
+                                        <option value=""  selected>Pilih Jam</option>
                                         <option value="14:30">14:30</option>
                                         <option value="15:50">15:50</option>
                                         <option value="17:10">17:10</option>
@@ -77,10 +79,21 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <!-- Custom Time Input -->
+                            <div>
+                                <label for="custom_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Atau Masukkan Waktu Kustom</label>
+                                <div class="relative mt-1">
+                                    <input type="time" name="custom_time" id="custom_time"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        onchange="handleCustomTimeSelection()">
+                                </div>
+                            </div>
                         </div>
                     
                         <input type="hidden" name="teacher_id" value="{{ session('teacher_id') }}" >
                         <input type="hidden" name="course_id" value="{{ $data['id'] }}">
+                        <input type="hidden" name="final_time" id="final_time">
                     
                         <div class="overflow-x-auto p-4 lg:p-0 bg-white dark:bg-gray-800">
                             <div class="inline-block min-w-full align-middle">
@@ -131,6 +144,63 @@
                             </div>
                         </div>
                     </form>
-
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function handleTimeSelection() {
+            const timeSelect = document.getElementById('time');
+            const customTimeInput = document.getElementById('custom_time');
+            const finalTimeInput = document.getElementById('final_time');
+            
+            if (timeSelect.value) {
+                // Disable custom time input when preset time is selected
+                customTimeInput.disabled = true;
+                customTimeInput.value = '';
+                customTimeInput.classList.add('opacity-50', 'cursor-not-allowed');
+                
+                // Set the final time value
+                finalTimeInput.value = timeSelect.value;
+            } else {
+                // Enable custom time input when no preset time is selected
+                customTimeInput.disabled = false;
+                customTimeInput.classList.remove('opacity-50', 'cursor-not-allowed');
+                finalTimeInput.value = '';
+            }
+        }
+
+        function handleCustomTimeSelection() {
+            const timeSelect = document.getElementById('time');
+            const customTimeInput = document.getElementById('custom_time');
+            const finalTimeInput = document.getElementById('final_time');
+            
+            if (customTimeInput.value) {
+                // Disable preset time select when custom time is entered
+                timeSelect.disabled = true;
+                timeSelect.value = '';
+                timeSelect.classList.add('opacity-50', 'cursor-not-allowed');
+                
+                // Set the final time value
+                finalTimeInput.value = customTimeInput.value;
+            } else {
+                // Enable preset time select when custom time is cleared
+                timeSelect.disabled = false;
+                timeSelect.classList.remove('opacity-50', 'cursor-not-allowed');
+                finalTimeInput.value = '';
+            }
+        }
+
+        // Form validation to ensure one time option is selected
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const finalTime = document.getElementById('final_time').value;
+            
+            if (!finalTime) {
+                e.preventDefault();
+                alert('Please select a preset time or enter a custom time.');
+                return false;
+            }
+        });
+    </script>
 @endsection

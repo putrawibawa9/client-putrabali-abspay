@@ -32,6 +32,7 @@ class AbsenceService
          
         } catch (RequestException $e) {
             // Log the error details
+            dd($e->getMessage());
             Log::error('API Request Failed: ' . $e->getMessage());
 
             // Return a user-friendly error message
