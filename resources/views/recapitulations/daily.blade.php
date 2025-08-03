@@ -26,7 +26,7 @@
         @endif
         <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2">
             
-            Total Teacher Fee:
+            Total Upah Guru:
             <span class="text-blue-600 dark:text-blue-400">Rp. {{ number_format($totalTeacherFee, 0, ',', '.') }} </span>
 
         </h3>
