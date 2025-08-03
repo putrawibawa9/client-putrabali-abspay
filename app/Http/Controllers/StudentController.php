@@ -10,6 +10,7 @@ use App\Services\PaymentService;
 use App\Services\StudentService;
 use Illuminate\Support\Facades\Http;
 
+
 class StudentController extends Controller
 {
     protected $studentService;
@@ -194,20 +195,29 @@ class StudentController extends Controller
 
 public function searchStudentByNisOrName(Request $request)
 {
-    // get the search value from the request
     $page = $request->query('page', 1);
-
     $search = $request->input('search');
+
+    $students = $this->studentService->searchStudentByNisOrName($search, $page);
+
+    // Optional: handle jika students berisi error
+    if (isset($students['error'])) {
+        return back()->with('error', $students['error']);
+    }
+
     $englishCourses = $this->courseService->getCourseBySubject('english');
     $mapelCourses = $this->courseService->getCourseBySubject('mapel');
-    
-    $students = $this->studentService->searchStudentByNisOrName($search, $page);
-    $search = $request->input('search');
-    // also return the search value to be used in the view
     $activeRoute = 'students';
-       return view('pages.students.index', compact('students', 'search', 'activeRoute', 'englishCourses', 'mapelCourses', 'search'));
 
+    return view('pages.students.index', compact(
+        'students',
+        'search',
+        'activeRoute',
+        'englishCourses',
+        'mapelCourses'
+    ));
 }
+
 
 
 }

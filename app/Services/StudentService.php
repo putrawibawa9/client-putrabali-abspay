@@ -156,52 +156,43 @@ class StudentService
        }
     }
 
-    public function searchStudentByNisOrName($search, $page = ''){
-        // dd($search);
-        try {
-            // Make the API request
-            $response = $this->client->request('GET', $this->baseUrl . "/students-search?search=$search&page=$page", [
-                'timeout' => 10, // Set a timeout for the request
-                'headers' => [
-                    'Accept' => 'application/json',
-                ],
-                // Optional: Add query parameters if needed
-              'json' => [
-                'search' => $search
-              ],
-            ]);
+   public function searchStudentByNisOrName($search, $page = 1)
+{
+    try {
+        $response = $this->client->request('GET', $this->baseUrl . "/students-search", [
+            'timeout' => 10,
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
+            'query' => [
+                'search' => $search,
+                'page' => $page
+            ],
+        ]);
 
-            // Check if the response status code is 200 (OK)
-            if ($response->getStatusCode() === 200) {
-                // Decode the JSON response into an associative array
-                $data = json_decode($response->getBody()->getContents(), true);
-                
-                return $data;
-            }
-
-            // Handle unexpected status codes
-            return [
-                'error' => 'Unexpected response status code: ' . $response->getStatusCode(),
-            ];
-        } catch (RequestException $e) {
-            // Log the error details
-            Log::error('API Request Failed: ' . $e->getMessage());
-
-            // Return a user-friendly error message
-            return [
-                'error' => $e->getMessage(),
-            ];
-        } catch (\Exception $e) {
-            // Log unexpected errors
-            Log::error('Unexpected Error: ' . $e->getMessage());
-
-            // Return a generic error message
-            return [
-                'error' => $e->getMessage(),
-            ];
-
+        if ($response->getStatusCode() === 200) {
+            $data = json_decode($response->getBody()->getContents(), true);
+            return $data;
         }
+
+        return [
+            'error' => 'Unexpected response status code: ' . $response->getStatusCode(),
+        ];
+    } catch (RequestException $e) {
+        Log::error('API Request Failed: ' . $e->getMessage());
+
+        return [
+            'error' => 'API error: ' . $e->getMessage(),
+        ];
+    } catch (\Exception $e) {
+        Log::error('Unexpected Error: ' . $e->getMessage());
+
+        return [
+            'error' => 'Unexpected error: ' . $e->getMessage(),
+        ];
     }
+}
+
 
     public function getMonthlyEnrolledStudent(){
         try {
