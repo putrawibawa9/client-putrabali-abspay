@@ -121,7 +121,7 @@
             <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 4v10m4-10v10m-8-6h12" />
             </svg>
-            <p class="mt-2 text-gray-600 dark:text-gray-300">No meetings found for {{ $date }}</p>
+            <p class="mt-2 text-gray-600 dark:text-gray-300">Tidak ada pertemuan yang ditemukan</p>
         </div>
     @endif
 </div>
