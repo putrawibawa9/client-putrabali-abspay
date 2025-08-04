@@ -117,7 +117,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" 
-                                                class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                                                class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800" onclick="return confirm('Apakah yakin untuk mengeluarkan siswa ini?')"> 
                                                 Keluarkan
                                             </button>
                                         </form>     

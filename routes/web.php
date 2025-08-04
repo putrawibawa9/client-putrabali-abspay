@@ -53,7 +53,9 @@ Route::middleware([CheckUserSession::class])->group(function () {
     
 
     // Meetings
-    Route::get('/meetings/{id}', [MeetingController::class, 'getAbsencesByMeetingId']);
+    // Route::get('/meetings/{id}', [MeetingController::class, 'getAbsencesByMeetingId']);
+
+    Route::resource('/meetings', MeetingController::class);
 
     // Recapitulation
     Route::get('/recapitulations', [RecapitulationController::class, 'index']);
