@@ -42,6 +42,7 @@ class CourseController extends Controller
        
          $courses = $this->courseService->getAllCourses($page);
          $activeRoute = 'courses';
+         
         return view('pages.courses.index', compact('courses', 'activeRoute'));
     }
 
@@ -107,6 +108,7 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $oldData = $this->courseService->getCourseWithStudentsbyID($id);
         $newData = $request->all();
     

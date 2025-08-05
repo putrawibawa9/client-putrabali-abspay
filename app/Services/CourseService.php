@@ -304,6 +304,7 @@ $alias = $alias['alias'] ?? null;
 
      public function updateCourse($id, $data)
     {
+        // dd($data);
        try{
           $data['_method'] = 'PUT'; // Add the method override
          $this->client->post("$this->baseUrl/courses/{$id}", [
