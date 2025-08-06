@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\CourseService;
 use App\Services\MeetingService;
 
 class MeetingController extends Controller
