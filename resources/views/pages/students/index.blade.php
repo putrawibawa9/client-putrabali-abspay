@@ -431,53 +431,53 @@
         <div class="grid grid-cols-6 gap-6">
             <!-- Student Details -->
             <div class="col-span-6 sm:col-span-3">
-                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
                 <input type="text" name="name" id="name" 
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Enter Student Name" required>
+                    placeholder="Masukkan Nama Murid" required>
             </div>
             
             <div class="col-span-6 sm:col-span-3">
                 <label for="wa_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    WhatsApp Number</label>
+                    Nomor WhatsApp</label>
                 <input type="tel" name="wa_number" id="wa_number" 
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Enter Whatsapp Number" >
+                    placeholder="Masukkan Nomor WhatsApp">
             </div>
 
             <div class="col-span-6 sm:col-span-3">
                 <label for="enroll_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Enroll Date</label>
+                    Tanggal Daftar</label>
                 <input type="date" name="enroll_date" id="enroll_date"
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     required>
             </div>
 
             <div class="col-span-6 sm:col-span-3">
-                <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Kelamin</label>
                 <select name="gender" id="gender" 
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     required>
-                    <option value="">Select gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    <option value="">Pilih jenis kelamin</option>
+                    <option value="Male">Laki-laki</option>
+                    <option value="Female">Perempuan</option>
                 </select>
             </div>
 
             <div class="col-span-6">
-                <label for="school" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School</label>
+                <label for="school" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sekolah</label>
                 <input type="text" name="school" id="school"
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Enter school name" required>
+                    placeholder="Masukkan nama sekolah" required>
             </div>
 
             <!-- English Course -->
             <div class="col-span-6 sm:col-span-3">
-                <label for="english_course" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">English Course</label>
+                <label for="english_course" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas Bahasa Inggris</label>
                 <select name="course_id[]" id="english_course" 
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     >
-                    <option value="">Select English Course</option>
+                    <option value="">Pilih Kursus Bahasa Inggris</option>
                     @foreach ($englishCourses as $course)
                         <option value="{{ $course['id'] }}">{{ $course['alias']}} || Rp.{{ number_format($course['payment_rate'], 0, ',', '.') }} </option>
                     @endforeach
@@ -485,19 +485,19 @@
             </div>
             <div class="col-span-6 sm:col-span-3">
                 <label for="english_payment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Discount Rate</label>
+                 Harga Potongan</label>
                 <input type="number" min="0" name="custom_payment_rate[]" id="english_payment" 
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Enter Discount Rate" >
+                    placeholder="Masukan Harga Potongan" >
             </div>
 
             <!-- Mapel Course -->
             <div class="col-span-6 sm:col-span-3">
-                <label for="mapel_course" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mapel Course</label>
+                <label for="mapel_course" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas Mata Pelajaran</label>
                 <select name="course_id[]" id="mapel_course" 
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     >
-                    <option value="">Select Mapel Course</option>
+                    <option value="">Pilih Kelas Mata Pelajaran</option>
                     @foreach ($mapelCourses as $course)
                         <option value="{{ $course['id'] }}">{{ $course['alias'] }} || Rp.{{ number_format($course['payment_rate'], 0, ',', '.') }}</option>
                     @endforeach
@@ -505,10 +505,10 @@
             </div>
             <div class="col-span-6 sm:col-span-3">
                 <label for="mapel_payment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Discount Rate</label>
+                   Harga Potongan</label>
                 <input type="number"  min="0" name="custom_payment_rate[]" id="mapel_payment" 
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Enter Discount Rate" >
+                    placeholder="Masukkan Harga Potongan" >
             </div>
         </div>
     </div>
@@ -516,10 +516,10 @@
     <div class="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
         <button
             class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            type="submit">Add Student</button>
+            type="submit">Tambah Siswa</button>
         <button
             class="text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
-            type="reset">Reset Form</button>
+            type="reset">Reset</button>
     </div>
 </form>
 

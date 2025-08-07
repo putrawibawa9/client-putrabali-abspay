@@ -32,22 +32,41 @@
                         </li>
                     </ol>
                 </nav>
-                <div class="bg-gray-200 dark:bg-gray-700 w-full py-6 px-8 flex items-center rounded">
-                    <div class="w-20 h-20 rounded-full bg-gray-100"></div>
-                    <div class="flex-1 flex flex-col justify-center ml-5">
-                        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">{{ $student['name'] }}</h1>
-                        <ul class="flex items-center gap-6">
-                            @foreach ($student['active_courses'] as $course)
-                                <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span>{{ $course['subject'] }} - {{ $course['alias'] }}</span>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
+               <div class="bg-gray-200 dark:bg-gray-700 w-full py-6 px-8 flex items-center justify-between rounded">
+    <!-- Kiri: Foto + Nama + Course -->
+    <div class="flex items-center">
+        <div class="w-20 h-20 rounded-full bg-gray-100"></div>
+        <div class="flex-1 flex flex-col justify-center ml-5">
+            <h1 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">{{ $student['name'] }}</h1>
+            <ul class="flex items-center gap-6 flex-wrap">
+                @foreach ($student['active_courses'] as $course)
+                    <li class="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd"
+                                d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span>{{ $course['subject'] }} - {{ $course['alias'] }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
+    <!-- Kanan: Button -->
+    <a href="{{ route('students.show', $student['id']) }}"
+        class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M10.293 15.707a1 1 0 0 1 0-1.414L13.586 11H3a1 1 0 1 1 0-2h10.586l-3.293-3.293a1 1 0 1 1 1.414-1.414l5 5a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0Z" />
+        </svg>
+        <span>Lihat Detail</span>
+    </a>
+</div>
+
             </div>
 
             {{-- Combined Form --}}
@@ -140,7 +159,7 @@
                                             >
                                             <label for="inline-radio-diskon_{{ $index }}" class="text-sm font-medium text-gray-900 dark:text-gray-300">
                                                 <div class="flex flex-col">
-                                                    <span>Diskon Perorangan</span>
+                                                    <span>Harga Setelah Potongan</span>
                                                     <span>Rp. {{ number_format($course['pivot']['custom_payment_rate'], 0, ',', '.') }}</span>
                                                 </div>
                                             </label>

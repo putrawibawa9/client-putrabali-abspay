@@ -123,22 +123,36 @@
 </div>
             </div>
             <div class="sm:flex flex-col sm:flex-1 min-h-full">
-                <div class="flex items-center justify-between w-full mt-12">
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Payment</h2>
+               <div class="flex items-center justify-between w-full mt-12">
+    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Payment</h2>
 
-                    <a target="_blank" href="{{ route('formPembayaran.print', $student['id']) }}"
-                        class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-primary-700 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 transition-all dark:focus:ring-offset-gray-800">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M8 3a2 2 0 0 0-2 2v3h12V5a2 2 0 0 0-2-2H8Zm-3 7a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h1v-4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v4h1a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5Zm4 11a1 1 0 0 1-1-1v-4h8v4a1 1 0 0 1-1 1H9Z"
-                                clip-rule="evenodd" />
-                        </svg>
+    <div class="flex gap-4">
+        <!-- Tombol untuk membuat pembayaran -->
+        <a href="/payments/{{$student['id']}}"
+            class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all dark:focus:ring-offset-gray-800">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 010-2h3V6a1 1 0 011-1z"
+                    clip-rule="evenodd" />
+            </svg>
+            <span>Tambah Pembayaran</span>
+        </a>
 
-                        <span>Print Payment Form</span>
-                    </a>
-                </div>
+        <!-- Tombol print -->
+        <a target="_blank" href="{{ route('formPembayaran.print', $student['id']) }}"
+            class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-primary-700 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 transition-all dark:focus:ring-offset-gray-800">
+            <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                    d="M8 3a2 2 0 0 0-2 2v3h12V5a2 2 0 0 0-2-2H8Zm-3 7a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h1v-4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v4h1a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5Zm4 11a1 1 0 0 1-1-1v-4h8v4a1 1 0 0 1-1 1H9Z"
+                    clip-rule="evenodd" />
+            </svg>
+            <span>Print Kartu Pembayaran</span>
+        </a>
+    </div>
+</div>
+
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">
     @if (!empty($payment['course_payments']) && count($payment['course_payments']) > 0)
@@ -426,18 +440,18 @@
             
          
             <div class="col-span-6 sm:col-span-3">
-                <label for="english_payment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Old Discount Rate</label>
+                <label for="english_payment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Potongan Harga Lama</label>
                 <input type="number" disabled value="" id="old_custom_payment_rate" 
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="No Discount Rate">
+                    placeholder="Tidak Ada Potongan Harga">
             </div>
 
             
             <div class="col-span-6 sm:col-span-3">
-                <label for="mapel_payment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Discount Rate</label>
+                <label for="mapel_payment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga Setelah Potongan Baru</label>
                 <input type="number" name="custom_payment_rate" id="mapel_payment" 
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Enter Discount Rate">
+                    placeholder="Harga Setelah Potongan Baru">
             </div>
         </div>
     </div>
@@ -448,7 +462,7 @@
     <div class="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
         <button
             class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            type="submit">Change Custom Payment Rate</button>
+            type="submit">Ubah Harga Setelah Potongan </button>
         <button
             class="text-white bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
             type="reset">Reset Form</button>
