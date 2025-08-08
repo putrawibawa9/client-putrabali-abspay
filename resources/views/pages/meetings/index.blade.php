@@ -72,19 +72,19 @@
                             <tr>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                               Day
+                               Hari
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                  Date
+                                  Tanggal
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                              Teacher
+                              Guru
                                 </th>       
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                              Detail
+                              Siswa
                                 </th>       
                             </tr>
                         </thead>
@@ -94,15 +94,25 @@
                             @foreach ($meetings['data'] as $meeting)                             
                            
                                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">    
-                                    <td
-                                        class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                        {{ $meeting['day'] }}
-                                    </td>
-                                    <td
-                                        class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                        {{ $meeting['date'] }}
-                                    </td>
-                                  
+                                   @php
+    $days = [
+        'Monday'    => 'Senin',
+        'Tuesday'   => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday'  => 'Kamis',
+        'Friday'    => 'Jumat',
+        'Saturday'  => 'Sabtu',
+        'Sunday'    => 'Minggu',
+    ];
+@endphp
+
+<td class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
+    {{ $days[$meeting['day']] ?? $meeting['day'] }}
+</td>
+                                 <td class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
+    {{ \Carbon\Carbon::parse($meeting['date'])->locale('id')->translatedFormat('d F Y') }}
+</td>
+
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {{ $meeting['teacher'] }}
                                     </td>
@@ -114,7 +124,7 @@
     <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
         <path d="M13.5 8.5a3.5 3.5 0 1 0-7 0 3.5 3.5 0 0 0 7 0ZM20.5 10.5a3 3 0 1 0-6 0 3 3 0 0 0 6 0ZM12 12.5c-3.25 0-6.5 1.5-6.5 4.5v1c0 .55.45 1 1 1h11c.55 0 1-.45 1-1v-1c0-3-3.25-4.5-6.5-4.5ZM20.5 16c-1.5 0-2.8.4-3.6 1h5.2c.55 0 1-.45 1-1v-.5c0-.83-1.97-1.5-2.6-1.5Z" />
     </svg>
-    Students
+    Cek Absensi
 </a>
                                     </td>
                                 </tr>

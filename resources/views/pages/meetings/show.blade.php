@@ -58,24 +58,12 @@
                         </li>
                     </ol>
                 </nav>
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All Student</h1>
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Absensi</h1>
             </div>
             <div class="sm:flex sm:flex-1 min-h-full">
                 <div
                     class="items-center hidden sm:flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                    <form class="lg:pr-3 w-full" action="/students/search" method="POST">
-    @csrf
-    <label for="student-search" class="sr-only">Search</label>
-    <div class="relative mt-1">
-        <input type="text" name="search" id="student-search" value="{{ $search ?? '' }}"
-            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            placeholder="Search for Student">
-        <button type="submit" 
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 bg-transparent hover:text-primary-500 text-sm focus:outline-none">
-            Search
-        </button>
-    </div>
-</form>
+                   
 <div class="flex pl-0 mt-3 sm:pl-2 sm:mt-0">
     @if(isset($search) && $search != '')
         <a href="/students"
@@ -104,8 +92,13 @@
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Name
+                                    Nama
                                 </th>
+                                <th scope="col"
+                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                    Status
+                                </th>
+
                             </tr>
                         </thead>
 
@@ -120,6 +113,17 @@
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
             {{ $studentData['student_course']['student']['name'] }}
         </td>                
+    <td class="p-4 text-base font-medium whitespace-nowrap dark:text-white"
+    style="color: {{ $studentData['status'] === 'present' ? '#065f46' : ($studentData['status'] === 'absent' ? '#991b1b' : 'black') }}">
+    
+    {{ $studentData['status'] === 'present' ? 'Hadir' : ($studentData['status'] === 'absent' ? 'Absen' : ucfirst($studentData['status'])) }}
+</td>
+
+
+
+
+
+             
     </tr>
                             @empty
                                 <tr>
