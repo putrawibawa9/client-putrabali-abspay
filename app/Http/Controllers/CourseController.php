@@ -21,7 +21,17 @@ class CourseController extends Controller
     {
     
         $page = $request->query('page', 1);
-        $courses = $this->courseService->search($request->all(), $page);
+
+        if ($request->has('alias')) {
+            $alias = $request->input('alias');
+            // If 'alias' is present, search by alias
+            $courses = $this->courseService->searchByAlias(['alias' => $alias], $page);
+        } else {
+            // Otherwise, search by other criteria
+            $courses = $this->courseService->search($request->all(), $page);
+        }
+  
+        
       
         if(isset($courses['message'])){
             return redirect()->route('courses.index')->with('error', $courses['message']);
@@ -29,11 +39,11 @@ class CourseController extends Controller
         $level = $request->input('level', '');
         $section = $request->input('section', '');
         $subject = $request->input('subject', '');
-        
+        $alias = $request->input('alias', '');
         $isSearch = true;
         $activeRoute = 'courses';
-       
-        return view('pages.courses.index', compact('courses', 'activeRoute', 'level', 'section', 'subject', 'isSearch'));
+    //    dd($courses);
+        return view('pages.courses.index', compact('courses', 'activeRoute', 'level', 'section', 'subject', 'alias', 'isSearch'));
 
     }
 

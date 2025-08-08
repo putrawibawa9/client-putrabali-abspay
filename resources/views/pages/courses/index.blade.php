@@ -46,14 +46,31 @@
                 <!-- Multi-field Filter Form -->
                 <form action="{{ route('courses.search') }}" method="GET" class="mb-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <div>
-                            <label for="level" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Level</label>
-                            <input type="text" name="level" id="level" value="{{ $level ?? '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter level">
-                        </div>
-                        <div>
-                            <label for="section" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
-                            <input type="text" name="section" id="section" value="{{ $section ?? '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter section">
-                        </div>
+                      <div>
+    <label for="level" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Level</label>
+    <select name="level" id="level"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
+               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+        @for ($i = 1; $i <= 15; $i++)
+            <option value="{{ $i }}" {{ (isset($level) && $level == $i) ? 'selected' : '' }}>
+                {{ $i }}
+            </option>
+        @endfor
+    </select>
+</div>
+<div>
+    <label for="section" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
+    <select name="section" id="section"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
+               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+        @foreach (range('A', 'H') as $letter)
+            <option value="{{ $letter }}" {{ (isset($section) && $section == $letter) ? 'selected' : '' }}>
+                {{ $letter }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
                         <div>
                             <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject</label>
                             <select name="subject" id="subject" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -82,7 +99,7 @@
                 </form>
 
                 <!-- Alias Search Form -->
-                {{-- <form action="{{ route('courses.search') }}" method="GET" class="border-t pt-6 dark:border-gray-700">
+                <form action="{{ route('courses.search') }}" method="GET" class="border-t pt-6 dark:border-gray-700">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label for="alias" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Search by Alias</label>
@@ -97,7 +114,7 @@
                             </button>
                         </div>
                     </div>
-                </form> --}}
+                </form>
             </div>
         </div>
 

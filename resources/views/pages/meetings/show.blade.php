@@ -122,7 +122,7 @@
         font-weight: 500;
         display: inline-block;
     ">
-        {{ $studentData['status'] === 'present' ? 'Hadir' : ($studentData['status'] === 'absent' ? 'Absen' : ucfirst($studentData['status'])) }}
+        {{ $studentData['status'] === 'present' ? 'Hadir' : ($studentData['status'] === 'absent' ? 'Tidak Hadir' : ucfirst($studentData['status'])) }}
     </span>
 </td>
 
