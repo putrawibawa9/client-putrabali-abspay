@@ -113,11 +113,19 @@
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
             {{ $studentData['student_course']['student']['name'] }}
         </td>                
-    <td class="p-4 text-base font-medium whitespace-nowrap dark:text-white"
-    style="color: {{ $studentData['status'] === 'present' ? '#065f46' : ($studentData['status'] === 'absent' ? '#991b1b' : 'black') }}">
-    
-    {{ $studentData['status'] === 'present' ? 'Hadir' : ($studentData['status'] === 'absent' ? 'Absen' : ucfirst($studentData['status'])) }}
+   <td class="p-4 text-base font-medium whitespace-nowrap dark:text-white">
+    <span style="
+        background-color: {{ $studentData['status'] === 'present' ? '#d1fae5' : ($studentData['status'] === 'absent' ? '#fee2e2' : '#f3f4f6') }};
+        color: {{ $studentData['status'] === 'present' ? '#065f46' : ($studentData['status'] === 'absent' ? '#991b1b' : 'black') }};
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 500;
+        display: inline-block;
+    ">
+        {{ $studentData['status'] === 'present' ? 'Hadir' : ($studentData['status'] === 'absent' ? 'Absen' : ucfirst($studentData['status'])) }}
+    </span>
 </td>
+
 
 
 
