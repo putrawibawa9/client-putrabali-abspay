@@ -118,7 +118,17 @@
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Payments</h3>
                     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
                        
-                        <p class="font-semibold text-xl text-gray-900 dark:text-white mb-2">Total Revenue This Month:</p>
+                        <p class="font-semibold text-xl text-gray-900 dark:text-white mb-2">Expected Income:</p>
+                        <h5 class="text-3xl font-bold text-gray-900 dark:text-white">
+                            {{ $recapitulations['expected_income'] }}
+                        </h5>
+                    </div>
+                </div>
+                <div class="mt-8">
+                 
+                    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
+                       
+                        <p class="font-semibold text-xl text-gray-900 dark:text-white mb-2">Total Pemasukan Bulan Ini:</p>
                         <h5 class="text-3xl font-bold text-gray-900 dark:text-white">
                             Rp. {{ number_format($recapitulations['total_revenue'], 0, ',', '.') }}
                         </h5>
