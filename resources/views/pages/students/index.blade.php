@@ -37,36 +37,38 @@
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All Student</h1>
             </div>
             <div class="sm:flex sm:flex-1 min-h-full">
-                <div
-                    class="items-center hidden sm:flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                   <form class="lg:pr-3 w-full" action="{{ route('students.search') }}" method="GET">
-    <label for="student-search" class="sr-only">Search</label>
-    <div class="relative mt-1">
-        <input type="text" name="search" id="student-search" value="{{ request('search') }}"
-            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            placeholder="Search for Student">
-        <button type="submit" 
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 bg-transparent hover:text-primary-500 text-sm focus:outline-none">
-            Search
-        </button>
-    </div>
-</form>
+                <!-- Fixed: Removed 'hidden' class and made search visible on mobile -->
+                <div class="flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
+                    <form class="lg:pr-3 w-full" action="{{ route('students.search') }}" method="GET">
+                        <label for="student-search" class="sr-only">Search</label>
+                        <div class="relative mt-1">
+                            <input type="text" name="search" id="student-search" value="{{ request('search') }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 pr-20 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Search for Student">
+                            <button type="submit" 
+                                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 bg-transparent hover:text-primary-500 text-sm focus:outline-none">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
 
-<div class="flex pl-0 mt-3 sm:pl-2 sm:mt-0">
-    @if(isset($search) && $search != '')
-        <a href="/students"
-            class="inline-flex justify-center p-1 ml-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/>
-            </svg>
-        </a>
-    @endif
-</div>
+                    <div class="flex pl-0 mt-3 sm:pl-2 sm:mt-0">
+                        @if(isset($search) && $search != '')
+                            <a href="/students"
+                                class="inline-flex justify-center p-1 ml-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/>
+                                </svg>
+                            </a>
+                        @endif
+                    </div>
                 </div>
 
-                <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
+                <div class="flex items-center ml-auto space-x-2 sm:space-x-3 mt-4 sm:mt-0">
                     <button type="button" data-modal-toggle="add-user-modal"
-                        class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        class="inline-flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                         <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
