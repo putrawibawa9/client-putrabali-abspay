@@ -82,11 +82,11 @@
                             <tr>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Action
+                                    Aksi
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Alias
+                                    Nama Grup
                                 </th>
                                
                             </tr>

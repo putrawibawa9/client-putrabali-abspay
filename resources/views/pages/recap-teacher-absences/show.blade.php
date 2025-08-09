@@ -15,14 +15,14 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <span class="hidden sm:inline">Select Month:</span>
+                        <span class="hidden sm:inline">Pilih Bulan:</span>
                     </div>
                     
                     <form action="/recap-teacher-absences" method="GET" class="flex flex-col sm:flex-row gap-2 w-full">
                         <input type="hidden" name="id" value="{{ $teacher['teacher']['id'] }}">
                         
                         <div class="flex flex-col sm:flex-row sm:items-center gap-2 w-full">
-                            <label for="month" class="sm:hidden text-sm">Select Month:</label>
+                            <label for="month" class="sm:hidden text-sm">Pilih Bulan:</label>
                             <input 
                                 type="month" 
                                 name="month" 
@@ -35,7 +35,7 @@
                                 type="submit" 
                                 class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-1.5 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
                             >
-                                Submit
+                                Cek
                             </button>
                         </div>
                     </form>

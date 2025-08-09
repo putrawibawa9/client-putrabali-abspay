@@ -101,36 +101,54 @@
                                     <div class="bg-gray-100 dark:bg-gray-700 px-8 py-4 border-b border-gray-400 dark:border-gray-600">
                                         <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-400">{{ $data['alias'] }} - {{ $data['subject'] }}</h3>
                                     </div>
-                                    <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                                        <thead class="bg-gray-100 dark:bg-gray-700">
-                                            <tr>
-                                                <th scope="col"
-                                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                    Student Name
-                                                </th>
-                                                <th scope="col"
-                                                    class="p-4 text-xs font-medium text-center text-gray-500 uppercase dark:text-gray-400">
-                                                    Present
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                            @foreach ($data['students'] as $index => $student)
-                                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                        {{ $student['name'] }}
-                                                    </td>
-                                                    <td class="p-4 text-center">
-                                                        <input type="hidden" name="attendances[{{ $index }}][students_courses_id]" value="{{ $student['pivot']['id'] }}">
-                                                        <input type="hidden" name="attendances[{{ $index }}][status]" value="absent">
-                                                        <input id="checkbox-{{ $student['id'] }}" type="checkbox" 
-                                                            onclick="this.previousElementSibling.value=this.checked?'present':'absent'"
-                                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                  <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+  {{-- Atur lebar kolom: Nama lebar, Kehadiran sempit --}}
+  <colgroup>
+    <col class="w-[70%]" />
+    <col class="w-[30%]" />
+  </colgroup>
+
+  <thead class="bg-gray-100 dark:bg-gray-700">
+    <tr>
+      <th scope="col"
+          class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+        Nama
+      </th>
+      <th scope="col"
+          class="p-4 text-xs font-medium text-center text-gray-500 uppercase dark:text-gray-400 w-28">
+        Kehadiran
+      </th>
+    </tr>
+  </thead>
+
+  <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+    @foreach ($data['students'] as $index => $student)
+      <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+        {{-- NAMA: hilangkan nowrap, aktifkan wrap --}}
+        <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-normal break-words max-w-[220px] sm:max-w-none">
+          {{ $student['name'] }}
+          <a href="/public/check-status/{{ $student['id'] }}" rel="noopener"
+            class="ml-2 inline-flex items-center text-blue-600 hover:text-blue-800 align-middle"
+            title="Lihat ringkasan siswa">
+            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M18 10A8 8 0 11.001 10 8 8 0 0118 10zM9 9a1 1 0 012 0v5a1 1 0 11-2 0V9zm1-4a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+        </td>
+
+        {{-- KEHADIRAN: kolom sempit, center --}}
+        <td class="p-4 text-center w-28">
+          <input type="hidden" name="attendances[{{ $index }}][students_courses_id]" value="{{ $student['pivot']['id'] }}">
+          <input type="hidden" name="attendances[{{ $index }}][status]" value="absent">
+          <input id="checkbox-{{ $student['id'] }}" type="checkbox"
+            onclick="this.previousElementSibling.value=this.checked?'present':'absent'"
+            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+        </td>
+      </tr>
+    @endforeach
+  </tbody>
+</table>
+
                                 </div>
                             </div>
                         </div>
@@ -198,7 +216,7 @@
             
             if (!finalTime) {
                 e.preventDefault();
-                alert('Please select a preset time or enter a custom time.');
+                alert('Pilih Waktu dulu.');
                 return false;
             }
         });
