@@ -55,12 +55,20 @@ public function dailyRecap(Request $request)
         'teacher_id' => $teacherId,
     ]);
 
-    $meetings = $response->successful() ? $response->json() : [];
+    $responsePayment = Http::get(env('API_BASE_URL') . '/payments-daily-recap', [
+        'start_date' => $startDate,
+        'end_date' => $endDate,
+       
+    ]);
 
+    $meetings = $response->successful() ? $response->json() : [];
+    $payments = $responsePayment->successful() ? $responsePayment->json() : [];
+    
     $activeRoute = 'daily-recap';
     $totalMeetings = count($meetings);
     $totalTeacherFee = array_sum(array_column($meetings, 'course_teacher_fee'));
     $teachers = $this->teacherService->getAllTeachers();
+    
 
     return view('recapitulations.daily', compact(
         'meetings',
@@ -69,7 +77,8 @@ public function dailyRecap(Request $request)
         'activeRoute',
         'totalMeetings',
         'totalTeacherFee',
-        'teachers'
+        'teachers',
+        'payments'
     ));
 }
 
