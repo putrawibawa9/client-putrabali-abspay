@@ -55,14 +55,10 @@ public function dailyRecap(Request $request)
         'teacher_id' => $teacherId,
     ]);
 
-    $responsePayment = Http::get(env('API_BASE_URL') . '/payments-daily-recap', [
-        'start_date' => $startDate,
-        'end_date' => $endDate,
-       
-    ]);
+   
 
     $meetings = $response->successful() ? $response->json() : [];
-    $payments = $responsePayment->successful() ? $responsePayment->json() : [];
+    
     
     $activeRoute = 'daily-recap';
     $totalMeetings = count($meetings);
@@ -78,9 +74,34 @@ public function dailyRecap(Request $request)
         'totalMeetings',
         'totalTeacherFee',
         'teachers',
-        'payments'
+        
     ));
 }
+
+public function dailyRecapPayment(Request $request)
+{
+    // Ambil parameter tanggal dari query, kalau tidak ada pakai awal & akhir bulan ini
+    $startDate = $request->query('start_date', now()->startOfMonth()->format('Y-m-d'));
+    $endDate = $request->query('end_date', now()->format('Y-m-d'));
+
+    // Kirim request ke API
+    $response = Http::get(env('API_BASE_URL') . '/payments-daily-recap', [
+        'start_date' => $startDate,
+        'end_date' => $endDate,
+    ]);
+
+    $payments = $response->successful() ? $response->json() : [];
+    
+    $activeRoute = 'daily-recap-payment';
+    return view('recapitulations.daily-payment', compact(
+        'payments',
+        'startDate',
+        'endDate',
+        'activeRoute'
+    )); 
+
+}
+    
 
 
 }
