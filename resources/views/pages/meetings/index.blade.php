@@ -80,6 +80,10 @@
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                  Jam
+                                </th>
+                                <th scope="col"
+                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                               Guru
                                 </th>       
                                 <th scope="col"
@@ -90,7 +94,7 @@
                         </thead>
 
                         <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                            
+                            {{-- @dd($meetings) --}}
                             @foreach ($meetings['data'] as $meeting)                             
                            
                                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">    
@@ -109,8 +113,13 @@
 <td class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
     {{ $days[$meeting['day']] ?? $meeting['day'] }}
 </td>
+
+   
                                  <td class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
     {{ \Carbon\Carbon::parse($meeting['date'])->locale('id')->translatedFormat('d F Y') }}
+</td>
+<td class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
+    {{ $days[$meeting['time']] ?? $meeting['time'] }}
 </td>
 
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">

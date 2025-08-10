@@ -18,7 +18,7 @@ class AbsenceService
 
     public function store($data){
         try {
-    // dd($data);
+  
 
             // Make the API request
             $response = $this->client->request('POST', $this->baseUrl . '/absences', [
@@ -32,7 +32,7 @@ class AbsenceService
          
         } catch (RequestException $e) {
             // Log the error details
-            dd($e->getMessage());
+        
             Log::error('API Request Failed: ' . $e->getMessage());
 
             // Return a user-friendly error message
@@ -41,7 +41,7 @@ class AbsenceService
         } catch (\Exception $e) {
             // Log unexpected errors
             Log::error('Unexpected Error: ' . $e->getMessage());
-            dd($e->getMessage());
+            
             // Return a generic error message
             return [
                 'error' => $e->getMessage(),
@@ -49,7 +49,7 @@ class AbsenceService
         } catch (\Exception $e) {
             // Log unexpected errors
             Log::error('Unexpected Error: ' . $e->getMessage());
-        dd($e->getMessage());
+        
             // Return a generic error message
             return [
                 'error' => $e->getMessage(),

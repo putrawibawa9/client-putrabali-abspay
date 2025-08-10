@@ -91,14 +91,26 @@
                  
                     <tbody class="bg-gray-800 divide-y divide-gray-700">
                         <tr class="hover:bg-gray-700 transition duration-150">
+                              @php
+    $days = [
+        'Monday'    => 'Senin',
+        'Tuesday'   => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday'  => 'Kamis',
+        'Friday'    => 'Jumat',
+        'Saturday'  => 'Sabtu',
+        'Sunday'    => 'Minggu',
+    ];
+@endphp
                             <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-white">
                                 {{ $loop->iteration }}
                             </td>
                             <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-300">
-                               {{ $meeting['date'] }}
+                               {{-- {{ $meeting['date'] }} --}}
+                                {{ \Carbon\Carbon::parse($meeting['date'])->locale('id')->translatedFormat('d F Y') }}
                             </td>
                             <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-300">
-                                {{ $meeting['day'] }}
+                                {{ $days[$meeting['day']] ?? $meeting['day'] }}
                             </td>
                             <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-300">
                                 {{ $meeting['time'] }}

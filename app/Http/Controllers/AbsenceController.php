@@ -110,9 +110,10 @@ class AbsenceController extends Controller
 
     // Now you can pass $apiRequestData to your service or API client
     $error = $this->absenceService->store($apiRequestData);
+ 
     // dd($error);
     if ($error) {
-        return redirect()->route("absences.index")->with('error', $error['message']);
+        return redirect()->back()->with('error', $error['message']);
     }
 
    

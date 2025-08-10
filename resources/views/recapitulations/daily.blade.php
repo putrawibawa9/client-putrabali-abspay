@@ -73,10 +73,21 @@
                 <tbody>
                     @foreach($meetings as $meeting)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750">
+                          @php
+    $days = [
+        'Monday'    => 'Senin',
+        'Tuesday'   => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday'  => 'Kamis',
+        'Friday'    => 'Jumat',
+        'Saturday'  => 'Sabtu',
+        'Sunday'    => 'Minggu',
+    ];
+@endphp
                         <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ $meeting['course_alias'] }}</td>
                         <td class="px-4 py-3">{{ $meeting['teacher_name'] }}</td>
-                        <td class="px-4 py-3">{{ $meeting['day'] }}</td>
-                        <td class="px-4 py-3">{{ $meeting['date'] }}</td>
+                        <td class="px-4 py-3">{{ $days[$meeting['day']] ?? $meeting['day'] }}</td>
+                        <td class="px-4 py-3">{{ \Carbon\Carbon::parse($meeting['date'])->locale('id')->translatedFormat('d F Y') }}</td>
                         <td class="px-4 py-3">{{ $meeting['time'] }}</td>
                         <td class="px-4 py-3">{{ $meeting['course_teacher_fee'] }}</td>
                     </tr>
