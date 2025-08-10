@@ -122,6 +122,7 @@
     </div>
 </div>
             </div>
+            
             <div class="sm:flex flex-col sm:flex-1 min-h-full">
                <div class="flex items-center justify-between w-full mt-12">
     <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Payment</h2>

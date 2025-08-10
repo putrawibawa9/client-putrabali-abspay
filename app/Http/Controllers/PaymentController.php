@@ -47,7 +47,8 @@ class PaymentController extends Controller
     public function paymentForm($id)
     {
         $student = $this->studentService->getStudentById($id);
-        return view('payments.show', compact('student'));
+    
+        return view('payments.show', compact('student', 'payment'));
     }
 
     /**
@@ -58,7 +59,7 @@ class PaymentController extends Controller
         // dd($request->all());
     //   if request has 'payment_month' value, return error
     foreach ($request->courses as $course) {
-        if ($course['type'] === 'spp' && $course['payment_month'] === 'Select Month') {
+        if ($course['type'] === 'spp' && $course['payment_month'] === null) {
             return redirect()->back()->with('error', 'Tolong masukan bulan pembayaran');
         }
     }
@@ -82,7 +83,7 @@ class PaymentController extends Controller
       if(isset($error['message'])){
           return redirect()->back()->with('error', $error['message']);
       }else{
-          return redirect()->route('students.show',$request->student_id )->with('success', 'Payment has been successfully added');
+          return redirect()->back()->with('success', 'Payment has been successfully added');
       }
     }
 
@@ -92,9 +93,10 @@ class PaymentController extends Controller
     public function show($id)
     {
         $student = $this->studentService->getStudentById($id);
-        // dd($student);
+           $payment = $this->paymentService->getStudentPayment($id);
+        // dd($payment);
        $activeRoute = 'payments';
-        return view('pages.payment.show', compact('student', 'activeRoute'));
+        return view('pages.payment.show', compact('student', 'payment', 'activeRoute'));
     }
 
     /**
