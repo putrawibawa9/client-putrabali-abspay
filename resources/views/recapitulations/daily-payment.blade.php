@@ -67,10 +67,12 @@
                         <th class="px-4 py-3">Siswa</th>
                         <th class="px-4 py-3">Kelas</th>
                         <th class="px-4 py-3">Tanggal</th>
-                        <th class="px-4 py-3 text-right">Jumlah</th>
+                        <th class="px-4 py-3 ">Jumlah</th>
+                        <th class="px-4 py-3 text-right">Admin</th>
                     </tr>
                 </thead>
                 <tbody>
+                   
                     @foreach($list as $p)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750">
                         <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">#{{ $p['id'] }}</td>
@@ -80,11 +82,14 @@
                         <td class="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">
                             {{ $rupiah($p['payment_amount']) }}
                         </td>
+                        <td class="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">
+                            {{ $p['admin_name'] ?? 'N/A' }}
+                        </td>
                     </tr>
                     @endforeach
                     {{-- Footer total --}}
                     <tr class="bg-gray-50 dark:bg-gray-800">
-                        <td colspan="4" class="px-4 py-3 text-right font-medium text-gray-700 dark:text-gray-300">Total</td>
+                        <td colspan="5" class="px-4 py-3 text-right font-medium text-gray-700 dark:text-gray-300">Total</td>
                         <td class="px-4 py-3 text-right font-bold text-gray-900 dark:text-white">
                             {{ $rupiah($total) }}
                         </td>

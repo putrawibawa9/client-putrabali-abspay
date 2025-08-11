@@ -78,12 +78,15 @@
       </div>
     </div>
   </div>
+  {{-- check user id --}}
+ 
 
   {{-- Create Payment Form --}}
   <form action="{{ route('payments.store') }}" method="POST" onsubmit="return confirm('Apakah pembayaran sudah benar?');">
     @csrf
     <input type="hidden" name="student_id" value="{{ $student['id'] }}">
-
+ 
+    <input type="hidden" name="user_id" value="{{ session('user')['id']}}">
     <div class="min-h-full">
       @if(count($active) > 0)
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 mt-4">

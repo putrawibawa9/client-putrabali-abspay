@@ -56,7 +56,7 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+     
     //   if request has 'payment_month' value, return error
     foreach ($request->courses as $course) {
         if ($course['type'] === 'spp' && $course['payment_month'] === null) {
@@ -70,11 +70,12 @@ class PaymentController extends Controller
     $validPayments = array_filter($courses, function ($course) {
         return !empty($course['payment_date']);
     });
-// dd($validPayments);
+
     // put studentId and vaildPayments in a variable
     $data = [
         'student_id' => $studentId,
         'courses' => $validPayments,   
+        'user_id' => $request->user_id, // Assuming you have a user_id in the request
     ];
 
     $error = $this->paymentService->store($data);
