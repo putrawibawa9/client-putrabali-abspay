@@ -77,7 +77,11 @@ class PaymentController extends Controller
         'courses' => $validPayments,   
         'user_id' => $request->user_id, // Assuming you have a user_id in the request
     ];
-
+   $data['courses'] = array_values(array_filter($data['courses'], function ($course) {
+    return !empty($course['type']);
+}));
+// dd($data);
+// send only the course that has payment
     $error = $this->paymentService->store($data);
 
     // dd($error);
