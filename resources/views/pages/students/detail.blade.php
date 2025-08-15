@@ -177,15 +177,19 @@
                                     </th>
                                     <th scope="col"
                                         class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                        Month
+                                        Bulan
                                     </th>
                                     <th scope="col"
                                         class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                        Amount
+                                        Jumlah
                                     </th>
                                     <th scope="col"
                                         class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                        Date
+                                        Tanggal
+                                    </th>
+                                    <th scope="col"
+                                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Print
                                     </th>
                                 </tr>
                             </thead>
@@ -210,6 +214,18 @@
                                             class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{ \Carbon\Carbon::parse($r['created_at'])->format('d M Y') }}
                                         </td>
+                                    <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+    <a href="{{ route('payments.receipt', $r['id']) }}" 
+       target="_blank"
+       class="inline-flex items-center px-3 py-1 bg-green-500 hover:bg-green-600 text-white text-sm rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 9V2h12v7M6 18h12v4H6v-4zM6 14h12a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v3a2 2 0 002 2z" />
+        </svg>
+        Print
+    </a>
+</td>
+
                                     </tr>
                                 @empty
                                     <tr>

@@ -62,11 +62,7 @@
         <div class="note">
             Terima kasih. Simpan kwitansi ini sebagai bukti pembayaran yang sah.
         </div>
-        <div class="sign">
-            <div>{{ $receipt['admin'] }}</div>
-            <div style="height:32px;"></div>
-            <div>_____________________</div>
-        </div>
+       
     </div>
 </div>
 </body>
