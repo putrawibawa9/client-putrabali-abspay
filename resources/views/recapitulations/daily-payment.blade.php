@@ -62,8 +62,9 @@
                     <col class="w-[16%]"/>
                 </colgroup>
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th class="px-4 py-3">ID</th>
+                    <tr>        
+             
+                        <th class="px-4 py-3">Print</th>
                         <th class="px-4 py-3">Siswa</th>
                         <th class="px-4 py-3">Kelas</th>
                         <th class="px-4 py-3">Tanggal</th>
@@ -75,7 +76,19 @@
                    
                     @foreach($list as $p)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750">
-                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">#{{ $p['id'] }}</td>
+                    <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+    <a href="{{ route('payments.receipt', $p['id']) }}" 
+       target="_blank"
+       class="inline-flex items-center px-3 py-1 bg-green-500 hover:bg-green-600 text-white text-sm rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 9V2h12v7M6 18h12v4H6v-4zM6 14h12a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v3a2 2 0 002 2z" />
+        </svg>
+        Print
+    </a>
+</td>
+
+
                         <td class="px-4 py-3 text-gray-900 dark:text-white whitespace-normal break-words">{{ $p['student_name'] }}</td>
                         <td class="px-4 py-3">{{ $p['course_alias'] }}</td>
                         <td class="px-4 py-3">{{ $indo($p['payment_date']) }}</td>
