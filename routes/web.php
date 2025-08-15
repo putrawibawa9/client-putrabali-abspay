@@ -63,6 +63,8 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::post('/students/monthly-paid-unpaid', [PaymentController::class, 'paidAndUnpaidStudentsMonthly']);
     Route::get('/daily-recap', [RecapitulationController::class, 'dailyRecap'])->name('daily-recap.index');
     Route::get('/daily-recap-payment', [RecapitulationController::class, 'dailyRecapPayment'])->name('daily-recap-payment.index');
+   Route::get('/payments/{id}/receipt', [PaymentController::class, 'generateReceipt'])
+    ->name('payments.receipt');
 
 
     // Dashboard

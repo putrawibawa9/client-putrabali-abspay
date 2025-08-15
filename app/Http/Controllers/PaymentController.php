@@ -9,6 +9,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\AbsenceService;
 use App\Services\PaymentService;
 use App\Services\StudentService;
+use Illuminate\Support\Facades\Http;
 use App\Services\StudentCourseService;
 
 
@@ -207,6 +208,47 @@ public function paidAndUnpaidStudentsMonthly(Request $request){
     return view('recapitulations.index', compact('data'));
 
 }
+
+public function generateReceipt($id)
+{
+
+     $base = env('API_BASE_URL', 'http://localhost:8000/api'); // Base URL API
+    
+
+        // Endpoint: /payments/{id}/receipt (contoh: /payments/15/receipt)
+        $endpoint = "{$base}/payments/{$id}/receipt";
+
+        $res = Http::acceptJson()->get($endpoint);
+        if (!$res->ok()) {
+            abort(502, 'Gagal mengambil data kwitansi dari API.');
+        }
+
+        $p = $res->json();
+
+        // Normalisasi + formatting
+        $date = isset($p['date']) ? Carbon::parse($p['date']) : now();
+    
+        $receipt = [
+            'id'           => $p['id'] ?? $id,
+            'student_name' => $p['student_name'] ?? '-',
+            'course_name'  => $p['course_name'] ?? '-',
+            'type'  => $p['type'] ?? '-',
+            'payment_month' => $p['payment_month'] ?? '-',
+            'amount'       => (int) ($p['amount'] ?? 0),
+            'date'         => $date->format('d/m/Y'),
+            'receipt_no'   => sprintf('KWT-%s-%s', $date->format('Ymd'), str_pad($p['id'] ?? $id, 4, '0', STR_PAD_LEFT)),
+            'admin' => $p['admin']
+        ];
+
+       
+        
+ 
+
+        $pdf = PDF::loadView('pages.payment.kwitansi-payment', compact('receipt'))
+                  ->setPaper('A6', 'portrait'); // kecil & hemat kertas
+
+        return $pdf->stream('kwitansi-'.$receipt['receipt_no'].'.pdf');
+    }
 
 
 }
