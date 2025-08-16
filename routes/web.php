@@ -45,7 +45,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::get('/courses/{id}/students', [CourseController::class, 'showCourseWithStudents'])->name('courses.students');
 
     // payments
-    Route::resource('/payments', PaymentController::class);
+
     Route::get('/payments-search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
     Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembayaranPrint'])->name('formPembayaran.print');
    
@@ -81,6 +81,7 @@ Route::post('/register', [AuthenticationController::class, 'register']);
 Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');
 
 
+    Route::resource('/payments', PaymentController::class);
 // for student or parents
   Route::get('/public/check-status', [PaymentController::class, 'checkPaymentFromParents'])->name('check-status');
     Route::get('/public/check-status/search', [PaymentController::class, 'searchStudentFromParents'])->name('check-status.search');
