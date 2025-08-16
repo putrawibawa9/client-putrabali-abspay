@@ -22,6 +22,25 @@
     </style>
 </head>
 <body>
+
+@php
+use Carbon\Carbon;
+
+$dt = (!empty($receipt['date']) && !empty($receipt['time']))
+    ? Carbon::parse($receipt['date'].' '.$receipt['time'])->locale('id')
+    : null;
+
+$prettyDateTime = $dt ? $dt->isoFormat('dddd, D MMMM YYYY, HH:mm') : '-';
+
+// payment_month (English) → Indonesia
+$map = [
+    'january'=>'Januari','february'=>'Februari','march'=>'Maret','april'=>'April','may'=>'Mei','june'=>'Juni',
+    'july'=>'Juli','august'=>'Agustus','september'=>'September','october'=>'Oktober','november'=>'November','december'=>'Desember'
+];
+$key = isset($receipt['payment_month']) ? strtolower(trim($receipt['payment_month'])) : null;
+$paymentMonthId = $key ? ($map[$key] ?? $receipt['payment_month']) : '-';
+@endphp
+
 <div class="card">
     <div class="header">
         <div class="title">KWITANSI PEMBAYARAN</div>
@@ -31,10 +50,13 @@
     <div class="line"></div>
 
     <table>
-        
         <tr>
-            <td class="label">Tanggal</td>
-            <td class="value">: {{ $receipt['date'] }}</td>
+            <td class="label">Waktu</td>
+            <td class="value">: {{ $prettyDateTime }}</td>
+        </tr>
+        <tr>
+            <td class="label">Nis</td>
+            <td class="value">: {{ $receipt['student_nis'] }}</td>
         </tr>
         <tr>
             <td class="label">Nama Siswa</td>
@@ -50,7 +72,7 @@
         </tr>
         <tr>
             <td class="label">Bulan</td>
-            <td class="value amount">: {{ $receipt['payment_month'] }}</td>
+            <td class="value amount">: {{ $paymentMonthId }}</td>
         </tr>
         <tr>
             <td class="label">Jumlah</td>
@@ -62,7 +84,6 @@
         <div class="note">
             Terima kasih. Simpan kwitansi ini sebagai bukti pembayaran yang sah.
         </div>
-       
     </div>
 </div>
 </body>

@@ -231,16 +231,18 @@ public function generateReceipt($id)
         $receipt = [
             'id'           => $p['id'] ?? $id,
             'student_name' => $p['student_name'] ?? '-',
+            'student_nis'  => $p['student_nis'] ?? '-',
             'course_name'  => $p['course_name'] ?? '-',
             'type'  => $p['type'] ?? '-',
             'payment_month' => $p['payment_month'] ?? '-',
             'amount'       => (int) ($p['amount'] ?? 0),
-            'date'         => $date->format('d/m/Y'),
+            'date'         => $p['date'],
+            'time'      => $p['time'],
             'receipt_no'   => sprintf('KWT-%s-%s', $date->format('Ymd'), str_pad($p['id'] ?? $id, 4, '0', STR_PAD_LEFT)),
             'admin' => $p['admin']
         ];
 
-       
+    //    dd($receipt);
         
  
 
