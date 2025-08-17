@@ -63,8 +63,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::post('/students/monthly-paid-unpaid', [PaymentController::class, 'paidAndUnpaidStudentsMonthly']);
     Route::get('/daily-recap', [RecapitulationController::class, 'dailyRecap'])->name('daily-recap.index');
     Route::get('/daily-recap-payment', [RecapitulationController::class, 'dailyRecapPayment'])->name('daily-recap-payment.index');
-   Route::get('/payments/{id}/receipt', [PaymentController::class, 'generateReceipt'])
-    ->name('payments.receipt');
+  
 
 
     // Dashboard
@@ -73,6 +72,8 @@ Route::middleware([CheckUserSession::class])->group(function () {
 
 
 // authentications
+ Route::get('/payments/{id}/receipt', [PaymentController::class, 'generateReceipt'])
+    ->name('payments.receipt');
 Route::get('/', [AuthenticationController::class, 'loginPage'])->name('login');
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/login/teacher', [AuthenticationController::class, 'loginTeacher'])->name('login.teacher');
