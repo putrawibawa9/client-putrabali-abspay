@@ -32,31 +32,11 @@
     <div class="forms">
         <div class="form-content">
           <div class="login-form">
-            <div class="title">Login Admin</div>
-          <form action="/login" method="POST">
+            <div class="title">Login Teacher</div>
+              <form action="{{ route('login.teacher') }}" method="POST">
+     
             @csrf
-            <div class="input-boxes">
-              <div class="input-box">
-                <i class="fas fa-user"></i>
-                <input type="text" name="name" placeholder="Enter your name" required>
-              </div>
-              <div class="input-box">
-                <i class="fas fa-lock"></i>
-                <input type="password" name="password" placeholder="Enter your password" required>
-              </div>
-         
-              <div class="button input-box">
-                <input type="submit" value="Submit">
-              </div>
-              <div class="text sign-up-text">Not an admin? <label for="flip">Login as teacher</label></div>
-            </div>
-        </form>
-      </div>
-        <div class="signup-form">
-          <div class="title">Login Teacher</div>
-        <form action="{{ route('login.teacher') }}" method="POST">
-          @csrf
-            <div class="input-boxes">
+             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-user"></i>
                 <input type="text" name="username" placeholder="Enter your username" required>
@@ -70,6 +50,28 @@
                 <input type="submit" value="Submit">
               </div>
               <div class="text sign-up-text">Not a teacher? <label for="flip">Login as admin</label></div>
+            </div>
+          
+        </form>
+      </div>
+        <div class="signup-form">
+          <div class="title">Login Admin</div>
+          <form action="/login" method="POST">
+          @csrf
+             <div class="input-boxes">
+              <div class="input-box">
+                <i class="fas fa-user"></i>
+                <input type="text" name="name" placeholder="Enter your name" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Enter your password" required>
+              </div>
+         
+              <div class="button input-box">
+                <input type="submit" value="Submit">
+              </div>
+              <div class="text sign-up-text">Not an admin? <label for="flip">Login as teacher</label></div>
             </div>
       </form>
     </div>

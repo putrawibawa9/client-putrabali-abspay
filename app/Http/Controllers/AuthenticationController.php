@@ -34,6 +34,7 @@ class AuthenticationController extends Controller
         // dd($user);
         Session::put('user_logged_in', true);
         Session::put('user', $user);
+        Session::put('actor', 'admin');
         // dd('login success');
         return redirect()->route('dashboard');
       } 
@@ -77,6 +78,7 @@ public function loginTeacher(Request $request){
         Session::put('teacher_logged_in', true);
         Session::put('user', $teacher_name);
         Session::put('teacher_id', $teacher_id);
+        Session::put('actor', 'teacher');
         // dd('login success');
       return redirect()->route('absences.index');
     } 
