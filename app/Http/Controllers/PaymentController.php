@@ -55,43 +55,48 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-     
-    //   if request has 'payment_month' value, return error
+   public function store(Request $request)
+{
+    // kalau type spp tapi tidak ada bulan, return error
     foreach ($request->courses as $course) {
         if ($course['type'] === 'spp' && $course['payment_month'] === null) {
             return redirect()->back()->with('error', 'Tolong masukan bulan pembayaran');
         }
     }
-         $studentId = $request->input('student_id');
-    $courses = $request->input('courses');
 
-      // Filter out courses with invalid payment data
+    $studentId = $request->input('student_id');
+    $courses   = $request->input('courses');
+
+    // Filter out courses with invalid payment data
     $validPayments = array_filter($courses, function ($course) {
         return !empty($course['payment_date']);
     });
 
-    // put studentId and vaildPayments in a variable
+    // siapkan data dasar
     $data = [
         'student_id' => $studentId,
-        'courses' => $validPayments,   
-        'user_id' => $request->user_id, // Assuming you have a user_id in the request
+        'courses'    => array_values(array_filter($validPayments, function ($course) {
+            return !empty($course['type']);
+        })),
     ];
-   $data['courses'] = array_values(array_filter($data['courses'], function ($course) {
-    return !empty($course['type']);
-}));
-// dd($data);
-// send only the course that has payment
+
+    // tentukan siapa aktornya
+    if ($request->actor === 'teacher') {
+        $data['teacher_id'] = $request->user_id;
+    } elseif ($request->actor === 'admin') {
+        $data['user_id'] = $request->user_id;
+    }
+
+    // kirim ke service
     $error = $this->paymentService->store($data);
 
-    // dd($error);
-      if(isset($error['message'])){
-          return redirect()->back()->with('error', $error['message']);
-      }else{
-          return redirect()->back()->with('success', 'Payment has been successfully added');
-      }
+    if (isset($error['message'])) {
+        return redirect()->back()->with('error', $error['message']);
     }
+
+    return redirect()->back()->with('success', 'Payment has been successfully added');
+}
+
 
     /**
      * Display the specified resource.

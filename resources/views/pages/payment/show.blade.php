@@ -85,7 +85,8 @@
   <form action="{{ route('payments.store') }}" method="POST" onsubmit="return confirm('Apakah pembayaran sudah benar?');">
     @csrf
     <input type="hidden" name="student_id" value="{{ $student['id'] }}">
- 
+    <input type="hidden" name="actor" value="{{ session('actor') }}">
+    {{-- Hidden User ID --}}
     <input type="hidden" name="user_id" value="{{ session('user')['id']}}">
     <div class="min-h-full">
       @if(count($active) > 0)
@@ -247,6 +248,17 @@
                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   @forelse ($row['payments'] as $r)
                     <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                       <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+    <a href="{{ route('payments.receipt', $r['id']) }}" 
+       target="_blank"
+       class="inline-flex items-center px-3 py-1 bg-green-500 hover:bg-green-600 text-white text-sm rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 9V2h12v7M6 18h12v4H6v-4zM6 14h12a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v3a2 2 0 002 2z" />
+        </svg>
+        Print
+    </a>
+</td>
                       <td class="px-4 sm:px-6 py-3 text-gray-900 dark:text-white whitespace-nowrap">
                         {{ $r['type'] }}
                       </td>
