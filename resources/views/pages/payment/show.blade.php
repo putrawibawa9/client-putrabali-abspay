@@ -239,6 +239,8 @@
               <table class="min-w-full text-sm text-left text-gray-600 dark:text-gray-300">
                 <thead class="text-xs uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
+                    
+                    <th class="px-4 sm:px-6 py-3">Print</th>
                     <th class="px-4 sm:px-6 py-3">Type</th>
                     <th class="px-4 sm:px-6 py-3">Month</th>
                     <th class="px-4 sm:px-6 py-3">Amount</th>
@@ -274,7 +276,7 @@
                     </tr>
                   @empty
                     <tr>
-                      <td colspan="4" class="px-4 sm:px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                      <td colspan="5" class="px-4 sm:px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                         No payment records for this course.
                       </td>
                     </tr>
