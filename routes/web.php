@@ -46,7 +46,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
 
     // payments
 
-    Route::get('/payments-search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
+  
     Route::get('/formPembayaran/print/{id}', [PaymentController::class, 'formPembayaranPrint'])->name('formPembayaran.print');
    
 
@@ -70,7 +70,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::get('/dashboard', [RecapitulationController::class, 'index'])->name('dashboard')->middleware(CheckUserSession::class);
 });
 
-
+  Route::get('/payments-search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
 // authentications
  Route::get('/payments/{id}/receipt', [PaymentController::class, 'generateReceipt'])
     ->name('payments.receipt');
