@@ -55,6 +55,10 @@ $paymentMonthId = $key ? ($map[$key] ?? $receipt['payment_month']) : '-';
             <td class="value">: {{ $prettyDateTime }}</td>
         </tr>
         <tr>
+            <td class="label">Admin</td>
+            <td class="value">: {{ $receipt['admin'] }}</td>
+        </tr>
+        <tr>
             <td class="label">Nis</td>
             <td class="value">: {{ $receipt['student_nis'] }}</td>
         </tr>
