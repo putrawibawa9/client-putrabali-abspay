@@ -68,6 +68,8 @@
                         <th class="px-4 py-3">Siswa</th>
                         <th class="px-4 py-3">Kelas</th>
                         <th class="px-4 py-3">Tanggal</th>
+                        <th class="px-4 py-3">Jenis</th>
+                        <th class="px-4 py-3">Bulan</th>
                         <th class="px-4 py-3 ">Jumlah</th>
                         <th class="px-4 py-3 text-right">Admin</th>
                     </tr>
@@ -92,6 +94,28 @@
                         <td class="px-4 py-3 text-gray-900 dark:text-white whitespace-normal break-words">{{ $p['student_name'] }}</td>
                         <td class="px-4 py-3">{{ $p['course_alias'] }}</td>
                         <td class="px-4 py-3">{{ $indo($p['payment_date']) }}</td>
+                        <td class="px-4 py-3">{{ $p['type'] }}</td>
+                      <td class="px-4 py-3">
+    @php
+        $bulanInggris = [
+            'january' => 'Januari',
+            'february' => 'Februari',
+            'march' => 'Maret',
+            'april' => 'April',
+            'may' => 'Mei',
+            'june' => 'Juni',
+            'july' => 'Juli',
+            'august' => 'Agustus',
+            'september' => 'September',
+            'october' => 'Oktober',
+            'november' => 'November',
+            'december' => 'Desember',
+        ];
+
+        $bulan = $p['payment_month'];
+        echo $bulanInggris[$bulan] ?? $bulan; // fallback kalau ada data aneh
+    @endphp
+</td>
                         <td class="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">
                             {{ $rupiah($p['payment_amount']) }}
                         </td>
@@ -135,6 +159,18 @@
                             <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                         </svg>
                         <span>{{ $indo($p['payment_date']) }}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 6a3 3 0 116 0v1h1a3 3 0 013 3v3a3 3 0 01-3 3H5a3 3 0 01-3-3V10a3 3 0 013-3h1V6zm3-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>{{ $p['payment_month'] }}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 6a3 3 0 116 0v1h1a3 3 0 013 3v3a3 3 0 01-3 3H5a3 3 0 01-3-3V10a3 3 0 013-3h1V6zm3-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>{{ $p['type'] }}</span>
                     </div>
                 </div>
             </div>
