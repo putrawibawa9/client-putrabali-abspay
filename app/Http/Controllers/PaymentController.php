@@ -66,6 +66,7 @@ class PaymentController extends Controller
 
     $studentId = $request->input('student_id');
     $courses   = $request->input('courses');
+    
 
     // Filter out courses with invalid payment data
     $validPayments = array_filter($courses, function ($course) {

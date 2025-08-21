@@ -17,24 +17,70 @@
 
     {{-- Filter Tanggal --}}
     <form method="GET" action="{{ route('daily-recap-payment.index') }}" class="mb-6">
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Filter By Date Range</label>
-        <div class="flex flex-col sm:flex-row gap-2 mb-4">
-            <input type="date" name="start_date"
-                   value="{{ request('start_date', now()->format('Y-m-d')) }}"
-                   class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                          focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-            <input type="date" name="end_date"
-                   value="{{ request('end_date', now()->format('Y-m-d')) }}"
-                   class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                          focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Filter By</label>
 
-            <button type="submit"
-                    class="px-4 py-2.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700
-                           focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-colors">
-                Filter
-            </button>
-        </div>
-    </form>
+    <div class="flex flex-col sm:flex-row gap-2 mb-4">
+        {{-- Start Date --}}
+        <input type="date" name="start_date"
+               value="{{ request('start_date', now()->format('Y-m-d')) }}"
+               class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                      focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+
+        {{-- End Date --}}
+        <input type="date" name="end_date"
+               value="{{ request('end_date', now()->format('Y-m-d')) }}"
+               class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                      focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+
+        {{-- Payment Month --}}
+       <select name="payment_month"
+        class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+               focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+    <option value="">-- All Months --</option>
+    @foreach(range(1,12) as $m)
+        @php
+            $monthName = strtolower(\Carbon\Carbon::create()->month($m)->format('F'));
+        @endphp
+        <option value="{{ $monthName }}"
+            {{ request('payment_month') == $monthName ? 'selected' : '' }}>
+            {{ ucfirst($monthName) }}
+        </option>
+    @endforeach
+</select>
+
+
+        {{-- Course --}}
+        <select name="course_id"
+                class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                       focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <option value="">-- All Courses --</option>
+            @foreach($courses['data'] as $course)
+                <option value="{{ $course['id'] }}" {{ request('course_id') == $course['id'] ? 'selected' : '' }}>
+                    {{ $course['alias'] }}
+                </option>
+            @endforeach
+        </select>
+
+        {{-- Admin/User --}}
+        <select name="user_id"
+                class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                       focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <option value="">-- All Admins --</option>
+            @foreach($users as $user)
+                <option value="{{ $user['id'] }}" {{ request('user_id') == $user['id'] ? 'selected' : '' }}>
+                    {{ $user['name'] }}
+                </option>
+            @endforeach
+        </select>
+
+        <button type="submit"
+                class="px-4 py-2.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700
+                       focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-colors">
+            Filter
+        </button>
+    </div>
+</form>
+
 
     {{-- Ringkasan --}}
     <div class="mb-4 flex flex-wrap items-center gap-3">
@@ -126,7 +172,7 @@
                     @endforeach
                     {{-- Footer total --}}
                     <tr class="bg-gray-50 dark:bg-gray-800">
-                        <td colspan="5" class="px-4 py-3 text-right font-medium text-gray-700 dark:text-gray-300">Total</td>
+                        <td colspan="7" class="px-4 py-3 text-right font-medium text-gray-700 dark:text-gray-300">Total</td>
                         <td class="px-4 py-3 text-right font-bold text-gray-900 dark:text-white">
                             {{ $rupiah($total) }}
                         </td>

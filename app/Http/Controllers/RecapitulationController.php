@@ -80,6 +80,7 @@ public function dailyRecap(Request $request)
 
 public function dailyRecapPayment(Request $request)
 {
+    // dd($request->all());
     // Ambil parameter tanggal dari query, kalau tidak ada pakai awal & akhir bulan ini
     $startDate = $request->query('start_date', now()->startOfMonth()->format('Y-m-d'));
     $endDate = $request->query('end_date', now()->format('Y-m-d'));
@@ -88,8 +89,14 @@ public function dailyRecapPayment(Request $request)
     $response = Http::get(env('API_BASE_URL') . '/payments-daily-recap', [
         'start_date' => $startDate,
         'end_date' => $endDate,
+        'course_id' => $request->query('course_id'),
+        'user_id' => $request->query('user_id'),
+        'payment_month' => $request->query('payment_month'),
     ]);
 
+    $courses =  Http::get(env('API_BASE_URL') . '/courses')->json();
+    $users =  Http::get(env('API_BASE_URL') . '/users')->json();
+    
     $payments = $response->successful() ? $response->json() : [];
     
     $activeRoute = 'daily-recap-payment';
@@ -97,8 +104,10 @@ public function dailyRecapPayment(Request $request)
         'payments',
         'startDate',
         'endDate',
-        'activeRoute'
-    )); 
+        'activeRoute',
+        'courses',
+        'users'
+    ));
 
 }
     
