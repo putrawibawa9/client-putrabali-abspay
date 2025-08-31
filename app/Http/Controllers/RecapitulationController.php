@@ -110,7 +110,34 @@ public function dailyRecapPayment(Request $request)
     ));
 
 }
-    
 
+  public function unpaid(Request $request){
+              // Ambil parameter query (bisa override lewat URL)
+        $month    = $request->query('month', now()->format('Y-m'));
+        $courseId = $request->query('course_id');
+
+        // Panggil API unpaid
+        $response = Http::get(env('API_BASE_URL') . '/unpaid', [
+            'month'     => $month,
+            'course_id' => $courseId,
+        ]);
+
+        // Kalau sukses → ambil JSON, kalau gagal → kosongkan
+        $unpaids = $response->successful() ? $response->json() : [];
+
+        // Untuk tambahan filter UI, bisa juga fetch course list dsb kalau perlu
+        $courses = Http::get(env('API_BASE_URL') . '/courses')->json();
+
+        $activeRoute = 'courses';
+
+        return view('recapitulations.unpaid', compact(
+            'unpaids',
+            'month',
+            'courseId',
+            'courses',
+            'activeRoute'
+        ));
+
+    }
 
 }

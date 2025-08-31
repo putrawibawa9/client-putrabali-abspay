@@ -100,6 +100,10 @@
                                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                                             Select
                                         </a>
+                                   <a href="{{ route('unpaid.index') }}?course_id={{ $course['id'] }}&month={{ now()->format('Y-m') }}"
+   class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+    Pembayaran
+</a>
                                     </td>
                                     <td
                                         class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">

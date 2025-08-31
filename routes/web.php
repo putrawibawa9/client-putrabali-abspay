@@ -13,7 +13,7 @@ use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\RecapitulationController;
 use App\Http\Controllers\StudentCourseController;
 use App\Http\Middleware\CheckUserSession;
-
+use Faker\Provider\ar_EG\Payment;
 
 Route::middleware([CheckUserSession::class])->group(function () {
 
@@ -99,3 +99,5 @@ Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout
     Route::get('/absences/{id}', [AbsenceController::class, 'absenceForm'])->name('absences.show');
     Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absences.store');
     Route::get('/recap-teacher-absences', [TeacherController::class, 'recapTeacherAbsences'])->name('recap-teacher-absences');
+
+    Route::get('/unpaid', [RecapitulationController::class, 'unpaid'])->name('unpaid.index');
