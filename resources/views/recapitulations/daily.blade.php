@@ -71,6 +71,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- @dd($meetings) --}}
                     @foreach($meetings as $meeting)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750">
                           @php
@@ -84,8 +85,19 @@
         'Sunday'    => 'Minggu',
     ];
 @endphp
-                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ $meeting['course_alias'] }}</td>
-                        <td class="px-4 py-3">{{ $meeting['teacher_name'] }}</td>
+                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+    <a href="{{ route('courses.students', $meeting['course_id']) }}"
+       class="text-primary-600 hover:underline dark:text-primary-400">
+        {{ $meeting['course_alias'] }}
+    </a>
+</td>
+                      <td class="px-4 py-3">
+    <a href="/recap-teacher-absences?id={{ $meeting['teacher_id'] }}"
+       class="text-primary-600 hover:underline dark:text-primary-400">
+        {{ $meeting['teacher_name'] }}
+    </a>
+</td>
+
                         <td class="px-4 py-3">{{ $days[$meeting['day']] ?? $meeting['day'] }}</td>
                         <td class="px-4 py-3">{{ \Carbon\Carbon::parse($meeting['date'])->locale('id')->translatedFormat('d F Y') }}</td>
                         <td class="px-4 py-3">{{ $meeting['time'] }}</td>

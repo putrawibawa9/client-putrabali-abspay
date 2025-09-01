@@ -137,8 +137,17 @@
 </td>
 
 
-                        <td class="px-4 py-3 text-gray-900 dark:text-white whitespace-normal break-words">{{ $p['student_name'] }}</td>
-                        <td class="px-4 py-3">{{ $p['course_alias'] }}</td>
+                        <td class="px-4 py-3 text-primary-600 hover:underline dark:text-primary-400">
+                            <a href="{{ route('students.show', $p['student_id']) }}">
+                                {{ $p['student_name'] }}
+                            </a>
+                        </td>
+                        <td class="px-4 py-3 text-primary-600 hover:underline dark:text-primary-400">
+                            <a href="{{ route('courses.students', $p['course_id']) }}">
+
+                                {{ $p['course_alias'] }}
+                            </a>
+                        </td>
                         <td class="px-4 py-3">{{ $indo($p['payment_date']) }}</td>
                         <td class="px-4 py-3">{{ $p['type'] }}</td>
                       <td class="px-4 py-3">

@@ -76,14 +76,14 @@
             <div class="flex flex-col min-h-full">
              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Enrolled This Month</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Pendaftaran Baru Bulan Ini</h3>
         <p class="text-3xl font-bold text-blue-500 dark:text-blue-400">
             {{ $recapitulations['total_enroll_students_in_given_month'] }}
         </p>
     </div>
 
     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Total Students</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Total Siswa</h3>
         <p class="text-3xl font-bold text-green-500 dark:text-green-400">
             {{ $recapitulations['total_students'] }}
         </p>
@@ -93,20 +93,20 @@
                 <!-- Teachers & Courses Section -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Teachers</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Guru</h3>
                         <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-                            <p class="text-gray-700 dark:text-gray-400 mb-3">Total Teachers</p>
+                            <p class="text-gray-700 dark:text-gray-400 mb-3">Total Guru</p>
                             <p class="font-semibold text-gray-900 dark:text-white mb-2">Total:</p>
-                            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $recapitulations['total_teachers'] }} Teachers</h5>
+                            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $recapitulations['total_teachers'] }} Guru</h5>
                         </div>
                     </div>
 
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Courses</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Kelas</h3>
                         <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-                            <p class="text-gray-700 dark:text-gray-400 mb-3">Active Courses</p>
+                            <p class="text-gray-700 dark:text-gray-400 mb-3">Kelas Aktif</p>
                             <p class="font-semibold text-gray-900 dark:text-white mb-2">Total:</p>
-                            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $recapitulations['total_active_courses'] }} Courses</h5>
+                            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $recapitulations['total_active_courses'] }} Kelas</h5>
                         </div>
                     </div>
                 </div>
@@ -115,10 +115,10 @@
 
                 <!-- Payments Section -->
                 <div class="mt-8">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Payments</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Pembayaran</h3>
                     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
                        
-                        <p class="font-semibold text-xl text-gray-900 dark:text-white mb-2">Expected Income:</p>
+                        <p class="font-semibold text-xl text-gray-900 dark:text-white mb-2">Pendapatan yang Diharapkan:</p>
                         <h5 class="text-3xl font-bold text-gray-900 dark:text-white">
                             {{ $recapitulations['expected_income'] }}
                         </h5>
@@ -135,28 +135,26 @@
                     </div>
                 </div>
 
-              <div class="mt-6">
-    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Payment Status This Month</h3>
-    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-        <div class="flex flex-col items-center justify-center">
-            <!-- Smaller canvas container -->
-            <div class="w-40 h-40">
-                <canvas id="paymentStatusChart"></canvas>
-            </div>
-
-            <div class="mt-4 space-y-1 text-sm">
-                <p class="text-gray-700 dark:text-gray-400">
-                    <span class="inline-block w-3 h-3 rounded-full bg-green-500 mr-2"></span>
-                    Paid: <strong class="text-gray-900 dark:text-white">{{ $recapitulations['total_students_who_paid'] }}%</strong>
+            <div class="mt-6">
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Status Pembayaran Bulan Ini</h3>
+    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700 text-center">
+        <div class="flex flex-col sm:flex-row justify-around items-center gap-4">
+            <div class="p-4 bg-green-100 dark:bg-green-800 rounded-lg w-full sm:w-1/3">
+                <p class="text-lg font-semibold text-green-800 dark:text-green-100">Sudah Dibayar</p>
+                <p class="text-2xl font-bold text-green-800 dark:text-green-100">
+                    {{ $recapitulations['total_students_who_paid'] }}%
                 </p>
-                <p class="text-gray-700 dark:text-gray-400">
-                    <span class="inline-block w-3 h-3 rounded-full bg-red-500 mr-2"></span>
-                    Not Paid: <strong class="text-gray-900 dark:text-white">{{ $recapitulations['total_students_who_have_not_paid'] }}%</strong>
+            </div>
+            <div class="p-4 bg-red-100 dark:bg-red-800 rounded-lg w-full sm:w-1/3">
+                <p class="text-lg font-semibold text-red-700 dark:text-red-200">Belum Dibayar</p>
+                <p class="text-2xl font-bold text-red-800 dark:text-red-100">
+                    {{ $recapitulations['total_students_who_have_not_paid'] }}%
                 </p>
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
     const paymentStatusCtx = document.getElementById('paymentStatusChart').getContext('2d');

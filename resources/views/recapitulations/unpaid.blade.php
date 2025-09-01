@@ -68,10 +68,10 @@
 
     {{-- Informasi tambahan --}}
     <p class="mt-1 text-sm font-medium text-red-600 dark:text-red-400">
-        Belum bayar bulan {{ ucfirst($month ?? now()->format('F')) }} :
+        Belum bayar bulan {{ ucfirst($month ?? now()->format('')) }} :
         {{ $unpaids['count'] ?? 0 }} siswa
     </p>
-
+`
     {{-- Filter Form --}}
     <form method="GET" action="{{ route('unpaid.index') }}" class="mt-4 flex flex-wrap gap-2">
         {{-- Filter Bulan --}}
@@ -176,9 +176,12 @@
             {{ $student['nis'] }}
         </td>
         <!-- Name Column -->
-        <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            {{ $student['name'] }}
-        </td>                
+      <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
+    <a href="{{ route('payments.show', $student['id']) }}"
+       class="text-white hover:underline dark:text-primary-400">
+        {{ $student['name'] }}
+    </a>
+</td>               
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
         <a href="https://wa.me/{{ $student['wa_number'] }}" target="_blank" title="Klik untuk chat di WhatsApp" class="flex items-center gap-1 text-white-600 hover:underline">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline" fill="currentColor" viewBox="0 0 24 24">

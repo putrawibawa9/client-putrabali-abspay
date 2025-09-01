@@ -131,8 +131,10 @@
                                     </td>
 
                                     <td class="p-2 sm:p-4 text-sm font-medium text-gray-900 dark:text-white">
-                                        <div class="max-w-[120px] sm:max-w-none truncate sm:whitespace-nowrap">
-                                            {{ $student['name'] }}
+                                        <div class="max-w-[120px] sm:max-w-none truncate sm:whitespace-nowrap text-primary-400 hover:underline">
+                                            <a href="{{ route('students.show', $student['id']) }}">
+                                                {{ $student['name'] }}
+                                            </a>
                                         </div>
                                         <!-- Mobile-only additional info -->
                                         <div class="sm:hidden text-xs text-gray-500 mt-1 space-y-1">
