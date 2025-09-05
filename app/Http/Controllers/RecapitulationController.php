@@ -38,7 +38,9 @@ class RecapitulationController extends Controller
     // dd($recapitulations);
    $currentMonth = Carbon::now()->format('F'); // Full month name
    $activeRoute ='dashboard';
-   return view('pages.dashboard.dashboard', compact('activeRoute', 'recapitulations', 'currentMonth'));
+   $financeCategory = Http::get(env('API_BASE_URL') . '/finance-entries')->json();
+//    dd($financeCategory);
+   return view('pages.dashboard.dashboard', compact('activeRoute', 'recapitulations', 'currentMonth', 'financeCategory'));
 }
 
 public function dailyRecap(Request $request)
@@ -96,6 +98,7 @@ public function dailyRecapPayment(Request $request)
 
     $courses =  Http::get(env('API_BASE_URL') . '/courses')->json();
     $users =  Http::get(env('API_BASE_URL') . '/users')->json();
+
     
     $payments = $response->successful() ? $response->json() : [];
     

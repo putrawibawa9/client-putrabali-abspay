@@ -213,6 +213,40 @@
                         </div>
                     </div>
                 </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8 mb-6">
+                   <div>
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Buku Kas</h3>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-gray-100 dark:bg-gray-800">
+                <th class="border px-4 py-2 text-left dark:text-white">Kategori</th>
+                <th class="border px-4 py-2 text-left dark:text-white">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $grandTotal = 0;
+            @endphp
+
+            @foreach ($financeCategory as $row)
+                @php
+                    $grandTotal += $row['total_amount'];
+                @endphp
+                <tr>
+                    <td class="border px-4 py-2 dark:text-white">{{ $row['category'] }}</td>
+                    <td class="border px-4 py-2 dark:text-white">
+                        Rp. {{ number_format($row['total_amount'], 0, ',', '.') }}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+     
+    </table>
+</div>
+
+
+                  
+                </div>
             </div>
         </div>
     </div>
