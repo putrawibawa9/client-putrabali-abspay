@@ -9,6 +9,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\FinanceEntryController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\RecapitulationController;
 use App\Http\Controllers\StudentCourseController;
@@ -63,7 +64,7 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::post('/students/monthly-paid-unpaid', [PaymentController::class, 'paidAndUnpaidStudentsMonthly']);
     Route::get('/daily-recap', [RecapitulationController::class, 'dailyRecap'])->name('daily-recap.index');
     Route::get('/daily-recap-payment', [RecapitulationController::class, 'dailyRecapPayment'])->name('daily-recap-payment.index');
-    Route::get('/finance-entries', [RecapitulationController::class, 'financeEntries'])->name('finance-entries.index');
+    Route::resource('/finance-entries', FinanceEntryController::class);
   
 
 

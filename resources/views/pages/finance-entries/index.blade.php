@@ -20,15 +20,25 @@
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Pemasukan</h3>
             <!-- Form tambah pemasukan baru -->
-            <form method="POST" class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end">
+            <form id="incomeForm" method="POST" class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end flex-wrap">
                 @csrf
-                <div class="flex-1">
+                <input type="hidden" name="direction" value="income">
+                <div class="flex-1 min-w-[180px]">
                     <label for="income_category" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Kategori</label>
-                    <input type="text" name="category" id="income_category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
+                    <select name="finance_category_id" id="income_category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
+                        <option value="">Pilih Kategori</option>
+                        @foreach ($financeCategory['income_data'] as $category)
+                            <option value="{{ $category['id'] }}">{{ $category['code'] }} || {{ $category['name'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="flex-1">
+                <div class="flex-1 min-w-[120px]">
                     <label for="income_total" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Total</label>
-                    <input type="number" name="total_amount" id="income_total" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
+                    <input type="number" name="amount" id="income_total" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
+                </div>
+                <div class="flex-1 min-w-[180px]">
+                    <label for="income_note" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Note <span class="text-xs text-gray-400">(opsional)</span></label>
+                    <input type="text" name="note" id="income_note" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" placeholder="Catatan tambahan (opsional)">
                 </div>
                 <button type="submit" class="mt-2 sm:mt-0 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Tambah</button>
             </form>
@@ -48,7 +58,7 @@
                             $grandTotal += $row['total_amount'];
                         @endphp
                         <tr>
-                            <td class="border px-4 py-2 dark:text-white">{{ $row['category'] }}</td>
+                               <td class="border px-4 py-2 dark:text-white">{{ $row['code'] }} || {{ $row['category'] }}</td>
                             <td class="border px-4 py-2 dark:text-white">
                                 Rp. {{ number_format($row['total_amount'], 0, ',', '.') }}
                             </td>
@@ -60,15 +70,25 @@
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Pengeluaran</h3>
             <!-- Form tambah pengeluaran baru -->
-            <form method="POST" class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end">
+            <form id="outcomeForm" method="POST" class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end flex-wrap">
                 @csrf
-                <div class="flex-1">
+                        <input type="hidden" name="direction" value="expense">
+                <div class="flex-1 min-w-[180px]">
                     <label for="outcome_category" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Kategori</label>
-                    <input type="text" name="category" id="outcome_category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
+                    <select name="finance_category_id" id="outcome_category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
+                        <option value="">Pilih Kategori</option>
+                        @foreach ($financeCategory['outcome_data'] as $category)
+                            <option value="{{ $category['id'] }}">{{ $category['code'] }} || {{ $category['name'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="flex-1">
+                <div class="flex-1 min-w-[120px]">
                     <label for="outcome_total" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Total</label>
-                    <input type="number" name="total_amount" id="outcome_total" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
+                    <input type="number" name="amount" id="outcome_total" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
+                </div>
+                <div class="flex-1 min-w-[180px]">
+                    <label for="outcome_note" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Note <span class="text-xs text-gray-400">(opsional)</span></label>
+                    <input type="text" name="note" id="outcome_note" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" placeholder="Catatan tambahan (opsional)">
                 </div>
                 <button type="submit" class="mt-2 sm:mt-0 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Tambah</button>
             </form>
@@ -88,7 +108,7 @@
                             $grandTotal += $row['total_amount'];
                         @endphp
                         <tr>
-                            <td class="border px-4 py-2 dark:text-white">{{ $row['category'] }}</td>
+                            <td class="border px-4 py-2 dark:text-white">{{ $row['code'] }} || {{ $row['category'] }}</td>
                             <td class="border px-4 py-2 dark:text-white">
                                 Rp. {{ number_format($row['total_amount'], 0, ',', '.') }}
                             </td>
@@ -99,4 +119,50 @@
         </div>
     </div>
 </div>
+
+
+
+<script>
+    const incomeForm = document.getElementById('incomeForm');
+    const outcomeForm = document.getElementById('outcomeForm');
+    const incomeFields = incomeForm.querySelectorAll('input, select, textarea');
+    const incomeSubmit = incomeForm.querySelector('button[type="submit"]');
+    const outcomeFields = outcomeForm.querySelectorAll('input, select, textarea');
+    const outcomeSubmit = outcomeForm.querySelector('button[type="submit"]');
+
+    function setFormState(fields, submitBtn, disabled) {
+        fields.forEach(input => {
+            if (input.type !== 'hidden') {
+                if (disabled) {
+                    input.setAttribute('disabled', 'disabled');
+                } else {
+                    input.removeAttribute('disabled');
+                }
+            }
+        });
+        if (disabled) {
+            submitBtn.setAttribute('disabled', 'disabled');
+        } else {
+            submitBtn.removeAttribute('disabled');
+        }
+    }
+
+    incomeForm.addEventListener('focusin', function() {
+        setFormState(outcomeFields, outcomeSubmit, true);
+        setFormState(incomeFields, incomeSubmit, false);
+    });
+    outcomeForm.addEventListener('focusin', function() {
+        setFormState(incomeFields, incomeSubmit, true);
+        setFormState(outcomeFields, outcomeSubmit, false);
+    });
+
+    document.addEventListener('mousedown', function(e) {
+        if (!incomeForm.contains(e.target) && !outcomeForm.contains(e.target)) {
+            setFormState(incomeFields, incomeSubmit, false);
+            setFormState(outcomeFields, outcomeSubmit, false);
+        }
+    });
+</script>
+
+
 @endsection

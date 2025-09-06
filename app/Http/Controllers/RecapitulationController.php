@@ -143,27 +143,6 @@ public function dailyRecapPayment(Request $request)
 
     }
 
-    public function financeEntries(Request $request)
-    {
-        // Ambil filter tanggal dari query string
-        $startDate = $request->query('start_date');
-        $endDate = $request->query('end_date');
-
-        // Kirim ke API jika ada filter, jika tidak kirim kosong
-        $query = [];
-        if ($startDate) {
-            $query['start_date'] = $startDate;
-        }
-        if ($endDate) {
-            $query['end_date'] = $endDate;
-        }
-
-        $response = Http::get(env('API_BASE_URL') . '/finance-entries', $query);
-        $financeCategory = $response->successful() ? $response->json() : [];
-
-        $activeRoute = 'finance-entries';
-
-        return view('pages.finance-entries.index', compact('financeCategory', 'activeRoute', 'startDate', 'endDate'));
-    }
+  
 
 }
