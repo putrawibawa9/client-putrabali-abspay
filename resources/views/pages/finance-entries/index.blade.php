@@ -106,28 +106,7 @@
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Pemasukan</h3>
             <!-- Form tambah pemasukan baru -->
-            <form id="incomeForm" method="POST" class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end flex-wrap">
-                @csrf
-                <input type="hidden" name="direction" value="income">
-                <div class="flex-1 min-w-[180px]">
-                    <label for="income_category" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Kategori</label>
-                    <select name="finance_category_id" id="income_category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
-                        <option value="">Pilih Kategori</option>
-                        @foreach ($financeCategory['income_data'] as $category)
-                            <option value="{{ $category['id'] }}">{{ $category['code'] }} || {{ $category['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="flex-1 min-w-[120px]">
-                    <label for="income_total" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Total</label>
-                    <input type="number" name="amount" id="income_total" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
-                </div>
-                <div class="flex-1 min-w-[180px]">
-                    <label for="income_note" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Note <span class="text-xs text-gray-400">(opsional)</span></label>
-                    <input type="text" name="note" id="income_note" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" placeholder="Catatan tambahan (opsional)">
-                </div>
-                <button type="submit" class="mt-2 sm:mt-0 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Tambah</button>
-            </form>
+          
             <table class="w-full border-collapse">
                 <thead>
                     <tr class="bg-gray-100 dark:bg-gray-800">
@@ -159,10 +138,12 @@
         </div>
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Pengeluaran</h3>
+            <!-- Tombol tampilkan form pengeluaran -->
+            <button id="showOutcomeFormBtn" type="button" class="mb-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Tambah Pengeluaran</button>
             <!-- Form tambah pengeluaran baru -->
-            <form id="outcomeForm" method="POST" class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end flex-wrap">
+            <form id="outcomeForm" method="POST" class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end flex-wrap" style="display:none;">
                 @csrf
-                        <input type="hidden" name="direction" value="expense">
+                <input type="hidden" name="direction" value="expense">
                 <div class="flex-1 min-w-[180px]">
                     <label for="outcome_category" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Kategori</label>
                     <select name="finance_category_id" id="outcome_category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
@@ -233,45 +214,80 @@
 
 
 <script>
-    const incomeForm = document.getElementById('incomeForm');
     const outcomeForm = document.getElementById('outcomeForm');
-    const incomeFields = incomeForm.querySelectorAll('input, select, textarea');
-    const incomeSubmit = incomeForm.querySelector('button[type="submit"]');
-    const outcomeFields = outcomeForm.querySelectorAll('input, select, textarea');
-    const outcomeSubmit = outcomeForm.querySelector('button[type="submit"]');
-
-    function setFormState(fields, submitBtn, disabled) {
-        fields.forEach(input => {
-            if (input.type !== 'hidden') {
-                if (disabled) {
-                    input.setAttribute('disabled', 'disabled');
-                } else {
-                    input.removeAttribute('disabled');
-                }
-            }
+    const showOutcomeFormBtn = document.getElementById('showOutcomeFormBtn');
+    
+    // Check if elements exist before trying to use them
+    if (showOutcomeFormBtn && outcomeForm) {
+        // Tampilkan form pengeluaran saat tombol diklik
+        showOutcomeFormBtn.addEventListener('click', function() {
+            outcomeForm.style.display = 'flex';
+            showOutcomeFormBtn.style.display = 'none';
+            outcomeForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
-        if (disabled) {
-            submitBtn.setAttribute('disabled', 'disabled');
-        } else {
-            submitBtn.removeAttribute('disabled');
-        }
     }
 
-    incomeForm.addEventListener('focusin', function() {
-        setFormState(outcomeFields, outcomeSubmit, true);
-        setFormState(incomeFields, incomeSubmit, false);
-    });
-    outcomeForm.addEventListener('focusin', function() {
-        setFormState(incomeFields, incomeSubmit, true);
-        setFormState(outcomeFields, outcomeSubmit, false);
-    });
+    // Only run the form interaction code if incomeForm exists
+    const incomeForm = document.getElementById('incomeForm');
+    
+    if (incomeForm && outcomeForm) {
+        const incomeFields = incomeForm.querySelectorAll('input, select, textarea');
+        const incomeSubmit = incomeForm.querySelector('button[type="submit"]');
+        const outcomeFields = outcomeForm.querySelectorAll('input, select, textarea');
+        const outcomeSubmit = outcomeForm.querySelector('button[type="submit"]');
 
-    document.addEventListener('mousedown', function(e) {
-        if (!incomeForm.contains(e.target) && !outcomeForm.contains(e.target)) {
-            setFormState(incomeFields, incomeSubmit, false);
-            setFormState(outcomeFields, outcomeSubmit, false);
+        function setFormState(fields, submitBtn, disabled) {
+            fields.forEach(input => {
+                if (input.type !== 'hidden') {
+                    if (disabled) {
+                        input.setAttribute('disabled', 'disabled');
+                    } else {
+                        input.removeAttribute('disabled');
+                    }
+                }
+            });
+            if (submitBtn) {
+                if (disabled) {
+                    submitBtn.setAttribute('disabled', 'disabled');
+                } else {
+                    submitBtn.removeAttribute('disabled');
+                }
+            }
         }
-    });
+
+        incomeForm.addEventListener('focusin', function() {
+            setFormState(outcomeFields, outcomeSubmit, true);
+            setFormState(incomeFields, incomeSubmit, false);
+        });
+
+        outcomeForm.addEventListener('focusin', function() {
+            setFormState(incomeFields, incomeSubmit, true);
+            setFormState(outcomeFields, outcomeSubmit, false);
+        });
+
+        document.addEventListener('mousedown', function(e) {
+            if (!incomeForm.contains(e.target) && !outcomeForm.contains(e.target)) {
+                setFormState(incomeFields, incomeSubmit, false);
+                setFormState(outcomeFields, outcomeSubmit, false);
+            }
+        });
+    } else if (outcomeForm) {
+        // If only outcomeForm exists, just handle the outcome form interactions
+        const outcomeFields = outcomeForm.querySelectorAll('input, select, textarea');
+        const outcomeSubmit = outcomeForm.querySelector('button[type="submit"]');
+
+        outcomeForm.addEventListener('focusin', function() {
+            // Enable outcome form fields when focused
+            outcomeFields.forEach(input => {
+                if (input.type !== 'hidden') {
+                    input.removeAttribute('disabled');
+                }
+            });
+            if (outcomeSubmit) {
+                outcomeSubmit.removeAttribute('disabled');
+            }
+        });
+    }
 </script>
 
 

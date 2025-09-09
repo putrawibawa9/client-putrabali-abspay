@@ -50,9 +50,9 @@ class FinanceEntryController extends Controller
         $response = Http::post(env('API_BASE_URL') . '/finance-entries', $data);
 
         if ($response->successful()) {
-            return redirect()->route('finance-entries.index')->with('success', 'Finance entry added successfully.');
+            return redirect()->route('finance-categories')->with('success', 'Finance entry added successfully.');
         } else {
-            return redirect()->route('finance-entries.index')->with('error', 'Failed to add finance entry.');
+            return redirect()->route('finance-categories')->with('error', 'Failed to add finance entry.');
         }
     }
 
