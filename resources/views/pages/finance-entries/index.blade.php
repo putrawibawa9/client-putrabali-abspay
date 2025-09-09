@@ -139,7 +139,7 @@
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Pengeluaran</h3>
             <!-- Tombol tampilkan form pengeluaran -->
-            <button id="showOutcomeFormBtn" type="button" class="mb-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Tambah Pengeluaran</button>
+        
             <!-- Form tambah pengeluaran baru -->
        
             <table class="w-full border-collapse">
