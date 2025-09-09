@@ -54,7 +54,7 @@
                         <ul class="list-disc ml-4">
                         @foreach ($cat['finance_entries'] as $entry)
                             <li>
-                                <span class="font-semibold">{{ $entry['note'] }}</span> - Rp. {{ number_format($entry['amount'], 0, ',', '.') }} <span class="text-xs text-gray-500">({{ \Carbon\Carbon::parse($entry['created_at'])->format('d M Y') }})</span>
+                                <span class="font-semibold">{{ $entry['note'] ?? 'unknown' }}</span> - Rp. {{ number_format($entry['amount'], 0, ',', '.') }} <span class="text-xs text-gray-500">({{ \Carbon\Carbon::parse($entry['created_at'])->format('d M Y') }})</span>
                             </li>
                         @endforeach
                         @if (empty($cat['finance_entries']))
