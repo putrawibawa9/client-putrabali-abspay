@@ -141,28 +141,7 @@
             <!-- Tombol tampilkan form pengeluaran -->
             <button id="showOutcomeFormBtn" type="button" class="mb-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Tambah Pengeluaran</button>
             <!-- Form tambah pengeluaran baru -->
-            <form id="outcomeForm" method="POST" class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end flex-wrap" style="display:none;">
-                @csrf
-                <input type="hidden" name="direction" value="expense">
-                <div class="flex-1 min-w-[180px]">
-                    <label for="outcome_category" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Kategori</label>
-                    <select name="finance_category_id" id="outcome_category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
-                        <option value="">Pilih Kategori</option>
-                        @foreach ($financeCategory['outcome_data'] as $category)
-                            <option value="{{ $category['id'] }}">{{ $category['code'] }} || {{ $category['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="flex-1 min-w-[120px]">
-                    <label for="outcome_total" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Total</label>
-                    <input type="number" name="amount" id="outcome_total" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" required>
-                </div>
-                <div class="flex-1 min-w-[180px]">
-                    <label for="outcome_note" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Note <span class="text-xs text-gray-400">(opsional)</span></label>
-                    <input type="text" name="note" id="outcome_note" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-800 dark:text-white" placeholder="Catatan tambahan (opsional)">
-                </div>
-                <button type="submit" class="mt-2 sm:mt-0 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Tambah</button>
-            </form>
+       
             <table class="w-full border-collapse">
                 <thead>
                     <tr class="bg-gray-100 dark:bg-gray-800">
