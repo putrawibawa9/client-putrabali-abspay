@@ -70,7 +70,7 @@
                       <li>
                         <button type="button"
                             class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                            aria-controls="dropdown-crud-teacher" data-collapse-toggle="dropdown-crud-teacher">
+                            aria-controls="dropdown-crud-teacher" data-collapse-toggle="dropdown-crud-recap">
                           <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                                 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
@@ -84,7 +84,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-crud-teacher" class="space-y-2 py-2 ">
+                        <ul id="dropdown-crud-recap" class="space-y-2 py-2 ">
                             <li>
                                 <a href="/dashboard"
                                     class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'dashboard' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
@@ -213,7 +213,7 @@
                        <li>
                         <button type="button"
                             class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                            aria-controls="dropdown-crud-courses" data-collapse-toggle="dropdown-crud-courses">
+                            aria-controls="dropdown-crud-courses" data-collapse-toggle="dropdown-crud-admin">
                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
@@ -229,7 +229,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-crud-courses" class="space-y-2 py-2 ">
+                        <ul id="dropdown-crud-admin" class="space-y-2 py-2 ">
                             <li>
                                 <a href="/finance-categories"
                                     class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'finance-categories' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">Input Pengeluaran</a>
