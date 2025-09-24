@@ -110,8 +110,8 @@
                 <label for="tipe_{{ $index }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
                 <select id="tipe_{{ $index }}" name="courses[{{ $index }}][type]"
                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                  <option value="" selected>Select Type</option>
-                  <option value="spp">Pembayaran SPP</option>
+                  <option value="" >Select Type</option>
+                  <option selected  value="spp">Pembayaran SPP</option>
                   <option value="modul">Modul || Rp.50.000</option>
                   <option value="pendaftaran">Pendaftaran || Rp.50.000</option>
                   <option value="ujian">Ujian || Rp.50.000</option>

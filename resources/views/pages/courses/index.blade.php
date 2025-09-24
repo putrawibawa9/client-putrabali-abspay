@@ -1,3 +1,4 @@
+{{-- @dd($courses) --}}
 @extends('layouts.main')
 
 @section('content')
@@ -29,12 +30,12 @@
 
                 <!-- Page Title and Add Button -->
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All Courses</h1>
+                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Semua Kelas</h1>
                     <button type="button" data-modal-toggle="add-user-modal" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full sm:w-auto">
                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
                         </svg>
-                        Add New Course
+                        Tambah Kelas Baru
                     </button>
                 </div>
             </div>
@@ -102,15 +103,15 @@
                 <form action="{{ route('courses.search') }}" method="GET" class="border-t pt-6 dark:border-gray-700">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <div>
-                            <label for="alias" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Search by Alias</label>
-                            <input type="text" name="alias" id="alias" value="{{ $alias ?? '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Enter course alias">
+                            <label for="alias" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cari Nama Kelas</label>
+                            <input type="text" name="alias" id="alias" value="{{ $alias ?? '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukan Nama Kelas">
                         </div>
                         <div class="flex items-end">
                             <button type="submit" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-full">
                                 <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
                                 </svg>
-                                Search by Alias
+                                Cari Nama Kelas
                             </button>
                         </div>
                     </div>
@@ -133,12 +134,12 @@
                         
                         <div class="space-y-2 mb-4">
                             <div class="flex justify-between">
-                                <span class="text-sm text-gray-500 dark:text-gray-400">Class Price:</span>
+                                <span class="text-sm text-gray-500 dark:text-gray-400">Harga Kelas:</span>
                                 <span class="text-sm font-medium text-gray-900 dark:text-white">Rp. {{ number_format($course['payment_rate'], 0, ',', '.') }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-sm text-gray-500 dark:text-gray-400">Teacher Rate:</span>
-                                <span class="text-sm font-medium text-gray-900 dark:text-white">Rp. {{ number_format($course['teaching_rate'], 0, ',', '.') }}</span>
+                                <span class="text-sm text-gray-500 dark:text-gray-400">Jumlah Murid:</span>
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $course['students_count'] }} Siswa</span>
                             </div>
                         </div>
 
@@ -177,7 +178,7 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Nama</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Kursus</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Harga Kelas</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Tarif Pengajar</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Jumlah Siswa</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Aksi</th>
                             </tr>
                         </thead>
@@ -187,7 +188,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ $course['alias'] }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $course['subject'] }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">Rp. {{ number_format($course['payment_rate'], 0, ',', '.') }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">Rp. {{ number_format($course['teaching_rate'], 0, ',', '.') }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $course['students_count'] }} Siswa</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex items-center space-x-2">
                                             <button type="button" data-modal-toggle="edit-user-modal-course" data-id="{{ $course['id'] }}" data-alias="{{ $course['alias'] }}" data-level="{{ $course['level'] }}" data-section="{{ $course['section'] }}" data-subject="{{ $course['subject'] }}" data-payment_rate="{{ $course['payment_rate'] }}" class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white rounded-md bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-300 dark:bg-amber-500 dark:hover:bg-amber-600 dark:focus:ring-amber-700">
