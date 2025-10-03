@@ -16,70 +16,136 @@
     </h2>
 
     {{-- Filter Tanggal --}}
-    <form method="GET" action="{{ route('daily-recap-payment.index') }}" class="mb-6">
-    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Filter By</label>
+   <form method="GET" action="{{ route('daily-recap-payment.index') }}" class="mb-6">
+    <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-100">Filter</h3>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('daily-recap-payment.index') }}"
+                   class="inline-flex items-center px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600
+                          text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    Reset
+                </a>
+                <button type="submit"
+                        class="inline-flex items-center px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700
+                               focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-colors">
+                    Apply
+                </button>
+            </div>
+        </div>
 
-    <div class="flex flex-col sm:flex-row gap-2 mb-4">
-        {{-- Start Date --}}
-        <input type="date" name="start_date"
-               value="{{ request('start_date', now()->format('Y-m-d')) }}"
-               class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                      focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <div class="p-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {{-- Start Date --}}
+                <div>
+                    <label class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-200">Start Date</label>
+                    <input type="date" name="start_date"
+                        value="{{ request('start_date', now()->toDateString()) }}"
+                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                               focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
 
-        {{-- End Date --}}
-        <input type="date" name="end_date"
-               value="{{ request('end_date', now()->format('Y-m-d')) }}"
-               class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                      focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                {{-- End Date --}}
+                <div>
+                    <label class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-200">End Date</label>
+                    <input type="date" name="end_date"
+                        value="{{ request('end_date', now()->toDateString()) }}"
+                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                               focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
 
-        {{-- Payment Month --}}
-       <select name="payment_month"
-        class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-               focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-    <option value="">-- All Months --</option>
-    @foreach(range(1,12) as $m)
-        @php
-            $monthName = strtolower(\Carbon\Carbon::create()->month($m)->format('F'));
-        @endphp
-        <option value="{{ $monthName }}"
-            {{ request('payment_month') == $monthName ? 'selected' : '' }}>
-            {{ ucfirst($monthName) }}
-        </option>
-    @endforeach
-</select>
+                {{-- Payment Month (ID locale) --}}
+                <div>
+                    <label class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-200">Payment Month</label>
+                    <select name="payment_month"
+                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                               focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="">-- All Months --</option>
+                        @foreach(range(1,12) as $m)
+                            @php
+                                $monthName = \Carbon\Carbon::create()->month($m)->locale('id')->translatedFormat('F');
+                                $value = strtolower($monthName); // simpan value lowercase biar konsisten dengan request sebelumnya
+                            @endphp
+                            <option value="{{ $value }}" {{ request('payment_month') == $value ? 'selected' : '' }}>
+                                {{ $monthName }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
+                {{-- Admin/User --}}
+                <div>
+                    <label class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-200">Admin/User</label>
+                    <select name="user_id"
+                        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                               focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="">-- All Admins --</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user['id'] }}" {{ request('user_id') == $user['id'] ? 'selected' : '' }}>
+                                {{ $user['name'] }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
 
-        {{-- Course --}}
-        <select name="course_id"
-                class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                       focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-            <option value="">-- All Courses --</option>
-            @foreach($courses['data'] as $course)
-                <option value="{{ $course['id'] }}" {{ request('course_id') == $course['id'] ? 'selected' : '' }}>
-                    {{ $course['alias'] }}
-                </option>
-            @endforeach
-        </select>
+            {{-- Courses (checkbox grid) --}}
+            <div class="mt-4">
+                <div class="flex items-center justify-between">
+                    <label class="block text-xs font-medium text-gray-700 dark:text-gray-200">Courses</label>
+                    <label class="inline-flex items-center gap-2 text-xs text-gray-600 dark:text-gray-300">
+                        <input id="toggle-all-courses" type="checkbox"
+                               class="rounded border-gray-300 dark:border-gray-600"
+                               data-target="#courses-checkboxes">
+                        <span>Select All</span>
+                    </label>
+                </div>
 
-        {{-- Admin/User --}}
-        <select name="user_id"
-                class="flex-1 sm:max-w-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                       focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-            <option value="">-- All Admins --</option>
-            @foreach($users as $user)
-                <option value="{{ $user['id'] }}" {{ request('user_id') == $user['id'] ? 'selected' : '' }}>
-                    {{ $user['name'] }}
-                </option>
-            @endforeach
-        </select>
+                <div id="courses-checkboxes"
+                     class="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 max-h-44 overflow-auto
+                            rounded-lg border border-gray-200 dark:border-gray-700 p-2">
+                    {{-- All Courses (kosongkan value untuk semantik lama, atau pakai keyword "all") --}}
+                    <label class="inline-flex items-center gap-2 p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <input type="checkbox" name="course_id[]" value=""
+                               class="rounded border-gray-300 dark:border-gray-600"
+                               {{ is_array(request('course_id')) && in_array('', request('course_id')) ? 'checked' : '' }}>
+                        <span class="text-sm text-gray-800 dark:text-gray-100">-- All Courses --</span>
+                    </label>
 
-        <button type="submit"
-                class="px-4 py-2.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700
-                       focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-colors">
-            Filter
-        </button>
+                    @foreach($courses['data'] as $course)
+                        @php
+                            $checked = (is_array(request('course_id')) && in_array($course['id'], request('course_id')))
+                                       || (request('course_id') == $course['id']);
+                        @endphp
+                        <label for="course-{{ $course['id'] }}"
+                               class="inline-flex items-center gap-2 p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <input id="course-{{ $course['id'] }}" type="checkbox"
+                                   name="course_id[]" value="{{ $course['id'] }}"
+                                   class="rounded border-gray-300 dark:border-gray-600"
+                                   {{ $checked ? 'checked' : '' }}>
+                            <span class="text-sm text-gray-800 dark:text-gray-100">{{ $course['alias'] }}</span>
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 </form>
+
+{{-- Mini helper: toggle select-all (no build tools needed) --}}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.querySelector('#toggle-all-courses');
+    const boxWrap = document.querySelector(toggle?.dataset?.target || '');
+    if (!toggle || !boxWrap) return;
+
+    toggle.addEventListener('change', () => {
+        const boxes = boxWrap.querySelectorAll('input[type="checkbox"][name="course_id[]"]');
+        boxes.forEach(cb => { cb.checked = toggle.checked });
+    });
+});
+</script>
+
 
 
     {{-- Ringkasan --}}

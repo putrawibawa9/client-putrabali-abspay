@@ -80,39 +80,95 @@ public function dailyRecap(Request $request)
     ));
 }
 
-public function dailyRecapPayment(Request $request)
-{
-    // dd($request->all());
-    // Ambil parameter tanggal dari query, kalau tidak ada pakai awal & akhir bulan ini
-    $startDate = $request->query('start_date', now()->startOfMonth()->format('Y-m-d'));
-    $endDate = $request->query('end_date', now()->format('Y-m-d'));
+ public function dailyRecapPayment(Request $request)
+    {
+        // Default tanggal: awal bulan s/d hari ini
+        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
+        $endDate   = $request->input('end_date', now()->toDateString());
 
-    // Kirim request ke API
-    $response = Http::get(env('API_BASE_URL') . '/payments-daily-recap', [
-        'start_date' => $startDate,
-        'end_date' => $endDate,
-        'course_id' => $request->query('course_id'),
-        'user_id' => $request->query('user_id'),
-        'payment_month' => $request->query('payment_month'),
-    ]);
+        // course_id[]: pastikan array & buang nilai kosong (mis. "" dari -- All Courses --)
+        $courseIds = collect($request->input('course_id', []))
+            ->filter(fn ($v) => $v !== null && $v !== '')
+            ->map(fn ($v) => is_numeric($v) ? (int) $v : $v)
+            ->values()
+            ->all();
 
-    $courses =  Http::get(env('API_BASE_URL') . '/courses')->json();
-    $users =  Http::get(env('API_BASE_URL') . '/users')->json();
+        // payment_month: UI pakai label Indonesia -> convert ke English lowercase
+        $payload = [
+            'start_date' => $startDate,
+            'end_date'   => $endDate,
+        ];
 
-    
-    $payments = $response->successful() ? $response->json() : [];
-    
-    $activeRoute = 'daily-recap-payment';
-    return view('recapitulations.daily-payment', compact(
-        'payments',
-        'startDate',
-        'endDate',
-        'activeRoute',
-        'courses',
-        'users'
-    ));
+        if (!empty($courseIds)) {
+            $payload['course_id'] = $courseIds; // ex: [1,2,3]
+        }
 
-}
+        if ($request->filled('user_id')) {
+            $payload['user_id'] = (int) $request->input('user_id');
+        }
+
+        if ($request->filled('payment_month')) {
+            $payload['payment_month'] = $this->mapMonthIdToEn(
+                strtolower($request->input('payment_month'))
+            ); // hasil: "october", "november", dst
+        }
+
+        // Panggil API dengan JSON body
+        $response = Http::asJson()
+            ->timeout(20)
+            ->post(env('API_BASE_URL') . '/payments-daily-recap', $payload);
+
+        $payments = $response->successful() ? $response->json() : [
+            'total_payment' => 0,
+            'payments' => [],
+            'error' => $response->json('message') ?? 'Failed to fetch data'
+        ];
+
+        // Dropdown data (bebas kalau mau di-cache)
+        $courses = Http::get(env('API_BASE_URL') . '/courses')->json();
+        $users   = Http::get(env('API_BASE_URL') . '/users')->json();
+
+        $activeRoute = 'daily-recap-payment';
+
+        return view('recapitulations.daily-payment', compact(
+            'payments',
+            'startDate',
+            'endDate',
+            'activeRoute',
+            'courses',
+            'users'
+        ));
+    }
+
+    /**
+     * Konversi nama bulan Indonesia -> English lowercase.
+     * Jika tidak ketemu di map, kembalikan nilai aslinya (fail-safe).
+     */
+    private function mapMonthIdToEn(string $val): string
+    {
+        $monthMap = [
+            'januari'   => 'january',
+            'februari'  => 'february',
+            'maret'     => 'march',
+            'april'     => 'april',
+            'mei'       => 'may',
+            'juni'      => 'june',
+            'juli'      => 'july',
+            'agustus'   => 'august',
+            'september' => 'september',
+            'oktober'   => 'october',
+            'november'  => 'november',
+            'desember'  => 'desember', // <— hati-hati typo, ini memang "desember" di ID → "december" di EN
+        ];
+
+        // Perbaiki mapping "desember" → "december"
+        if ($val === 'desember') {
+            return 'december';
+        }
+
+        return $monthMap[$val] ?? $val;
+    }
+
 
   public function unpaid(Request $request){
               // Ambil parameter query (bisa override lewat URL)
