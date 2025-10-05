@@ -51,6 +51,18 @@
                     <li>
                         <a href="/payments"
                             class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ $activeRoute == 'payments' ? 'bg-gray-100 dark:bg-gray-700' : '' }} dark:text-gray-200 dark:hover:bg-gray-700 ">
+                            <!-- Grading/Assessment Icon -->
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4zm2 0v16h12V4H6zm2 4h8v2H8V8zm0 4h5v2H8v-2zm0 4h8v2H8v-2z" clip-rule="evenodd"/>
+                                <circle cx="17" cy="7" r="1.5" fill="currentColor"/>
+                            </svg>
+
+                            <span class="ml-3" sidebar-toggle-item>Pembayaran</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/assessments"
+                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ $activeRoute == 'assessments' ? 'bg-gray-100 dark:bg-gray-700' : '' }} dark:text-gray-200 dark:hover:bg-gray-700 ">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
@@ -59,7 +71,7 @@
                                     clip-rule="evenodd" />
                             </svg>
 
-                            <span class="ml-3" sidebar-toggle-item>Pembayaran</span>
+                            <span class="ml-3" sidebar-toggle-item>Nilai</span>
                         </a>
                     </li>
                    

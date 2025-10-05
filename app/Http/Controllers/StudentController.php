@@ -126,7 +126,11 @@ class StudentController extends Controller
         $payment = $this->paymentService->getStudentPayment($id);
         $absenceHistory = $this->absenceService->getStudentAbsencesHistory($id);
         $activeRoute = 'students';
-        return view('pages.students.detail', compact('student', 'payment', 'absenceHistory', 'activeRoute', 'englishCourses', 'mapelCourses'));
+            // Call GET /assessments/{id} API
+        $response = \Illuminate\Support\Facades\Http::get(env('API_BASE_URL', 'http://localhost:8000') . "/assessments/{$id}");
+        $assessments = $response->successful() ? $response->json() : null;
+        // dd($assessments);
+        return view('pages.students.detail', compact('student', 'payment', 'absenceHistory', 'activeRoute', 'englishCourses', 'mapelCourses', 'assessments'));
    }
 
     /**

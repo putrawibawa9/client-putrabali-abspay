@@ -258,9 +258,7 @@
 
 
 
-                <div class="flex items-center justify-between w-full mt-12">
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Absence</h2>
-                </div>
+              
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-8">
     @forelse ($absenceHistory as $absence)
         <div class="overflow-x-auto">
@@ -333,6 +331,47 @@
         </div>
     @endforelse
 </div>
+
+  <div class="flex items-center justify-between w-full mt-12">
+                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Penilaian</h2>
+                </div>
+                <div class="grid grid-cols-1 gap-8 mt-8">
+                    <div class="overflow-x-auto">
+                        <div class="inline-block min-w-full align-middle">
+                            <div class="overflow-hidden shadow">
+                                <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+                                    <thead class="bg-gray-100 dark:bg-gray-700">
+                                        <tr>
+                                            <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Mapel</th>
+                                            <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Jenis Ulangan</th>
+                                            <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Nilai</th>
+                                            <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Keterangan</th>
+                                            <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Waktu</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                        
+                                        @forelse ($assessments['assessments'] ?? [] as $assessment)
+                                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">{{ $assessment['subject'] }}</td>
+                                                <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">{{ $assessment['type'] }}</td>
+                                                <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">{{ $assessment['score'] }}</td>
+                                                <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">{{ $assessment['remarks'] ?? 'Tidak ada Keterangan' }}</td>
+                                                <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">{{ \Carbon\Carbon::parse($assessment['created_at'])->format('d M Y') }}</td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="4" class="p-4 text-center text-gray-500 dark:text-gray-400">No assessment records available.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
 
             </div>
         </div>

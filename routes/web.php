@@ -10,6 +10,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\FinanceEntryController;
 use App\Http\Controllers\StudentCourseController;
@@ -96,6 +97,7 @@ Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout
 
     // for teachers
     Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput']);
+     Route::get('/students-search-assessments', [AssessmentController::class, 'searchStudentByNisOrName'])->name('students.search.assessments');
     Route::get('/absences', [AbsenceController::class, 'allCourses'])->name('absences.index');
     Route::get('/absence/courses/search', [AbsenceController::class, 'searchCourses'])->name('absence.courses.search');
     Route::get('/absence/courses/search-by-alias', [AbsenceController::class, 'searchCoursesByAlias'])->name('absence.courses.search-by-alias');
@@ -103,5 +105,5 @@ Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout
     Route::get('/absences/{id}', [AbsenceController::class, 'absenceForm'])->name('absences.show');
     Route::post('/absences/store', [AbsenceController::class, 'store'])->name('absences.store');
     Route::get('/recap-teacher-absences', [TeacherController::class, 'recapTeacherAbsences'])->name('recap-teacher-absences');
-
+  Route::resource('/assessments', \App\Http\Controllers\AssessmentController::class);
     Route::get('/unpaid', [RecapitulationController::class, 'unpaid'])->name('unpaid.index');
