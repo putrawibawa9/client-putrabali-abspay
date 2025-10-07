@@ -28,8 +28,8 @@
         </div>
         <div class="mb-4">
             <label for="score" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Score</label>
-            <input type="number" name="score" id="score" min="1" max="10" class="mt-1 block w-full rounded border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white" required>
-            <p class="text-xs text-red-600 mt-1">* Nilai hanya boleh 1-10</p>
+            <input type="number" name="score" id="score" min="10" max="100" class="mt-1 block w-full rounded border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white" required>
+            <p class="text-xs text-red-600 mt-1">* Nilai hanya boleh 10-100, tidak pakai desimal </p>
         </div>
         <div class="mb-4">
             <label for="remarks" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Remarks (optional)</label>
