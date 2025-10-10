@@ -166,7 +166,7 @@
                   {{-- Manual Payment Input --}}
                   <div class="flex flex-col gap-1 w-full md:w-56">
                     <label class="text-sm text-gray-700 dark:text-gray-300">Input jumlah </label>
-                    <input required type="number" name="courses[{{ $index }}][payment_amount]" placeholder="Masukkan jumlah"
+                    <input min="0"  type="number" name="courses[{{ $index }}][payment_amount]" placeholder="Masukkan jumlah"
                            class="w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
                            <p style="color: red;">* tulis angka tanpa pemisah ribuan, contoh: 100000 (bukan 100.000)</p>
                   </div>

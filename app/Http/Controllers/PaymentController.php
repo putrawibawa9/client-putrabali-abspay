@@ -57,46 +57,88 @@ class PaymentController extends Controller
      */
    public function store(Request $request)
 {
-    // kalau type spp tapi tidak ada bulan, return error
-    foreach ($request->courses as $course) {
-        if ($course['type'] === 'spp' && $course['payment_month'] === null) {
-            return redirect()->back()->with('error', 'Tolong masukan bulan pembayaran');
-        }
+    // Safety: pastikan ada array 'courses'
+    $courses = $request->input('courses', []);
+    if (!is_array($courses) || empty($courses)) {
+        return back()->with('error', 'Tidak ada data kursus yang dikirim.');
     }
 
     $studentId = $request->input('student_id');
-    $courses   = $request->input('courses');
-    
+    $actor     = $request->input('actor');
+    $userId    = $request->input('user_id');
 
-    // Filter out courses with invalid payment data
-    $validPayments = array_filter($courses, function ($course) {
-        return !empty($course['payment_date']);
-    });
+    // Normalisasi & filter: kirim HANYA item yang dibayar
+    $filtered = collect($courses)
+        ->map(function ($c) {
+            // Normalisasi value kosong
+            $c['type']           = $c['type']           ?? '';
+            $c['payment_month']  = ($c['payment_month'] ?? '') === '' ? null : $c['payment_month'];
+            $c['payment_date']   = $c['payment_date']   ?? null;
+            // payment_amount bisa "" (string kosong) dari input number
+            $c['payment_amount'] = isset($c['payment_amount']) && $c['payment_amount'] !== ''
+                ? (int)$c['payment_amount'] : null;
+            return $c;
+        })
+        ->filter(function ($c) {
+            // Hanya kirim:
+            // - SPP dengan nominal > 0
+            // - modul/pendaftaran/ujian (nominal boleh null; server set 50000)
+            if (empty($c['type'])) return false;
+            if ($c['type'] === 'spp') {
+                return !empty($c['payment_date']) && !empty($c['course_id']) && ($c['payment_amount'] > 0);
+            }
+            // Non-SPP: cukup ada tanggal & course_id; amount boleh null (server akan set 50000)
+            return !empty($c['payment_date']) && !empty($c['course_id']);
+        })
+        ->values();
 
-    // siapkan data dasar
-    $data = [
+    // Validasi sisi client: spp yang dikirim WAJIB punya bulan
+    foreach ($filtered as $c) {
+        if ($c['type'] === 'spp' && ($c['payment_amount'] ?? 0) > 0) {
+            if (empty($c['payment_month'])) { // "" atau null dianggap kosong
+                return back()->with('error', 'Tolong masukkan bulan pembayaran untuk SPP.');
+            }
+        } else {
+            // Untuk non-SPP, rapikan: pastikan payment_month null
+            $c['payment_month'] = null;
+        }
+    }
+
+    if ($filtered->isEmpty()) {
+        return back()->with('error', 'Tidak ada pembayaran yang valid. Isi nominal atau pilih jenis pembayaran yang tepat.');
+    }
+
+    // Siapkan payload akhir
+    $payload = [
         'student_id' => $studentId,
-        'courses'    => array_values(array_filter($validPayments, function ($course) {
-            return !empty($course['type']);
-        })),
+        'courses'    => $filtered->map(function ($c) {
+            return [
+                'course_id'      => $c['course_id'],
+                'payment_date'   => $c['payment_date'],
+                'payment_month'  => $c['type'] === 'spp' ? $c['payment_month'] : null,
+                'type'           => $c['type'],
+                'payment_amount' => $c['payment_amount'], // boleh null untuk non-SPP; server set 50000
+            ];
+        })->all(),
     ];
 
-    // tentukan siapa aktornya
-    if ($request->actor === 'teacher') {
-        $data['teacher_id'] = $request->user_id;
-    } elseif ($request->actor === 'admin') {
-        $data['user_id'] = $request->user_id;
+    // Tentukan aktor
+    if ($actor === 'teacher') {
+        $payload['teacher_id'] = $userId;
+    } elseif ($actor === 'admin') {
+        $payload['user_id'] = $userId;
     }
 
-    // kirim ke service
-    $error = $this->paymentService->store($data);
+    // Kirim ke service
+    $error = $this->paymentService->store($payload);
 
     if (isset($error['message'])) {
-        return redirect()->back()->with('error', $error['message']);
+        return back()->with('error', $error['message']);
     }
 
-    return redirect()->back()->with('success', 'Payment has been successfully added');
+    return back()->with('success', 'Payment has been successfully added');
 }
+
 
 
     /**
