@@ -92,6 +92,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
+        // Expose server-side session idle timeout and useful endpoints to the client.
+        // SESSION_IDLE_TIMEOUT is in seconds (from config('session.idle_timeout')).
+        window.SESSION_IDLE_TIMEOUT = {{ config('session.idle_timeout', 900) }};
+        // How many seconds before actual logout we show a warning modal (client-side)
+        window.IDLE_WARNING_SECONDS = 30;
+        window.PING_URL = "{{ url('/ping') }}";
+        window.LOGOUT_URL = "{{ route('logout') }}";
+    </script>
+
 
   
     @if (Session::has('error'))

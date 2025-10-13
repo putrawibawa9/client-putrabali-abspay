@@ -86,6 +86,11 @@ Route::post('/login/teacher', [AuthenticationController::class, 'loginTeacher'])
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');
 
+// lightweight ping endpoint used by client to refresh session activity timestamp
+Route::get('/ping', function () {
+  return response()->json(['ok' => true]);
+});
+
 
     Route::resource('/payments', PaymentController::class);
 // for student or parents
