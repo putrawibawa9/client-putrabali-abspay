@@ -98,7 +98,7 @@
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Alias
+                                    Instagram
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -122,7 +122,15 @@
                                     </td>
                                   
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $teacher['alias'] }}
+                                        @if(!empty($teacher['instagram']))
+                                            @php
+                                                $ig = ltrim($teacher['instagram'], '@');
+                                                $igUrl = 'https://instagram.com/' . $ig;
+                                            @endphp
+                                            <a href="{{ $igUrl }}" target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:underline">{{ $teacher['instagram'] }}</a>
+                                        @else
+                                            <span class="text-gray-400">N/A</span>
+                                        @endif
                                     </td>
                                    
                                     <td class="p-4 space-x-2 whitespace-nowrap">
@@ -348,6 +356,12 @@
                                     placeholder="Green" required>
                             </div>
                             <div class="col-span-6 sm:col-span-3">
+                                <label for="instagram_edit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Instagram</label>
+                                <input type="text" name="instagram" id="instagram_edit"
+                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="@instagram" >
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
                                 <label for="enroll_date"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                 <input type="password" name="password" id="password" 
@@ -428,6 +442,12 @@
                                 <input type="tel" name="alias" 
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="pw" required>
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="instagram" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Instagram</label>
+                                <input type="text" name="instagram" id="instagram"
+                                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="@instagram" >
                             </div>
                           
                    
