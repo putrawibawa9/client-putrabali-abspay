@@ -144,7 +144,7 @@
                                             data-id="{{ $teacher['id'] }}"
                                           data-name="{{ $teacher['name'] }}"
                                             data-username="{{ $teacher['username'] }}"
-                                            data-password="{{ $teacher['password'] }}"
+                                         
                                             data-alias="{{ $teacher['alias'] }}"
                                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-500 dark:bg-amber-500 dark:hover:bg-amber-700 dark:focus:ring-amber-700">
                                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
@@ -365,8 +365,9 @@
                                 <label for="enroll_date"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                 <input type="password" name="password" id="password" 
+                                 placeholder="Kosongkan jika tidak ingin mengubah password"
                                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                     required>
+                                     >
                             </div>
                        
                         </div>

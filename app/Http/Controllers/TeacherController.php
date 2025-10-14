@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Services\TeacherService;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
@@ -73,42 +74,72 @@ class TeacherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-     public function update(Request $request, $id)
+  public function update(Request $request, $id)
 {
-    // dd($id);
-    // implement the logic to compare the old data and new data
-    $oldData = $this->teacherService->getTeacherByID($id);
-
-    $newData = $request->all();
-    // hash the password
-    $newData['password'] = bcrypt($newData['password']);
-
-    // Initialize an array to store only the changed data
-    $updatedData = [];
-
-    // Compare each field in the new data with the old data
-    foreach ($newData as $key => $value) {
-        // Skip if the key is not present in the old data
-        if (!array_key_exists($key, $oldData)) {
-            continue;
-        }
-
-        // Compare the values and only add the changed ones
-        if ($value != $oldData[$key]) {
-            $updatedData[$key] = $value;
-        }
-    }
-    // dd($updatedData);
-
-     // Proceed with the next process only if there are changes
-    if (!empty($updatedData)) {
-       $error = $this->teacherService->updateTeacher($id, $updatedData);
+    // Ambil data lama (pastikan bentuknya array)
+    $old = $this->teacherService->getTeacherByID($id);
+    if (is_object($old)) {
+        $old = (array) $old;
     }
 
-        if ($error) {
-            return redirect('/teachers')->with('error', $error['message']);
+    // Hanya ambil field yang relevan dari form
+    $input = $request->only(['name', 'username', 'alias', 'instagram', 'password', 'password_confirmation']);
+
+    // Normalizer sederhana untuk string
+    $normalize = function ($v) {
+        return is_string($v) ? trim($v) : $v;
+    };
+
+    $updated = [];
+
+    // Bandingkan field non-password
+    foreach (['name', 'username', 'alias', 'instagram'] as $key) {
+        if ($request->has($key)) {
+            $newVal = $normalize($input[$key]);
+            $oldVal = $normalize($old[$key] ?? null);
+
+            // Kalau dikirim tapi kosong total, biarkan backend yang menilai (atau skip jika mau)
+            // Di sini kita hanya kirim kalau benar-benar berbeda & tidak identik
+            if ($newVal !== $oldVal) {
+                // Jika mau cegah empty string terkirim, uncomment baris berikut:
+                // if ($newVal === '' || $newVal === null) continue;
+                $updated[$key] = $newVal;
+            }
         }
-        return redirect('/teachers')->with('success', 'Teacher updated successfully');
+    }
+
+    // Bandingkan password: kirim hanya jika diisi dan berbeda dari yang lama
+    if ($request->filled('password')) {
+        $plain = (string) $input['password'];
+        $oldHashed = $old['password'] ?? null;
+
+        // Jika lama tersedia dan sama (cek dengan Hash::check), jangan kirim
+        $sameAsOld = $oldHashed ? Hash::check($plain, $oldHashed) : false;
+
+        if (!$sameAsOld) {
+            // KIRIM PLAIN ke API; biarkan backend yang melakukan hash
+            $updated['password'] = $plain;
+
+            // Jika backend minta confirmed
+            if ($request->has('password_confirmation')) {
+                $updated['password_confirmation'] = (string) $input['password_confirmation'];
+            }
+        }
+    }
+
+    // Tidak ada perubahan
+    if (empty($updated)) {
+        return redirect('/teachers')->with('info', 'Tidak ada perubahan.');
+    }
+
+    // Panggil service untuk update
+    $error = $this->teacherService->updateTeacher($id, $updated) ?? null;
+
+    if ($error) {
+        return redirect('/teachers')->with('error', $error['message'] ?? 'Gagal memperbarui data guru.');
+    }
+
+    return redirect('/teachers')->with('success', 'Teacher updated successfully');
 }
 
     /**
