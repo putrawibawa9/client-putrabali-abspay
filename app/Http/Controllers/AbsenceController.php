@@ -26,7 +26,7 @@ class AbsenceController extends Controller
 
     public function searchCourses(Request $request)
     {
-
+// dd($request->all());
        $page = $request->query('page', 1);
         $courses = $this->courseService->search($request->all(), $page);
        

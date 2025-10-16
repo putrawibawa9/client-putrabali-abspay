@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Services\TeacherService;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class TeacherController extends Controller
 {
@@ -163,20 +164,51 @@ class TeacherController extends Controller
 
 }
 
-public function recapTeacherAbsences(Request $request){
-// dd($request->all());
+public function recapTeacherAbsences(Request $request)
+{
     $activeRoute = 'recap-teacher-absences';
 
-   $teacher = $this->teacherService->recapTeacherAbsences([
+    // Panggil service absensi seperti biasa
+    $teacher = $this->teacherService->recapTeacherAbsences([
         'id' => $request->input('id'),
         'month' => $request->input('month'),
     ]);
-    $filterMonth = $request->input('month');
-  
+
+    $filterMonth = $request->input('month') ?? now()->month;
+    $filterYear  = $request->input('year') ?? now()->year;
+
+    // ✅ Tambahkan panggilan API ke backend untuk ambil jumlah repost
+    try {
+        $teacherId = $request->input('id');
+        $baseUrl = config('services.api.base_url'); // diambil dari .env (API_BASE_URL)
+
+        // Contoh: http://localhost:8000/api/v1/repost-proofs/16?month=10&year=2025
+        $response = Http::get("{$baseUrl}/repost-proofs/{$teacherId}", [
+            'month' => $filterMonth,
+            'year'  => $filterYear,
+        ]);
+
+        if ($response->successful()) {
+            $repostData = $response->json();
+            $repostCount = $repostData['count'] ?? 0;
+        } else {
+            $repostCount = 0;
+        }
+
+    } catch (\Exception $e) {
+        $repostCount = 0;
+    }
+
     if (isset($teacher['error'])) {
         return redirect()->back()->with('error', $teacher['error']);
     }
-    // dd($teacher);
-    return view('pages.recap-teacher-absences.show', compact('activeRoute', 'teacher', 'filterMonth'));
+// dd($repostCount);
+    return view('pages.recap-teacher-absences.show', compact(
+        'activeRoute',
+        'teacher',
+        'filterMonth',
+        'repostCount'
+    ));
 }
+
 }

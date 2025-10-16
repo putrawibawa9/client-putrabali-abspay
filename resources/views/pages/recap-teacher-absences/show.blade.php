@@ -8,7 +8,34 @@
         <div class="text-center mb-8">
             <h2 class="text-3xl font-bold text-white">Riwayat Mengajar</h2>
             <p class="mt-2 text-lg text-gray-300"><span class="font-semibold text-blue-400">{{ $teacher['teacher']['name'] }}</span></p>
-       
+         @php
+    // tentukan pesan dinamis berdasarkan jumlah repost
+    if ($repostCount <= 2) {
+        $message = "Ayo tetap semangat berbagi, " . explode(' ', $teacher['teacher']['name'])[0] . 
+                   "! Setiap repost membantu semakin banyak orang mengenal PB. 💪";
+        $color = "text-yellow-400";
+    } elseif ($repostCount == 4) {
+        $message = "Terima kasih atas dedikasi dan konsistensi Anda bulan ini! 🙏✨";
+        $color = "text-emerald-400";
+    } elseif ($repostCount > 4) {
+        $message = "Wah luar biasa! Anda melampaui target — semangat dan loyalitas Anda patut diapresiasi! 🏆🔥";
+        $color = "text-pink-400";
+    } else {
+        $message = "Terima kasih atas kontribusi Anda! 🙌";
+        $color = "text-blue-400";
+    }
+@endphp
+
+<p class="text-gray-200 text-lg font-medium text-center">
+    Anda telah berkontribusi dalam 
+    <span class="font-extrabold {{ $color }} drop-shadow-sm">({{ $repostCount }}/4)</span> 
+    Sosial Media PB bulan ini.
+</p>
+
+<p class="mt-2 text-gray-300 italic text-center">
+    {{ $message }}
+</p>
+
             <div class="text-white mt-3 px-4 py-2 bg-gray-800 border border-gray-700 rounded-md font-semibold text-blue-400">
                 <div class="flex flex-col sm:flex-row sm:items-center gap-3">
                     <div class="flex items-center">

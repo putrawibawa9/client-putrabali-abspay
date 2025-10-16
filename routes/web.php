@@ -12,6 +12,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\RepostProofController;
 use App\Http\Controllers\FinanceEntryController;
 use App\Http\Controllers\StudentCourseController;
 use App\Http\Controllers\AuthenticationController;
@@ -112,3 +113,4 @@ Route::get('/ping', function () {
     Route::get('/recap-teacher-absences', [TeacherController::class, 'recapTeacherAbsences'])->name('recap-teacher-absences');
   Route::resource('/assessments', \App\Http\Controllers\AssessmentController::class);
     Route::get('/unpaid', [RecapitulationController::class, 'unpaid'])->name('unpaid.index');
+   Route::resource('repost-proofs', RepostProofController::class);
