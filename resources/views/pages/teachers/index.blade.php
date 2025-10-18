@@ -40,6 +40,7 @@
             <div class="sm:flex sm:flex-1 min-h-full">
                 <div
                     class="items-center hidden sm:flex-1 mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
+                    
                     <form class="lg:pr-3 w-full" action="/teachers-search" method="GET">
    
     <label for="teacher-search" class="sr-only">Search</label>
@@ -94,7 +95,7 @@
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    username
+                                    Repost Bulan Ini
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -118,7 +119,7 @@
                                     </td>
                                     <td
                                         class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                        {{ $teacher['username'] }}
+                                        {{ $teacher['total_reposts_this_month'] }}
                                     </td>
                                   
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
