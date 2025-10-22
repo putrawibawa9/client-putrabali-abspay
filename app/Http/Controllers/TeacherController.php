@@ -203,6 +203,7 @@ public function recapTeacherAbsences(Request $request)
         return redirect()->back()->with('error', $teacher['error']);
     }
 // dd($repostData );
+
     return view('pages.recap-teacher-absences.show', compact(
         'activeRoute',
         'repostData',
