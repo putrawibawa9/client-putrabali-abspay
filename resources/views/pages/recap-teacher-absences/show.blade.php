@@ -163,7 +163,69 @@
             </div>
         </div>
 
-     
+      
     </div>
+    
 </div>
+<!-- Repost Proof Table -->
+<div class="bg-gray-800 shadow-lg rounded-lg overflow-hidden mt-10">
+<!-- Card Header -->
+<div class="px-4 py-5 sm:px-6 bg-gray-700 flex justify-between items-center">
+    <h3 class="text-lg font-medium text-white">
+        📸 Riwayat Repost
+    </h3>
+    <span class="text-white text-sm bg-gray-600 px-3 py-1 rounded-full">
+        {{ $repostCount }} Repost Bulan Ini
+    </span>
+</div>
+
+<!-- Table Section -->
+<div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-700">
+        <thead class="bg-gray-700">
+            <tr>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">#</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Tanggal</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Bukti Repost</th>
+            </tr>
+        </thead>
+
+        @php
+            // Pastikan variabel proof berasal dari API
+            $proofs = $repostData['proofs'] ?? [];
+        @endphp
+
+        @forelse ($proofs as $proof)
+            <tbody class="bg-gray-800 divide-y divide-gray-700">
+                <tr class="hover:bg-gray-700 transition duration-150">
+                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-white">
+                        {{ $loop->iteration }}
+                    </td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-300">
+                        {{ $proof['uploaded_at'] ?? '-' }}
+                    </td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-300">
+                        <a href="{{ $proof['url'] }}" target="_blank" class="inline-block">
+                            <img src="{{ $proof['url'] }}" 
+                                 alt="Repost Proof" 
+                                 class="h-24 w-auto rounded-md border border-gray-700 hover:opacity-80 transition">
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        @empty
+            <tbody>
+                <tr>
+                    <td colspan="3" class="px-4 py-4 text-center text-sm text-gray-400">
+                        Belum ada repost pada bulan ini.
+                    </td>
+                </tr>
+            </tbody>
+        @endforelse
+    </table>
+</div>
+</div>
+
+
+
 @endsection

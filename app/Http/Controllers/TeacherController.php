@@ -202,9 +202,10 @@ public function recapTeacherAbsences(Request $request)
     if (isset($teacher['error'])) {
         return redirect()->back()->with('error', $teacher['error']);
     }
-// dd($repostCount);
+// dd($repostData );
     return view('pages.recap-teacher-absences.show', compact(
         'activeRoute',
+        'repostData',
         'teacher',
         'filterMonth',
         'repostCount'
