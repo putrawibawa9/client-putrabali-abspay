@@ -44,7 +44,7 @@
                         <div class="relative flex-1">
                             <input type="text" name="search" id="student-search" value="{{ $search ?? '' }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg sm:rounded-r-none focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 pr-20 sm:pr-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Search for Student">
+                                placeholder="Cari Siswa berdasarkan NIS atau Nama...">
                             <!-- Mobile Search Button (inside input) -->
                             <button type="submit" 
                                 class="absolute right-2 top-1/2 transform -translate-y-1/2 px-3 py-1 text-xs font-medium text-white bg-primary-600 rounded hover:bg-primary-700 focus:ring-2 focus:ring-primary-300 focus:outline-none sm:hidden">
@@ -86,13 +86,13 @@
                         <thead class="bg-gray-100 dark:bg-gray-700">
                             <tr>
                                 <th scope="col" class="p-2 sm:p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Actions
+                                    Aksi
                                 </th>
                                 <th scope="col" class="p-2 sm:p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                     NIS
                                 </th>
                                 <th scope="col" class="p-2 sm:p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Name
+                                    Nama
                                 </th>
                                 <th scope="col" class="hidden sm:table-cell p-2 sm:p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                     WhatsApp Number
@@ -120,8 +120,8 @@
                                                     <path stroke="currentColor" stroke-width="2"
                                                         d="M3 10c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v4c0 1.1-.9 2-2 2H5a2 2 0 0 1-2-2v-4Zm2 0h14v4H5v-4Zm3 2a2 2 0 1 0 4 0 2 2 0 0 0-4 0Zm7 0h3" />
                                                 </svg>
-                                                <span class="hidden sm:inline">Create Payment</span>
-                                                <span class="sm:hidden">Pay</span>
+                                                <span class="hidden sm:inline">Buat Pembayaran</span>
+                                                <span class="sm:hidden">Bayar</span>
                                             </a>
                                         </div>
                                     </td>
