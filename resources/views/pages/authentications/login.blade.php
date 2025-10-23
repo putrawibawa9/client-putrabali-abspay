@@ -32,7 +32,7 @@
     <div class="forms">
         <div class="form-content">
           <div class="login-form">
-            <div class="title">Login </div>
+            <div class="title">Login Guru  </div>
               <form action="{{ route('login.teacher') }}" method="POST">
      
             @csrf
@@ -49,7 +49,7 @@
               <div class="button input-box">
                 <input type="submit" value="Submit">
               </div>
-              <div class="text sign-up-text">Not a teacher? <label for="flip">Login as admin</label></div>
+              <div class="text sign-up-text">Bukan Guru? <label for="flip">Login sebagai admin</label></div>
             </div>
           
         </form>
@@ -71,7 +71,7 @@
               <div class="button input-box">
                 <input type="submit" value="Submit">
               </div>
-              <div class="text sign-up-text">Not an admin? <label for="flip">Login as teacher</label></div>
+              <div class="text sign-up-text">Bukan Admin? <label for="flip">Login sebagai Guru</label></div>
             </div>
       </form>
     </div>
