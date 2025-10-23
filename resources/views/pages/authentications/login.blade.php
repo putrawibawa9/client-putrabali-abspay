@@ -32,7 +32,7 @@
     <div class="forms">
         <div class="form-content">
           <div class="login-form">
-            <div class="title">Login Teacher</div>
+            <div class="title">Login </div>
               <form action="{{ route('login.teacher') }}" method="POST">
      
             @csrf
