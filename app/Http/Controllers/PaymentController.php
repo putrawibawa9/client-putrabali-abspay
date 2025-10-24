@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Services\CourseService;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -301,6 +302,34 @@ public function generateReceipt($id)
     }
 
 
+    public function getUnpaidStudents()
+    {
+       // Base URL API diambil dari .env
+        $base = env('API_BASE_URL', 'http://localhost:8000/api/v1');
+
+        // Endpoint backend yang kamu sudah buat
+        $endpoint = "{$base}/getUnpaidStudents";
+
+        // Kirim request ke backend API
+        $res = Http::acceptJson()->get($endpoint);
+
+        // Jika gagal responsenya
+        if (!$res->ok()) {
+            abort(502, 'Gagal mengambil data murid yang belum bayar dari API.');
+        }
+
+        // Ambil data JSON dari response
+        $data = $res->json();
+
+        // Tampilkan ke view (atau bisa juga return response()->json($data))
+        return view('pages.students.unpaid', [
+            'students' => $data['data'] ?? [],
+            'activeRoute' => 'getUnpaidStudents',
+            'count' => $data['count'] ?? 0,
+            'months' => $data['unpaid_months'] ?? [],
+            'year' => $data['year'] ?? now()->year,
+        ]);
+    }
   
 
 }

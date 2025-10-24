@@ -99,6 +99,7 @@ Route::get('/ping', function () {
     Route::get('/public/check-status/search', [PaymentController::class, 'searchStudentFromParents'])->name('check-status.search');
     Route::get('/public/check-status/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
 
+       
 
 
     // for teachers
@@ -114,3 +115,4 @@ Route::get('/ping', function () {
   Route::resource('/assessments', \App\Http\Controllers\AssessmentController::class);
     Route::get('/unpaid', [RecapitulationController::class, 'unpaid'])->name('unpaid.index');
    Route::resource('repost-proofs', RepostProofController::class);
+ Route::get('/getUnpaidStudents', [PaymentController::class, 'getUnpaidStudents'])->name('reports.getUnpaidStudents');
