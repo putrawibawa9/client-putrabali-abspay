@@ -88,11 +88,32 @@
                                     <td class="p-4 text-gray-900 dark:text-white">
                                         {{ $student['nis'] }}
                                     </td>
+                                    
                                     <td class="p-4 text-gray-900 dark:text-white">
-                                        {{ $student['name'] }}
+                                        <a href="/students/{{ $student['id'] }}" class="text-primary-600 hover:underline">{{ $student['name'] }}</a>
                                     </td>
                                     <td class="p-4 text-gray-900 dark:text-white">
-                                        {{ $student['wa_number'] ?? '-' }}
+                                        @if(!empty($student['wa_number']))
+                                            @php
+                                                // remove non-digit characters
+                                                $raw = preg_replace('/\D+/', '', $student['wa_number']);
+                                                // convert leading 0 to country code 62 (Indonesia)
+                                                if (substr($raw, 0, 1) === '0') {
+                                                    $phone = '62' . substr($raw, 1);
+                                                } else {
+                                                    $phone = $raw;
+                                                }
+                                            @endphp
+                                            <a href="https://wa.me/{{ $phone }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-green-600 hover:underline">
+                                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path d="M20.52 3.48A11.92 11.92 0 0012 0C5.373 0 .01 5.373 0 12c0 2.11.548 4.176 1.587 6.014L0 24l6.224-1.614A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12 0-3.206-1.248-6.217-3.48-8.52zM12 22.08c-1.86 0-3.69-.5-5.279-1.44l-.377-.22-3.694.96.987-3.6-.245-.374A9.06 9.06 0 012.94 12 9.06 9.06 0 0112 2.94 9.06 9.06 0 0121.06 12 9.06 9.06 0 0112 22.08z"/>
+                                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.473-.148-.673.149-.198.297-.767.967-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.884-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.133-.132.297-.347.445-.52.149-.173.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.148-.673-1.62-.922-2.218-.242-.582-.487-.503-.673-.513l-.575-.01c-.198 0-.52.074-.793.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487 1.263.545 2.25.87 3.024 1.112 1.27.403 2.43.347 3.345.211.102-.051 1.758-.718 2.006-1.412.248-.695.248-1.29.173-1.412-.074-.124-.273-.198-.57-.347z"/>
+                                                </svg>
+                                                <span class="ml-2">{{ $student['wa_number'] }}</span>
+                                            </a>
+                                        @else
+                                            -
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

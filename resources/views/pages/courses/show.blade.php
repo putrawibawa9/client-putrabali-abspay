@@ -128,8 +128,9 @@
         </td>
         <!-- Name Column -->
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            {{ $student['name'] }}
+            <a href="/students/{{ $student['id'] }}" class="text-primary-600 hover:underline">{{ $student['name'] }}</a>
         </td>                
+        
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
             {{ $student['school'] }}
         </td> 
