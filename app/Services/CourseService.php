@@ -243,6 +243,7 @@ $alias = $alias['alias'] ?? null;
                     'subject' => $data['subject'],
                     'alias' => $data['alias'],
                     'payment_rate' => $data['payment_rate'],
+                    'teaching_rate' => $data['teaching_rate'],
                 ]
             ]);
 

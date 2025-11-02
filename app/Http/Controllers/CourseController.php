@@ -76,6 +76,7 @@ class CourseController extends Controller
            'subject' => 'required',
            'alias'  => 'required',
            'payment_rate' => 'required',
+           'teaching_rate' => 'required',
         ]);
 
 
