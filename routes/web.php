@@ -116,3 +116,10 @@ Route::get('/ping', function () {
     Route::get('/unpaid', [RecapitulationController::class, 'unpaid'])->name('unpaid.index');
    Route::resource('repost-proofs', RepostProofController::class);
  Route::get('/getUnpaidStudents', [PaymentController::class, 'getUnpaidStudents'])->name('reports.getUnpaidStudents');
+
+
+ Route::get('/sitemap.xml', function () {
+    $urls = [url('/')];
+    return response()->view('sitemap', compact('urls'))
+        ->header('Content-Type', 'text/xml');
+});
