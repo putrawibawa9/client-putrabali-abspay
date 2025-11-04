@@ -1,3 +1,4 @@
+{{-- @dd($students) --}}
 @extends('layouts.main')
 
 @section('content')
@@ -106,7 +107,7 @@
                             </th>
                             <th scope="col"
                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Gender
+                                NIK
                             </th>
                             <th scope="col"
                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -141,10 +142,13 @@ Show Detail
                                     <button type="button" data-modal-toggle="edit-user-modal"
                                         data-id="{{ $student['id'] }}"
                                     data-name="{{ $student['name'] }}"
+                                     data-nik="{{ $student['nik'] }}"
+                                        data-nisn="{{ $student['nisn'] }}"
                                         data-wa_number="{{ $student['wa_number'] }}"
                                         data-gender="{{ $student['gender'] }}"
                                         data-school="{{ $student['school'] }}"
                                         data-enroll_date="{{ $student['enroll_date'] }}"
+                                       
                                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-500 dark:bg-amber-500 dark:hover:bg-amber-700 dark:focus:ring-amber-700">
                                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -173,7 +177,7 @@ Show Detail
                                     <a href="https://wa.me/{{ $student['wa_number'] }}"> {{ $student['wa_number'] }} </a>
                                 </td>
                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $student['gender'] }}
+                                    {{ $student['nik'] }}
                                 </td>
                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $student['school'] }}
@@ -388,6 +392,32 @@ Show Detail
                                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="Enter school name" required>
                         </div>
+                    <div class="col-span-6 sm:col-span-3">
+    <label for="nik" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        NIK (Nomor Induk Kependudukan)
+    </label>
+    <input type="text" name="nik" id="nik"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
+               focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 
+               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+               dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder="Masukkan 16 digit NIK (opsional)"
+        maxlength="16">
+</div>
+
+<div class="col-span-6 sm:col-span-3">
+    <label for="nisn" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        NISN (Nomor Induk Siswa Nasional)
+    </label>
+    <input type="text" name="nisn" id="nisn"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
+               focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 
+               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+               dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder="Masukkan 10 digit NISN (opsional)"
+        maxlength="10">
+</div>
+
                     </div>
                 </div>
                 <!-- Modal footer -->
@@ -465,6 +495,32 @@ Show Detail
                 <option value="Female">Perempuan</option>
             </select>
         </div>
+     <div class="col-span-6 sm:col-span-3">
+    <label for="nik" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        NIK (Nomor Induk Kependudukan)
+    </label>
+    <input type="text" name="nik" id="nik"
+        placeholder="Masukkan 16 digit NIK (opsional)"
+        maxlength="16"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
+               focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 
+               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+               dark:focus:ring-primary-500 dark:focus:border-primary-500">
+</div>
+
+<div class="col-span-6 sm:col-span-3">
+    <label for="nisn" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        NISN (Nomor Induk Siswa Nasional)
+    </label>
+    <input type="text" name="nisn" id="nisn"
+        placeholder="Masukkan 10 digit NISN (opsional)"
+        maxlength="10"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
+               focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 
+               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+               dark:focus:ring-primary-500 dark:focus:border-primary-500">
+</div>
+
 
         <div class="col-span-6">
             <label for="school" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sekolah</label>

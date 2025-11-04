@@ -60,6 +60,7 @@ class StudentController extends Controller
      */
  public function store(Request $request)
 {
+    // dd($request->all());
     // Validate the incoming request data
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
@@ -69,6 +70,8 @@ class StudentController extends Controller
         'enroll_date' => 'required|date',
         'course_id' => 'required|array', // Ensure course_id is an array
         'custom_payment_rate' => 'nullable|array', // Ensure custom_payment_rate is an array
+        'nik' => 'nullable|string|max:255',
+        'nisn' => 'nullable|string|max:255',
     ]);
 
     // Format the WhatsApp number
@@ -101,6 +104,8 @@ class StudentController extends Controller
         'gender' => $validatedData['gender'],
         'school' => $validatedData['school'],
         'enroll_date' => $validatedData['enroll_date'],
+        'nik' => $validatedData['nik'],
+        'nisn' => $validatedData['nisn'],
         'courses' => $courses,
     ];
 
@@ -147,6 +152,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
+       
         $oldData = $this->studentService->getStudentById($id);
         $newData = $request->all();
     
@@ -171,14 +177,21 @@ class StudentController extends Controller
             return redirect("/students")->with('success', 'Tidak ada data yang berubah.');
         }
     
+    
         // Proceed with the update only if there are changes
         $result = $this->studentService->updateStudent($id, $updatedData);
     
-        if (is_int($result)) {
-            return redirect("/students/$result")->with('success', 'Sukses merubah data siswa');
-        } else {
-            return redirect('/students')->with('error', $result['message']);
-        }
+       if (is_int($result)) {
+    // kasus lama — hanya ID
+    return redirect("/students/$result")->with('success', 'Sukses merubah data siswa');
+} elseif (is_array($result) && isset($result['student_id'])) {
+    // kasus baru — array dengan message dan student_id
+    return redirect("/students/{$result['student_id']}")->with('success', $result['message']);
+} else {
+    // fallback error
+    return redirect('/students')->with('error', $result['message'] ?? 'Terjadi kesalahan saat mengubah data siswa');
+}
+
     }
 
     /**

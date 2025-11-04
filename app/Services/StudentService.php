@@ -114,7 +114,9 @@ class StudentService
                 'gender' => $data['gender'],
                 'school' => $data['school'],
                 'enroll_date' => $data['enroll_date'],
-                'courses' => $data['courses']
+                'courses' => $data['courses'],
+                'nik' => $data['nik'],
+                'nisn' => $data['nisn'],
             ],
         ]);
 

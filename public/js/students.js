@@ -14,6 +14,9 @@
         form.querySelector('#gender').value = button.dataset.gender || '';
         form.querySelector('#school').value = button.dataset.school || '';
         form.querySelector('#enroll_date').value = button.dataset.enroll_date || '';
+        form.querySelector("#nik").value = button.dataset.nik || "";
+        form.querySelector("#nisn").value = button.dataset.nisn || "";
+
 
         // Show modal
         modal.classList.remove('hidden');
