@@ -2,11 +2,13 @@
 
 use Faker\Provider\ar_EG\Payment;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
 use App\Http\Middleware\CheckUserSession;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
@@ -18,7 +20,6 @@ use App\Http\Controllers\StudentCourseController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\RecapitulationController;
 use App\Http\Controllers\FinanceCategoryController;
-use Illuminate\Support\Facades\Response;
 
 Route::middleware([CheckUserSession::class])->group(function () {
 
@@ -119,9 +120,4 @@ Route::get('/ping', function () {
  Route::get('/getUnpaidStudents', [PaymentController::class, 'getUnpaidStudents'])->name('reports.getUnpaidStudents');
 
 
-Route::get('/sitemap.xml', function () {
-    $urls = [url('/')];
-
-    return Response::view('sitemap', compact('urls'))
-        ->header('Content-Type', 'application/xml');
-});
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
