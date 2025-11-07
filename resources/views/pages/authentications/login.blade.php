@@ -3,7 +3,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <title> Login and Registration Form in HTML & CSS | CodingLab </title>
+    <title> Sistem Absensi dan Pembayaran PB English Course</title>
  
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
     <!-- Fontawesome CDN Link -->
