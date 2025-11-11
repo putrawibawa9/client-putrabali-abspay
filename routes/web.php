@@ -14,6 +14,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\CoursePriceController;
 use App\Http\Controllers\RepostProofController;
 use App\Http\Controllers\FinanceEntryController;
 use App\Http\Controllers\StudentCourseController;
@@ -76,6 +77,11 @@ Route::middleware([CheckUserSession::class])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [RecapitulationController::class, 'index'])->name('dashboard')->middleware(CheckUserSession::class);
+
+
+    Route::get('/course-prices', [CoursePriceController::class, 'index'])->name('course-prices.index');
+Route::post('/course-prices', [CoursePriceController::class, 'store'])->name('course-prices.store');
+Route::put('/course-prices/{id}', [CoursePriceController::class, 'update'])->name('course-prices.update');
 });
 
   Route::get('/payments-search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
