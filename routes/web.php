@@ -79,9 +79,12 @@ Route::middleware([CheckUserSession::class])->group(function () {
     Route::get('/dashboard', [RecapitulationController::class, 'index'])->name('dashboard')->middleware(CheckUserSession::class);
 
 
-    Route::get('/course-prices', [CoursePriceController::class, 'index'])->name('course-prices.index');
+    Route::get('/course-prices/year/{course_id}/{year}', [CoursePriceController::class, 'index'])->name('course-prices.index');
 Route::post('/course-prices', [CoursePriceController::class, 'store'])->name('course-prices.store');
 Route::put('/course-prices/{id}', [CoursePriceController::class, 'update'])->name('course-prices.update');
+
+Route::post('/course-prices/update-month', [CoursePriceController::class, 'updateMonth'])
+    ->name('course-prices.update-month');
 });
 
   Route::get('/payments-search', [PaymentController::class, 'searchStudentByNisOrName'])->name('payments.search');
@@ -127,3 +130,7 @@ Route::get('/ping', function () {
 
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index']);
+
+Route::get('/course-prices/view/{course_id}/{year}', [CoursePriceController::class, 'showForTeacher'])
+    ->name('course-prices.view');
+

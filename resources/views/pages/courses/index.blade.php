@@ -176,7 +176,7 @@
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Nama</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Kursus</th>
+                          
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Harga Kelas</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Jumlah Siswa</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Upah Guru</th>
@@ -187,7 +187,7 @@
                             @foreach ($courses['data'] as $course)                             
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">    
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ $course['alias'] }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $course['subject'] }}</td>
+                                 
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">Rp. {{ number_format($course['payment_rate'], 0, ',', '.') }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $course['students_count'] }} Siswa</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">Rp. {{ number_format($course['teaching_rate'], 0, ',', '.') }}</td>
@@ -219,7 +219,17 @@
                  3 .895 3 2-1.343 2-3 2m0-8V6m0 12v-2m9-4
                  a9 9 0 11-18 0 9 9 0 0118 0z"/>
     </svg>
-    Pembayaran
+   Cek Pembayaran Siswa
+</a>
+                                           <a href="{{ route('course-prices.index', ['course_id' => $course['id'], 'year' => now()->year]) }}" 
+   class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+    <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 
+                 3 .895 3 2-1.343 2-3 2m0-8V6m0 12v-2m9-4
+                 a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+   Pembayaran Per Bulan
 </a>
 
 

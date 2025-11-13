@@ -53,12 +53,26 @@
           @if(count($active) > 0)
             <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-2">
               @foreach ($active as $course)
-                <li class="text-gray-700 dark:text-gray-300 inline-flex items-center gap-2">
-                  <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-800 dark:text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd" d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z" clip-rule="evenodd"/>
-                  </svg>
-                  <span class="text-sm sm:text-base">{{ $course['subject'] }} - {{ $course['alias'] }}</span>
-                </li>
+              {{-- letakkan ini di bagian atas file blade (mis. langsung di atas <li> atau di header) --}}
+@php
+    $year = now()->year;
+@endphp
+
+<li class="text-gray-700 dark:text-gray-300 inline-flex items-center gap-2">
+    <a 
+        href="{{ route('course-prices.view', [$course['id'], $year]) }}"
+        class="inline-flex items-center gap-2 hover:underline hover:text-blue-600 dark:hover:text-blue-400 transition"
+    >
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-800 dark:text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z" clip-rule="evenodd"/>
+        </svg>
+
+        <span class="text-sm sm:text-base">
+            {{ $course['subject'] }} - {{ $course['alias'] }}
+        </span>
+    </a>
+</li>
+
               @endforeach
             </ul>
           @else
