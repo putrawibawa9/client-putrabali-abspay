@@ -107,9 +107,23 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 mt-4">
           @foreach ($active as $index => $course)
             <div class="p-4 sm:p-6 lg:p-8 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-[#111827] dark:border-gray-700 dark:hover:bg-gray-700">
-              <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white break-words">
-                {{ $course['subject'] }} - {{ $course['alias'] }}
-              </h3>
+           @php
+    $year = now()->year;
+@endphp
+
+<a 
+    href="{{ route('course-prices.view', [$course['id'], $year]) }}" 
+    class="group block"
+>
+    <h3 class="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white break-words group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
+        {{ $course['subject'] }} - {{ $course['alias'] }}
+    </h3>
+
+    <p class="text-sm text-gray-600 dark:text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-300 transition">
+        cek harga bulanan di sini →
+    </p>
+</a>
+
 
               {{-- Hidden Course ID --}}
               <input type="hidden" name="courses[{{ $index }}][course_id]" value="{{ $course['id'] }}">
@@ -168,14 +182,14 @@
 
                   {{-- Discounted (display only) --}}
                   @php $customRate = (int)($course['pivot']['custom_payment_rate'] ?? 0); @endphp
-                  <div class="flex items-start gap-2">
+                  {{-- <div class="flex items-start gap-2">
                     <div class="text-sm font-medium text-gray-900 dark:text-gray-300">
                       <div class="flex flex-col">
                         <span>Harga Setelah Potongan</span>
                         <span>{{ $customRate > 0 ? 'Rp. '.number_format($customRate, 0, ',', '.') : '—' }}</span>
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
 
                   {{-- Manual Payment Input --}}
                   <div class="flex flex-col gap-1 w-full md:w-56">

@@ -105,18 +105,13 @@
                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                 WhatsApp Number
                             </th>
-                            <th scope="col"
-                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                NIK
-                            </th>
+                           
+                            
                             <th scope="col"
                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                 School
                             </th>
-                            <th scope="col"
-                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Enroll Date
-                            </th>
+                           
                             
                         </tr>
                     </thead>
@@ -136,8 +131,9 @@ class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-w
     <path stroke="currentColor" stroke-width="2"
         d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
 </svg>
-Show Detail
-</a>
+Detail
+</a> 
+
 
                                     <button type="button" data-modal-toggle="edit-user-modal"
                                         data-id="{{ $student['id'] }}"
@@ -162,6 +158,21 @@ Show Detail
                                         Edit Student
                                     </button>
 
+
+                           <a href="{{ route('payments.show', $student['id']) }}"  
+class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 
+       rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 transition">
+    
+    {{-- Icon Cash + Plus --}}
+    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" 
+        viewBox="0 0 24 24">
+        <path d="M12 8v8m4-4H8" stroke-linecap="round" stroke-linejoin="round"/> 
+        <rect x="3" y="5" width="18" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    Input Pembayaran
+</a>
+
                                 
 
                                 </td>
@@ -176,15 +187,11 @@ Show Detail
                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <a href="https://wa.me/{{ $student['wa_number'] }}"> {{ $student['wa_number'] }} </a>
                                 </td>
-                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $student['nik'] }}
-                                </td>
+                                
                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $student['school'] }}
                                 </td>
-                                <td class="p-4 text-base font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $student['enroll_date'] }}
-                                </td>
+                               
                                 
                             </tr>
                     

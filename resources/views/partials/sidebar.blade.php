@@ -138,7 +138,7 @@
 
 
 
-                    <li>
+                    {{-- <li>
                         <button type="button"
                             class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                             aria-controls="dropdown-crud-teacher" data-collapse-toggle="dropdown-crud-students">
@@ -162,14 +162,14 @@
                                 <a href="/payments"
                                     class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'payments' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">Pembayaran
                                     </a>
-                            </li>
+                            </li> --}}
                             {{-- <li>
                                 <a href="/course-prices"
                                     class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'course-prices' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">Pembayaran Bulanan</a>
                             </li> --}}
                            
-                        </ul>
-                    </li>
+                        {{-- </ul> --}}
+                    {{-- </li> --}}
 
 
                     <li>

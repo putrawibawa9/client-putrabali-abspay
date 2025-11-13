@@ -150,7 +150,7 @@ class PaymentController extends Controller
         $student = $this->studentService->getStudentById($id);
            $payment = $this->paymentService->getStudentPayment($id);
         // dd($payment);
-       $activeRoute = 'payments';
+       $activeRoute = 'students';
         return view('pages.payment.show', compact('student', 'payment', 'activeRoute'));
     }
 
