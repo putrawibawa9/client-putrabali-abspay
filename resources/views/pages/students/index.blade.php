@@ -93,24 +93,26 @@
                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                             Actions
                         </th>
+                        <th scope="col"
+                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                Nama
+                            </th>
+                             <th scope="col"
+                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                             Kelas Aktif
+                            </th>
                             <th scope="col"
                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                 NIS
                             </th>
-                            <th scope="col"
-                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                Name
-                            </th>
-                            <th scope="col"
-                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                WhatsApp Number
-                            </th>
-                           
                             
                             <th scope="col"
                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                School
+                                Nomor WhatsApp
                             </th>
+                           
+                            
+                           
                            
                             
                         </tr>
@@ -121,76 +123,78 @@
                         @foreach ($students['data'] as $student)                             
                         
                             <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">    
-                                <td class="p-4 space-x-2 whitespace-nowrap">
+                               <td class="p-2 space-x-1 whitespace-nowrap w-48">
 
-                                    <a href="/students/{{ $student['id'] }}"
-class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-<svg class="w-4 h-4 mr-2" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <path stroke="currentColor" stroke-width="2"
-        d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
-    <path stroke="currentColor" stroke-width="2"
-        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-</svg>
-Detail
-</a> 
+    <!-- Detail -->
+    <a href="/students/{{ $student['id'] }}"
+        class="inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-primary-600 rounded-md hover:bg-primary-800">
+        <svg class="w-3 h-3 mr-1" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-width="2"
+                d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
+            <path stroke="currentColor" stroke-width="2"
+                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+        Detail
+    </a>
 
+    <!-- Edit Student -->
+    <button type="button"
+        data-modal-toggle="edit-user-modal"
+        data-id="{{ $student['id'] }}"
+        data-name="{{ $student['name'] }}"
+        data-nik="{{ $student['nik'] }}"
+        data-nisn="{{ $student['nisn'] }}"
+        data-wa_number="{{ $student['wa_number'] }}"
+        data-gender="{{ $student['gender'] }}"
+        data-school="{{ $student['school'] }}"
+        data-enroll_date="{{ $student['enroll_date'] }}"
 
-                                    <button type="button" data-modal-toggle="edit-user-modal"
-                                        data-id="{{ $student['id'] }}"
-                                    data-name="{{ $student['name'] }}"
-                                     data-nik="{{ $student['nik'] }}"
-                                        data-nisn="{{ $student['nisn'] }}"
-                                        data-wa_number="{{ $student['wa_number'] }}"
-                                        data-gender="{{ $student['gender'] }}"
-                                        data-school="{{ $student['school'] }}"
-                                        data-enroll_date="{{ $student['enroll_date'] }}"
-                                       
-                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-500 dark:bg-amber-500 dark:hover:bg-amber-700 dark:focus:ring-amber-700">
-                                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
-                                            </path>
-                                            <path fill-rule="evenodd"
-                                                d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                        Edit Student
-                                    </button>
+        class="inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-amber-400 rounded-md hover:bg-amber-500">
+        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+            <path fill-rule="evenodd"
+                d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                clip-rule="evenodd"></path>
+        </svg>
+        Edit
+    </button>
 
+    <!-- Input Pembayaran -->
+    <a href="{{ route('payments.show', $student['id']) }}"
+        class="inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-primary-600 rounded-md hover:bg-primary-800">
+        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24">
+            <path d="M12 8v8m4-4H8" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="3" y="5" width="18" height="14" rx="2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Pembayaran
+    </a>
 
-                           <a href="{{ route('payments.show', $student['id']) }}"  
-class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 
-       rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 transition">
-    
-    {{-- Icon Cash + Plus --}}
-    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" 
-        viewBox="0 0 24 24">
-        <path d="M12 8v8m4-4H8" stroke-linecap="round" stroke-linejoin="round"/> 
-        <rect x="3" y="5" width="18" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+</td>
 
-    Input Pembayaran
-</a>
-
-                                
-
+                                <td
+                                    class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
+                                    {{ $student['name'] }}
+                                </td>
+                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    @forelse ($student['active_courses'] as $course )
+                                       <p>{{ $course['alias'] }}</p>
+                                    @empty
+                                        -
+                                    @endforelse
                                 </td>
                                 <td
                                     class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
                                     {{ $student['nis'] }}
                                 </td>
-                                <td
-                                    class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
-                                    {{ $student['name'] }}
-                                </td>
+                                
                                 <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <a href="https://wa.me/{{ $student['wa_number'] }}"> {{ $student['wa_number'] }} </a>
                                 </td>
                                 
-                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $student['school'] }}
-                                </td>
+                               
                                
                                 
                             </tr>
