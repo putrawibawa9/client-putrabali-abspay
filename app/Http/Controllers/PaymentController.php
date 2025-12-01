@@ -86,7 +86,7 @@ class PaymentController extends Controller
             // - modul/pendaftaran/ujian (nominal boleh null; server set 50000)
             if (empty($c['type'])) return false;
             if ($c['type'] === 'spp') {
-                return !empty($c['payment_date']) && !empty($c['course_id']) && ($c['payment_amount'] > 0);
+                return !empty($c['payment_date']) && !empty($c['course_id']) && ($c['payment_amount'] >= 0);
             }
             // Non-SPP: cukup ada tanggal & course_id; amount boleh null (server akan set 50000)
             return !empty($c['payment_date']) && !empty($c['course_id']);
@@ -110,6 +110,7 @@ class PaymentController extends Controller
     }
 
     // Siapkan payload akhir
+    
     $payload = [
         'student_id' => $studentId,
         'courses'    => $filtered->map(function ($c) {
@@ -123,6 +124,7 @@ class PaymentController extends Controller
         })->all(),
     ];
 
+    // dd($payload);
     // Tentukan aktor
     if ($actor === 'teacher') {
         $payload['teacher_id'] = $userId;
