@@ -52,7 +52,7 @@ class CourseController extends Controller
        
          $courses = $this->courseService->getAllCourses($page);
          $activeRoute = 'courses';
-         
+        //  dd($courses);
         return view('pages.courses.index', compact('courses', 'activeRoute'));
     }
 
@@ -77,6 +77,7 @@ class CourseController extends Controller
            'alias'  => 'required',
            'payment_rate' => 'required',
            'teaching_rate' => 'required',
+              'lokasi_pb' => 'required',
         ]);
 
 

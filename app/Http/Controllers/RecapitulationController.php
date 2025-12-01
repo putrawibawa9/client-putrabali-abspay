@@ -39,7 +39,7 @@ class RecapitulationController extends Controller
    $currentMonth = Carbon::now()->format('F'); // Full month name
    $activeRoute ='dashboard';
   
-//    dd($financeCategory);
+//    dd($recapitulations);
    return view('pages.dashboard.dashboard', compact('activeRoute', 'recapitulations', 'currentMonth'));
 }
 

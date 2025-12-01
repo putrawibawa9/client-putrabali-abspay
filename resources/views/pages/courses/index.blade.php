@@ -176,7 +176,7 @@
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Nama</th>
-                          
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Lokasi</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Harga Kelas</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Jumlah Siswa</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">Upah Guru</th>
@@ -187,9 +187,10 @@
                             @foreach ($courses['data'] as $course)                             
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">    
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ $course['alias'] }}</td>
-                                 
+                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">PB {{ $course['lokasi_pb'] }} </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">Rp. {{ number_format($course['payment_rate'], 0, ',', '.') }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $course['students_count'] }} Siswa</td>
+                                   
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">Rp. {{ number_format($course['teaching_rate'], 0, ',', '.') }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex items-center space-x-2">
@@ -336,6 +337,14 @@
                                     <option value="Mapel">Mapel</option>
                                 </select>
                             </div>
+                            <div>
+                                <label for="lokasi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lokasi</label>
+                                <select name="lokasi_pb" id="lokasi" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+                                    <option value="">Select Lokasi</option>
+                                    <option value="1">PB 1</option>
+                                    <option value="2">PB 2</option>
+                                </select>
+                            </div>
                             <div class="sm:col-span-2">
                                 <label for="payment_rate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga Kelas</label>
                                 <input type="number" min="0" name="payment_rate" id="payment_rate" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukan harga kelas" required>
@@ -404,6 +413,14 @@
                                     <option value="">Select Subject</option>
                                     <option value="English">English</option>
                                     <option value="Mapel">Mapel</option>
+                                </select>
+                            </div>
+                             <div>
+                                <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lokasi</label>
+                                <select name="lokasi_pb" id="gender" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+                                    <option value="">Select Lokasi</option>
+                                    <option value="1">PB 1</option>
+                                    <option value="2">PB 2</option>
                                 </select>
                             </div>
                             <div class="sm:col-span-2">

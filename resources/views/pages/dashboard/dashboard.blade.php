@@ -102,13 +102,33 @@
                     </div>
 
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Kelas</h3>
-                        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
-                            <p class="text-gray-700 dark:text-gray-400 mb-3">Kelas Aktif</p>
-                            <p class="font-semibold text-gray-900 dark:text-white mb-2">Total:</p>
-                            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $recapitulations['total_active_courses'] }} Kelas</h5>
-                        </div>
-                    </div>
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Kelas</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- PB 1 -->
+        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 
+                    dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
+            <p class="text-gray-700 dark:text-gray-400 mb-3">PB 1</p>
+            <p class="font-semibold text-gray-900 dark:text-white mb-2">Total:</p>
+            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">
+                {{ $recapitulations['total_active_courses_pb1'] }} Kelas
+            </h5>
+        </div>
+
+        <!-- PB 2 -->
+        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 
+                    dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
+            <p class="text-gray-700 dark:text-gray-400 mb-3">PB 2</p>
+            <p class="font-semibold text-gray-900 dark:text-white mb-2">Total:</p>
+            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">
+                {{ $recapitulations['total_active_courses_pb2'] }} Kelas
+            </h5>
+        </div>
+
+    </div>
+</div>
+
                 </div>
 
               
