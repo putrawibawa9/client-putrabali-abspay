@@ -21,73 +21,95 @@
                   
                     @if (!Session::has('user_logged_in'))
                         
-                    <li>
-                        <a href="/absences"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'absences' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                viewBox="0 0 24 24">
+                        <li>
+                        <button type="button"
+                            class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                            aria-controls="dropdown-crud-teacher" data-collapse-toggle="dropdown-crud-recap">
+                          <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                            </svg>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Input</span>
+                            <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
-                                    d="M7 2a2 2 0 0 0-2 2v1a1 1 0 0 0 0 2v1a1 1 0 0 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H7Zm3 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm-1 7a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3 1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1Z"
-                                    clip-rule="evenodd" />
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
                             </svg>
+                        </button>
+                        <ul id="dropdown-crud-recap" class="space-y-2 py-2 ">
+                            <li>
+                                <a href="/absences"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'absences' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
+                                 Absen</a>
+                            </li>
+                        
+                            <li>
+                                <a href="/payments"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'payments' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
+                                  Pembayaran</a>
+                            </li>
+                            <li>
+                                <a href="/assessments"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'assessments' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
+                                  Input Nilai</a>
+                            </li>
+                            <li>
+                                <a href="/repost-proofs/create"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'repost-proofs' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
+                                  Upload Bukti Repost</a>
+                            </li>
+                        </ul>
+                      
+                    </li>
 
-                            <span class="ml-3" sidebar-toggle-item>Absen</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/recap-teacher-absences?id={{ session('user')['id'] ?? '' }}"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'recap-teacher-absences' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path fill-rule="evenodd" 
-                                    d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm1-13a1 1 0 1 0-2 0v4.414l-2.293 2.293a1 1 0 0 0 1.414 1.414L12 11.414l2.293 2.293a1 1 0 0 0 1.414-1.414L13 9.414V7Z" 
-                                    clip-rule="evenodd"/>
-                            </svg>
-                            <span class="ml-3" sidebar-toggle-item>Riwayat Mengajar</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/payments"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ $activeRoute == 'payments' ? 'bg-gray-100 dark:bg-gray-700' : '' }} dark:text-gray-200 dark:hover:bg-gray-700 ">
-                            <!-- Grading/Assessment Icon -->
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                <path fill-rule="evenodd" d="M4 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4zm2 0v16h12V4H6zm2 4h8v2H8V8zm0 4h5v2H8v-2zm0 4h8v2H8v-2z" clip-rule="evenodd"/>
-                                <circle cx="17" cy="7" r="1.5" fill="currentColor"/>
-                            </svg>
 
-                            <span class="ml-3" sidebar-toggle-item>Pembayaran</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/assessments"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ $activeRoute == 'assessments' ? 'bg-gray-100 dark:bg-gray-700' : '' }} dark:text-gray-200 dark:hover:bg-gray-700 ">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                viewBox="0 0 24 24">
+                       <li>
+                        <button type="button"
+                            class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                            aria-controls="dropdown-crud-teacher" data-collapse-toggle="dropdown-crud-recap">
+                          <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                            </svg>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Operasional</span>
+                            <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
-                                    d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm2-2a1 1 0 1 0 0 2h3a1 1 0 1 0 0-2h-3Zm0 3a1 1 0 1 0 0 2h3a1 1 0 1 0 0-2h-3Zm-6 4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-6Zm8 1v1h-2v-1h2Zm0 3h-2v1h2v-1Zm-4-3v1H9v-1h2Zm0 3H9v1h2v-1Z"
-                                    clip-rule="evenodd" />
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
                             </svg>
+                        </button>
+                        <ul id="dropdown-crud-recap" class="space-y-2 py-2 ">
+                            <li>
+                                <a href="/recap-teacher-absences?id={{ session('user')['id'] ?? '' }}"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'recap-teacher-absences' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
+                                 Riwayat Mengajar</a>
+                            </li>
 
-                            <span class="ml-3" sidebar-toggle-item>Nilai</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/repost-proofs/create"
-                            class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ $activeRoute == 'repost-proofs' ? 'bg-gray-100 dark:bg-gray-700' : '' }} dark:text-gray-200 dark:hover:bg-gray-700 ">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path fill-rule="evenodd"
-                                    d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm2-2a1 1 0 1 0 0 2h3a1 1 0 1 0 0-2h-3Zm0 3a1 1 0 1 0 0 2h3a1 1 0 1 0 0-2h-3Zm-6 4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-6Zm8 1v1h-2v-1h2Zm0 3h-2v1h2v-1Zm-4-3v1H9v-1h2Zm0 3H9v1h2v-1Z"
-                                    clip-rule="evenodd" />
-                            </svg>
 
-                            <span class="ml-3" sidebar-toggle-item>Upload Bukti Repost</span>
-                        </a>
+                             
+                   
+                        
+                            <li>
+                                <a href="/teacher/schedule/future/{{ session('user')['id'] ?? '' }}"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'teacher-schedules' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
+                                  Jadwal Mengajar</a>
+                            </li>
+                           
+                        </ul>
+                      
                     </li>
+
+
+
+                    
+                   
+                
+               
+                 
                    
                       
 
@@ -102,7 +124,7 @@
                                 <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                                 <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                             </svg>
-                            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Rekapitulasi</span>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Operasional</span>
                             <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -131,6 +153,11 @@
                                 <a href="/finance-entries"
                                     class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'finance-entries' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
                                   Buku Kas</a>
+                            </li>
+                            <li>
+                                <a href="/finance-entries"
+                                    class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'finance-entries' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
+                                  Jadwal harian</a>
                             </li>
                         </ul>
                       
