@@ -174,8 +174,10 @@
                   <div class="flex items-start gap-2">
                     <div class="text-sm font-medium text-gray-900 dark:text-gray-300">
                       <div class="flex flex-col">
-                        <span>Harga Normal Kursus</span>
-                        <span>Rp. {{ number_format((int)($course['payment_rate'] ?? 0), 0, ',', '.') }}</span>
+                    <span>Bulan: {{ now()->translatedFormat('F Y') }}</span>
+
+                   Rp. {{ number_format($course['monthly_price'], 0, ',', '.') }}
+
                       </div>
                     </div>
                   </div>

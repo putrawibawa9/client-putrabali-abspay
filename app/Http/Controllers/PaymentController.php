@@ -17,18 +17,25 @@ use App\Services\StudentCourseService;
 class PaymentController extends Controller
 {
 
+       protected $client;
+    protected $baseUrl;
+
+   
+
      protected $studentService;
     protected $courseService;
     protected $studentCoursesService;
     protected $paymentService;
     protected $absenceService;
-    public function __construct(StudentService $studentService, CourseService $courseService, StudentCourseService $studentCoursesService, PaymentService $paymentService, AbsenceService $absenceService)
+    public function __construct(StudentService $studentService, CourseService $courseService, StudentCourseService $studentCoursesService, PaymentService $paymentService, AbsenceService $absenceService, Client $client)
     {
         $this->studentService = $studentService;
         $this->courseService = $courseService;
         $this->studentCoursesService = $studentCoursesService;
         $this->paymentService = $paymentService;
         $this->absenceService = $absenceService;
+        $this->client = $client;
+         $this->baseUrl = config('services.api.base_url');
     }
     /**
      * Display a listing of the resource.
@@ -147,14 +154,66 @@ class PaymentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
-        $student = $this->studentService->getStudentById($id);
-           $payment = $this->paymentService->getStudentPayment($id);
-        // dd($payment);
-       $activeRoute = 'students';
-        return view('pages.payment.show', compact('student', 'payment', 'activeRoute'));
-    }
+  public function show($id)
+{
+    // 1. GET monthly payment dari API
+    $response = $this->client->get(
+        $this->baseUrl . '/students/' . $id . '/monthly-payment',
+        [
+            'timeout' => 10,
+            'headers' => ['Accept' => 'application/json'],
+        ]
+    );
+
+    $course_price = json_decode($response->getBody(), true);
+
+
+    // 2. GET student + payment seperti biasa
+    $student = $this->studentService->getStudentById($id);
+    $payment = $this->paymentService->getStudentPayment($id);
+
+    // ===============================================
+    // 3. MERGE course_price KE DALAM student['active_courses']
+    // ===============================================
+
+    // Buat map: course_id → data pricing bulan ini
+    $priceMap = collect($course_price['courses'])
+        ->mapWithKeys(fn($c) => [
+            $c['course_id'] => [
+                'final_price'    => $c['final_price_this_month'],
+                'default_rate'   => $c['default_rate'],
+                'override_price' => $c['override_price'],
+            ]
+        ]);
+
+    // Inject field 'monthly_price' ke setiap course aktif
+    $student['active_courses'] = collect($student['active_courses'])->map(function ($course) use ($priceMap) {
+
+        $courseId = $course['id'];
+
+        if (isset($priceMap[$courseId])) {
+            $course['monthly_price']  = $priceMap[$courseId]['final_price'];
+            $course['default_rate']   = $priceMap[$courseId]['default_rate'];
+            $course['override_price'] = $priceMap[$courseId]['override_price'];
+        } else {
+            // fallback (misal tidak ada di API)
+            $course['monthly_price'] = $course['payment_rate'];
+            $course['default_rate'] = $course['payment_rate'];
+            $course['override_price'] = null;
+        }
+
+        return $course;
+    });
+    // ===============================================
+
+
+    $activeRoute = 'students';
+// dd($course_price);
+    return view('pages.payment.show', compact(
+        'student', 'payment', 'activeRoute', 'course_price'
+    ));
+}
+
 
     /**
      * Show the form for editing the specified resource.
