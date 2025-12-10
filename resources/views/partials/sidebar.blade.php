@@ -94,7 +94,8 @@
                    
                         
                             <li>
-                                <a href="/teacher/schedule/future/{{ session('user')['id'] ?? '' }}"
+                                <a href="/schedule/teacher/{{ session('user')['id'] ?? '' }}/schedule"
+                             {{-- http://127.0.0.1:7000/schedule/teacher/41/schedule --}}
                                     class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ $activeRoute == 'teacher-schedules' ? 'bg-gray-100 dark:bg-gray-700' : '' }} ">
                                   Jadwal Mengajar</a>
                             </li>

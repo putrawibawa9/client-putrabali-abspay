@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
 <h2>Update Meeting #{{ $meeting['id'] }}</h2>

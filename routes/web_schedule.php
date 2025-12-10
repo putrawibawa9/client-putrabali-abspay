@@ -25,4 +25,7 @@ Route::prefix('schedule')->name('schedule.')->group(function () {
 
     Route::post('/course/{courseId}/recurring/update', [ScheduleController::class, 'updateRecurringSchedule'])
         ->name('recurring.update');
+
+        Route::get('/teacher/{id}/schedule', [ScheduleController::class, 'index'])
+    ->name('teacher.schedule');
 });

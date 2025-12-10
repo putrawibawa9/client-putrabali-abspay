@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Schedule;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class ScheduleController extends Controller
 {
@@ -102,10 +103,13 @@ class ScheduleController extends Controller
 
     public function showUpdateForm($id)
     {
-        $response = $this->api->get("meeting/$id");
-        $meeting = json_decode($response->getBody(), true);
 
-        return view('schedule.update-meeting', compact('meeting'));
+        $response = $this->client->get($this->baseUrl . '/scheduling/meeting/' . "$id");
+      
+        $meeting = json_decode($response->getBody(), true);
+       $activeRoute    = 'update-meeting';
+
+        return view('schedules.update-meeting', compact('meeting', 'activeRoute'));
     }
 
     public function updateMeeting(Request $request, $id)
@@ -149,5 +153,37 @@ class ScheduleController extends Controller
         $data = json_decode($response->getBody(), true);
 
         return redirect()->back()->with('success', $data['message']);
+    }
+
+
+     public function index($id, Request $req)
+    {
+      
+        $type = $req->type ?? 'future';
+
+        $base = env('API_BASE_URL', 'http://localhost:8000/api');
+   
+
+        $url = "{$base}/scheduling/schedule";
+
+        $response = Http::get($url, [
+            'teacher_id' => $id,
+            'type'       => $type
+        ]);
+        // dd($response->json());
+
+        if (!$response->successful()) {
+            return back()->with('error', 'Gagal mengambil jadwal guru.');
+        }
+
+        $schedule = $response->json();
+
+        return view('schedules.teacher-schedules', [
+            'activeRoute' => 'teacher-schedule',
+            'teacherId' => $id,
+            'type'      => $type,
+            'schedule'  => $schedule['data'] ?? [],
+            'count'     => $schedule['count'] ?? 0,
+        ]);
     }
 }
