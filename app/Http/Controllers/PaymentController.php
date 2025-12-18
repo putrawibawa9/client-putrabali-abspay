@@ -65,6 +65,7 @@ class PaymentController extends Controller
      */
    public function store(Request $request)
 {
+    
     // Safety: pastikan ada array 'courses'
     $courses = $request->input('courses', []);
     if (!is_array($courses) || empty($courses)) {
@@ -81,6 +82,8 @@ class PaymentController extends Controller
             // Normalisasi value kosong
             $c['type']           = $c['type']           ?? '';
             $c['payment_month']  = ($c['payment_month'] ?? '') === '' ? null : $c['payment_month'];
+            $c['payment_year']   = $c['payment_year']   ?? null;
+            $c['course_id']      = $c['course_id']      ?? null;
             $c['payment_date']   = $c['payment_date']   ?? null;
             // payment_amount bisa "" (string kosong) dari input number
             $c['payment_amount'] = isset($c['payment_amount']) && $c['payment_amount'] !== ''
@@ -125,6 +128,7 @@ class PaymentController extends Controller
                 'course_id'      => $c['course_id'],
                 'payment_date'   => $c['payment_date'],
                 'payment_month'  => $c['type'] === 'spp' ? $c['payment_month'] : null,
+                'payment_year'   => $c['type'] === 'spp' ? $c['payment_year'] : null,
                 'type'           => $c['type'],
                 'payment_amount' => $c['payment_amount'], // boleh null untuk non-SPP; server set 50000
             ];

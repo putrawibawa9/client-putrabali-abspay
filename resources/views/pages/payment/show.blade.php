@@ -166,6 +166,33 @@
                 </select>
               </div>
 
+     <div class="mt-5">
+    <label for="year_{{ $index }}"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        Year
+    </label>
+
+    <select id="year_{{ $index }}"
+            name="courses[{{ $index }}][payment_year]"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                   focus:ring-blue-500 focus:border-blue-500 p-2.5
+                   dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+
+        @php
+            $currentYear = now()->year;
+        @endphp
+
+        @for ($year = $currentYear - 2; $year <= $currentYear + 1; $year++)
+            <option value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }}>
+                {{ $year }}
+            </option>
+        @endfor
+
+    </select>
+</div>
+
+
+
               <div class="mt-5">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Amount</label>
 
