@@ -224,6 +224,10 @@
                                     </th>
                                     <th scope="col"
                                         class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Tahun
+                                    </th>
+                                    <th scope="col"
+                                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                         Jumlah
                                     </th>
                                     <th scope="col"
@@ -248,6 +252,10 @@
                                         <td
                                             class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
                                             {{ $r['payment_month'] }}
+                                        </td>
+                                        <td
+                                            class="p-4 text-base font-medium mr-12 text-gray-900 dark:text-white whitespace-nowrap">
+                                            {{ $r['payment_year'] }}
                                         </td>
                                         <td
                                             class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">

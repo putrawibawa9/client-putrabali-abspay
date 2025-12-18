@@ -301,6 +301,8 @@
                     <th class="px-4 sm:px-6 py-3">Print</th>
                     <th class="px-4 sm:px-6 py-3">Type</th>
                     <th class="px-4 sm:px-6 py-3">Month</th>
+                    <th class="px-4 sm:px-6 py-3">Year</th>
+
                     <th class="px-4 sm:px-6 py-3">Amount</th>
                     <th class="px-4 sm:px-6 py-3">Date</th>
                   </tr>
@@ -324,6 +326,9 @@
                       </td>
                       <td class="px-4 sm:px-6 py-3 text-gray-900 dark:text-white whitespace-nowrap">
                         {{ $r['payment_month'] }}
+                      </td>
+                      <td class="px-4 sm:px-6 py-3 text-gray-900 dark:text-white whitespace-nowrap">
+                        {{ $r['payment_year'] }}
                       </td>
                       <td class="px-4 sm:px-6 py-3 text-gray-900 dark:text-white whitespace-nowrap">
                         Rp.{{ number_format($r['payment_amount'], 0, ',','.') }}
