@@ -144,7 +144,7 @@ class PaymentController extends Controller
     }
 
     // Kirim ke service
-    $error = $this->paymentService->store($payload);
+    $error = $this->paymentService->stor                                                                   e($payload);
 
     if (isset($error['message'])) {
         return back()->with('error', $error['message']);
