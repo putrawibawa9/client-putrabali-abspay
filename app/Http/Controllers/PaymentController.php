@@ -193,44 +193,41 @@ class PaymentController extends Controller
     $payment = $this->paymentService->getStudentPayment($id);
     $absenceHistory = $this->absenceService->getStudentAbsencesHistory($id);
 
-    // --- panggil API scheduling (frontend -> backend API) ---
-    $base = env('API_BASE_URL', 'http://localhost:8000/api'); // contoh: http://localhost:8000/api
-  
-    $apiUrl = rtrim($base, '/') . "/student/schedule";
+  // --- panggil API scheduling (frontend -> backend API) ---
+$base = env('API_BASE_URL', 'http://localhost:8000/api/v1/scheduling');
+$apiUrl = rtrim($base, '/') . "/scheduling/student";
 // dd($apiUrl);
-    // default schedule jika API gagal
-    $schedule = [
-        'student_id' => $id,
-        'type' => 'future',
-        'date_generated' => now()->toDateString(),
-        'count' => 0,
-        'schedule' => []
-    ];
+// default fallback jika API gagal
+$schedule = [
+    'student_id' => $id,
+    'generated'  => now()->toDateTimeString(),
+    'count'      => 0,
+    'schedule'   => []
+];
 
-    try {
-        $response = Http::get($apiUrl, [
-            'student_id' => $id,
-            'type'       => 'future'
-        ]);
+try {
+    $response = Http::get($apiUrl, [
+        'student_id' => $id
+    ]);
 
-        if ($response->successful()) {
-            $json = $response->json();
+    if ($response->successful()) {
+        $json = $response->json();
 
-            // pastikan struktur sesuai harapan, fallback bila tidak
-            $schedule = [
-                'student_id'    => $json['student_id'] ?? $id,
-                'type'          => $json['type'] ?? 'future',
-                'date_generated'=> $json['date_generated'] ?? now()->toDateString(),
-                'count'         => $json['count'] ?? 0,
-                'schedule'      => $json['schedule'] ?? []
-            ];
-        } else {
-            // bisa log error jika perlu: \Log::error(...)
-            // tetap lanjut dengan $schedule default
-        }
-    } catch (\Throwable $e) {
-      
+        // mapping sesuai response backend
+        $schedule = [
+            'student_id' => $json['student_id'] ?? $id,
+            'generated'  => $json['generated'] ?? now()->toDateTimeString(),
+            'count'      => $json['count'] ?? 0,
+            'schedule'   => $json['schedule'] ?? []
+        ];
+        // dd($schedule);
+    } else {
+     
     }
+} catch (\Throwable $e) {
+   
+}
+
 // dd($schedule);
     // kirim semua data ke view
     return view('public.detail', compact('payment', 'absenceHistory', 'schedule'));

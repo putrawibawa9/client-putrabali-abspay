@@ -165,7 +165,7 @@ class ScheduleController extends Controller
    
 
         $url = "{$base}/scheduling/schedule";
-
+// dd($url);
         $response = Http::get($url, [
             'teacher_id' => $id,
             'type'       => $type
