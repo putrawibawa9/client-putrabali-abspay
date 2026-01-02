@@ -162,6 +162,83 @@
             @endif
         </section>
 
+                <!-- Student Schedule Section -->
+<section class="mt-12">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="section-title text-2xl font-semibold text-gray-800 dark:text-white">
+            Jadwal Les
+        </h2>
+    </div>
+
+    @if (!empty($schedule) && $schedule['count'] > 0)
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-100 dark:bg-gray-700">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            Tanggal
+                        </th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            Hari
+                        </th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            Jam
+                        </th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            Kelas
+                        </th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            Guru
+                        </th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            Ruang
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    @foreach ($schedule['schedule'] as $row)
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">
+                                {{ \Carbon\Carbon::parse($row['date'])->format('d M Y') }}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">
+                                {{ $row['day'] }}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">
+                                {{ $row['time'] }}
+                            </td>
+                            <td class="px-4 py-3 text-sm font-medium text-blue-500 dark:text-blue-300">
+                                {{ $row['course_alias'] }}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">
+                                {{ $row['teacher'] }}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">
+                                {{ $row['location'] ?? '-' }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+        </div>
+
+    @else
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center">
+            <div class="mx-auto w-24 h-24 bg-blue-50 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4">
+                <i class="fas fa-calendar-alt text-3xl text-blue-500 dark:text-blue-300"></i>
+            </div>
+            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-2">
+                Tidak Ada Jadwal
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                Jadwal les akan tampil di sini.
+            </p>
+        </div>
+    @endif
+</section>
         <!-- Absence Section -->
         <section>
             <div class="flex items-center justify-between mb-6">
@@ -239,7 +316,12 @@
                 </div>
             @endif
         </section>
+
+
+
     </main>
+
+
 
     <!-- Footer -->
     <footer class="footer py-4 text-center text-sm mt-12">

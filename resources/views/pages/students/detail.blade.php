@@ -56,18 +56,11 @@
 
         <!-- STUDENT INFO GRID -->
         <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-700 dark:text-gray-300 mb-4">
-            <div>
-  <span class="font-semibold">Jenis Kelamin:</span>
-@php
-    $gender = $student['gender'] ?? null;
-
-    echo match ($gender) {
-        'male' => 'Laki-laki',
-        'female' => 'Perempuan',
-        default => '-',
-    };
-@endphp
-
+         <div>
+    <span class="font-semibold">Jenis Kelamin:</span>
+    {{ $student['gender'] === 'male' 
+        ? 'Laki-laki' 
+        : ($student['gender'] === 'female' ? 'Perempuan' : '-') }}
 </div>
 
 

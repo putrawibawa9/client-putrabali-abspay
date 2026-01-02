@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -249,13 +250,51 @@ class PaymentController extends Controller
         return view('students.show', compact('data'));
     }
 
-    public function getStudentPaymentFromParents($id)
-    {
-        $payment = $this->paymentService->getStudentPayment($id);
-         $absenceHistory = $this->absenceService->getStudentAbsencesHistory($id);
-    // dd($payment);
-        return view('public.detail', compact('payment', 'absenceHistory'));
+   public function getStudentPaymentFromParents($id)
+{
+    // ambil data payment & absence seperti semula
+    $payment = $this->paymentService->getStudentPayment($id);
+    $absenceHistory = $this->absenceService->getStudentAbsencesHistory($id);
+
+  // --- panggil API scheduling (frontend -> backend API) ---
+$base = env('API_BASE_URL', 'http://localhost:8000/api/v1/scheduling');
+$apiUrl = rtrim($base, '/') . "/scheduling/student";
+// dd($apiUrl);
+// default fallback jika API gagal
+$schedule = [
+    'student_id' => $id,
+    'generated'  => now()->toDateTimeString(),
+    'count'      => 0,
+    'schedule'   => []
+];
+
+try {
+    $response = Http::get($apiUrl, [
+        'student_id' => $id
+    ]);
+
+    if ($response->successful()) {
+        $json = $response->json();
+
+        // mapping sesuai response backend
+        $schedule = [
+            'student_id' => $json['student_id'] ?? $id,
+            'generated'  => $json['generated'] ?? now()->toDateTimeString(),
+            'count'      => $json['count'] ?? 0,
+            'schedule'   => $json['schedule'] ?? []
+        ];
+        // dd($schedule);
+    } else {
+     
     }
+} catch (\Throwable $e) {
+   
+}
+
+// dd($schedule);
+    // kirim semua data ke view
+    return view('public.detail', compact('payment', 'absenceHistory', 'schedule'));
+}
 
     public function formPembayaranPrint($id)
     {
@@ -271,7 +310,7 @@ class PaymentController extends Controller
     }
 
     public function checkPaymentFromParents(){
-
+        // dd('masuk');
         return view('public.search');
     }
 

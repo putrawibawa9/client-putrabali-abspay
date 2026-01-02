@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\CourseService;
 use App\Services\MeetingService;
+use Illuminate\Support\Facades\Http;
 
 class MeetingController extends Controller
 {
@@ -75,5 +77,61 @@ class MeetingController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+     public function teacherFutureSchedule($teacherId)
+    {
+        // Base URL API dari env
+        $base = env('API_BASE_URL', 'http://localhost:8000/api');
+
+        
+
+        // Build URL API
+        $url = "{$base}/scheduling/teacher/schedule";
+        // dd($url);
+        // Call API
+        $response = Http::get($url, [
+            'teacher_id' => $teacherId,
+            'type'       => 'future'
+        ]);
+
+        if ($response->failed()) {
+            return back()->with('error', 'Gagal mengambil jadwal dari server API.');
+        }
+
+        // Data dari API
+        $data = $response->json();
+        // dd($data);
+        // Nanti kirim ke view Blade (belum dibuat)
+        return view('schedules.future', [
+            'schedule'   => $data['data'] ?? [],
+            'activeRoute'=> 'teacher-schedules',
+            'teacher' => $data['teacher'] ?? [],
+            'raw'        => $data, // kalau butuh debugging
+        ]);
+    }
+
+
+    public function dailySchedule(Request $req)
+    {
+        $base = env('API_BASE_URL', 'http://localhost:8000/api');
+ 
+
+        $date = $req->date ?? Carbon::today()->toDateString();
+        $apiUrl = "$base/scheduling/dailyMeeting?date={$date}";
+        // dd($apiUrl);
+
+        $response = Http::get($apiUrl);
+
+        if (!$response->successful()) {
+            return back()->with('error', 'Gagal mengambil data dari API');
+        }
+
+        $data = $response->json();
+        // dd($data);
+        return view('schedules.daily', [
+            'activeRoute' => 'schedule',
+            'schedule' => $data
+        ]);
     }
 }

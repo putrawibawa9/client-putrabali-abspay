@@ -22,6 +22,8 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\RecapitulationController;
 use App\Http\Controllers\FinanceCategoryController;
 
+
+
 Route::middleware([CheckUserSession::class])->group(function () {
 
     // students
@@ -105,10 +107,7 @@ Route::get('/ping', function () {
 
 
     Route::resource('/payments', PaymentController::class);
-// for student or parents
-  Route::get('/public/check-status', [PaymentController::class, 'checkPaymentFromParents'])->name('check-status');
-    Route::get('/public/check-status/search', [PaymentController::class, 'searchStudentFromParents'])->name('check-status.search');
-    Route::get('/public/check-status/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
+
 
        
 
@@ -134,3 +133,13 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 Route::get('/course-prices/view/{course_id}/{year}', [CoursePriceController::class, 'showForTeacher'])
     ->name('course-prices.view');
 
+
+
+    // for student or parents
+  Route::get('/public/check-status', [PaymentController::class, 'checkPaymentFromParents'])->name('check-status');
+    Route::get('/public/check-status/search', [PaymentController::class, 'searchStudentFromParents'])->name('check-status.search');
+    Route::get('/public/check-status/{id}', [PaymentController::class, 'getStudentPaymentFromParents']);
+
+
+// dd("web_schedule loaded");
+require __DIR__.'/web_schedule.php';
