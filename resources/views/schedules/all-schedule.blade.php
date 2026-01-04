@@ -38,6 +38,7 @@
         <table class="min-w-full bg-gray-900 border border-gray-700 rounded-lg">
             <thead class="bg-gray-800 border-b border-gray-700">
                 <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold">Guru</th>
                     <th class="px-4 py-3 text-left text-sm font-semibold">Tanggal</th>
                     <th class="px-4 py-3 text-left text-sm font-semibold">Hari</th>
                     <th class="px-4 py-3 text-left text-sm font-semibold">Jam</th>
@@ -48,8 +49,12 @@
             </thead>
 
             <tbody class="divide-y divide-gray-800">
+                {{-- @dd($schedules) --}}
                 @foreach ($schedules as $row)
                 <tr class="hover:bg-gray-800 transition">
+                       <td class="px-4 py-3">
+                        {{ $row['teacher'] }}
+                    </td>
                     <td class="px-4 py-3">
                         {{ \Carbon\Carbon::parse($row['date'])->format('d M Y') }}
                     </td>
