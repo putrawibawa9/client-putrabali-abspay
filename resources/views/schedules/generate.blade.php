@@ -4,49 +4,31 @@
 <div class="container-fluid px-4 py-4">
     <div class="row">
         <div class="col-12">
-            
-            {{-- Header Section --}}
-            <div class="mb-4">
-                <h2 class="mb-2 fw-bold text-dark">Generate Semester Schedule</h2>
-                <p class="text-muted mb-0">Create weekly schedules for your course semester</p>
-            </div>
 
-            {{-- SUCCESS MESSAGE --}}
-            @if(session('success'))
-                <script>alert("{{ session('success') }}");</script>
-            @endif
+            <h2 class="mb-2 fw-bold">Generate Semester Schedule</h2>
+            <p class="text-muted mb-4">Create weekly schedules for your course semester</p>
 
-            {{-- ERROR MESSAGE --}}
-            @if(session('error'))
-                <script>alert("{{ session('error') }}");</script>
-            @endif
-
-            {{-- VALIDATION ERRORS --}}
+            {{-- ERRORS --}}
             @if($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <div class="d-flex align-items-start">
-                        <strong>Please correct the following errors:</strong>
-                    </div>
-                    <ul class="mb-0 mt-2">
-                        @foreach ($errors->all() as $err)
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $err)
                             <li>{{ $err }}</li>
                         @endforeach
                     </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
 
-            {{-- Main Form --}}
             <form method="POST" action="{{ route('schedule.generate.submit') }}">
                 @csrf
 
-                {{-- Basic Information Section --}}
+                {{-- BASIC INFO --}}
                 <div class="mb-4">
-                    <h5 class="mb-3 fw-semibold">Basic Information</h5>
-                    
+                    <h5 class="fw-semibold mb-3">Basic Information</h5>
+
                     <div class="row g-3">
                         <div class="col-12">
-                            <label class="form-label">Course <span class="text-danger">*</span></label>
+                            <label class="form-label">Course</label>
                             <select name="course_id" class="form-select" required>
                                 <option value="">-- Select Course --</option>
                                 @foreach($courses as $course)
@@ -56,40 +38,36 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Start Date <span class="text-danger">*</span></label>
+                            <label class="form-label">Start Date</label>
                             <input type="date" name="start_date" class="form-control" required>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">End Date <span class="text-danger">*</span></label>
+                            <label class="form-label">End Date</label>
                             <input type="date" name="end_date" class="form-control" required>
                         </div>
                     </div>
                 </div>
 
-                <hr class="my-4">
+                <hr>
 
-                {{-- Weekly Schedule Section --}}
+                {{-- WEEKLY SCHEDULE --}}
                 <div class="mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div>
-                            <h5 class="mb-1 fw-semibold">Weekly Schedule</h5>
-                            <small class="text-muted">You can add up to 4 different days per week</small>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="addDay()">
-                            Add Day
-                        </button>
+                        <h5 class="fw-semibold mb-0">Weekly Schedule</h5>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="addDay()">Add Day</button>
                     </div>
 
                     <div id="schedule-area">
-                        {{-- DEFAULT: Sunday --}}
-                        <div class="schedule-block mb-3 p-3 border rounded" data-day="Sunday">
-                            <h6 class="mb-3 fw-semibold">Schedule #1</h6>
+
+                        {{-- DEFAULT BLOCK (Sunday) --}}
+                        <div class="schedule-block border rounded p-3 mb-3" data-day="Sunday">
+                            <h6 class="fw-semibold mb-3">Schedule #1</h6>
 
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label">Day <span class="text-danger">*</span></label>
-                                    <select name="schedule[Sunday][day]" class="form-select day-select" required>
+                                    <label class="form-label">Day</label>
+                                    <select class="form-select day-select" required>
                                         @foreach(["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"] as $d)
                                             <option value="{{ $d }}" {{ $d === 'Sunday' ? 'selected' : '' }}>
                                                 {{ $d }}
@@ -99,13 +77,15 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="form-label">Time <span class="text-danger">*</span></label>
-                                    <input type="time" name="schedule[Sunday][time]" class="form-control" required>
+                                    <label class="form-label">Time</label>
+                                    <input type="time" class="form-control time-input"
+                                           name="schedule[Sunday][time]" required>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label class="form-label">Teacher <span class="text-danger">*</span></label>
-                                    <select name="schedule[Sunday][teacher_id]" class="form-select" required>
+                                    <label class="form-label">Teacher</label>
+                                    <select class="form-select teacher-input"
+                                            name="schedule[Sunday][teacher_id]" required>
                                         <option value="">-- Select Teacher --</option>
                                         @foreach($teachers as $teacher)
                                             <option value="{{ $teacher['id'] }}">{{ $teacher['name'] }}</option>
@@ -115,127 +95,81 @@
 
                                 <div class="col-md-6">
                                     <label class="form-label">Location</label>
-                                    <input type="text" name="schedule[Sunday][location]" class="form-control" placeholder="e.g., Room 101">
+                                    <input type="text" class="form-control location-input"
+                                           name="schedule[Sunday][location]">
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
-                <hr class="my-4">
+                <hr>
 
-                {{-- Action Buttons --}}
-                <div class="d-flex gap-2 justify-content-end">
-                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">
-                        Cancel
-                    </button>
+                <div class="text-end">
                     <button type="submit" class="btn btn-success">
                         Generate Schedule
                     </button>
                 </div>
 
             </form>
-
         </div>
     </div>
 </div>
 
+{{-- STYLE --}}
 <style>
-.schedule-block {
-    background-color: #f8f9fa;
-    transition: all 0.2s ease;
-}
-
-.schedule-block:hover {
-    background-color: #e9ecef;
-}
-
-.form-control,
-.form-select {
-    border: 1px solid #dee2e6;
-}
-
-.form-control:focus,
-.form-select:focus {
-    border-color: #86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-}
+.schedule-block { background:#f8f9fa; }
 </style>
 
+{{-- SCRIPT --}}
 <script>
 let count = 1;
 const maxDays = 4;
-
-// Valid days
-const validDays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 
 function getUsedDays() {
-    const selects = document.querySelectorAll('.day-select');
-    return Array.from(selects).map(sel => sel.value);
-}
-
-function removeScheduleBlock(button) {
-    const block = button.closest('.schedule-block');
-    block.remove();
-    count--;
-    updateScheduleNumbers();
-}
-
-function updateScheduleNumbers() {
-    const blocks = document.querySelectorAll('.schedule-block');
-    blocks.forEach((block, index) => {
-        const header = block.querySelector('h6');
-        if (header) {
-            header.textContent = `Schedule #${index + 1}`;
-        }
-    });
-    count = blocks.length;
+    return Array.from(document.querySelectorAll('.schedule-block'))
+        .map(b => b.dataset.day);
 }
 
 function addDay() {
     if (count >= maxDays) {
-        alert("Maksimal 4 hari dalam seminggu.");
+        alert("Max 4 days per week");
         return;
     }
 
-    const usedDays = getUsedDays();
-    const availableDays = validDays.filter(d => !usedDays.includes(d));
+    const available = days.filter(d => !getUsedDays().includes(d));
+    if (!available.length) return;
 
-    if (availableDays.length === 0) {
-        alert("Semua hari sudah dipilih.");
-        return;
-    }
-
-    const day = availableDays[0];
+    const day = available[0];
     count++;
 
-    const html = `
-        <div class="schedule-block mb-3 p-3 border rounded" data-day="${day}">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h6 class="mb-0 fw-semibold">Schedule #${count}</h6>
-                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeScheduleBlock(this)">
-                    Remove
-                </button>
+    document.getElementById('schedule-area').insertAdjacentHTML('beforeend', `
+        <div class="schedule-block border rounded p-3 mb-3" data-day="${day}">
+            <div class="d-flex justify-content-between mb-3">
+                <h6 class="fw-semibold">Schedule #${count}</h6>
+                <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.schedule-block').remove()">Remove</button>
             </div>
 
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label class="form-label">Day <span class="text-danger">*</span></label>
-                    <select name="schedule[${day}][day]" class="form-select day-select" required>
-                        ${validDays.map(d => `
-                            <option value="${d}" ${d === day ? 'selected' : ''}>${d}</option>
-                        `).join('')}
+                    <label class="form-label">Day</label>
+                    <select class="form-select day-select" required>
+                        ${days.map(d => `<option value="${d}" ${d===day?'selected':''}>${d}</option>`).join('')}
                     </select>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label">Time <span class="text-danger">*</span></label>
-                    <input type="time" name="schedule[${day}][time]" class="form-control" required>
+                    <label class="form-label">Time</label>
+                    <input type="time" class="form-control time-input"
+                           name="schedule[${day}][time]" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label">Teacher <span class="text-danger">*</span></label>
-                    <select name="schedule[${day}][teacher_id]" class="form-select" required>
+                    <label class="form-label">Teacher</label>
+                    <select class="form-select teacher-input"
+                            name="schedule[${day}][teacher_id]" required>
                         <option value="">-- Select Teacher --</option>
                         @foreach($teachers as $teacher)
                             <option value="{{ $teacher['id'] }}">{{ $teacher['name'] }}</option>
@@ -245,14 +179,33 @@ function addDay() {
 
                 <div class="col-md-6">
                     <label class="form-label">Location</label>
-                    <input type="text" name="schedule[${day}][location]" class="form-control" placeholder="e.g., Room 101">
+                    <input type="text" class="form-control location-input"
+                           name="schedule[${day}][location]">
                 </div>
             </div>
         </div>
-    `;
-
-    document.getElementById("schedule-area").insertAdjacentHTML("beforeend", html);
+    `);
 }
-</script>
 
+// 🔑 CORE LOGIC: sync DAY → name[]
+document.addEventListener('change', function(e) {
+    if (!e.target.classList.contains('day-select')) return;
+
+    const block = e.target.closest('.schedule-block');
+    const oldDay = block.dataset.day;
+    const newDay = e.target.value;
+
+    if (getUsedDays().includes(newDay) && newDay !== oldDay) {
+        alert(`Day ${newDay} already used`);
+        e.target.value = oldDay;
+        return;
+    }
+
+    block.dataset.day = newDay;
+
+    block.querySelector('.time-input').name      = `schedule[${newDay}][time]`;
+    block.querySelector('.teacher-input').name   = `schedule[${newDay}][teacher_id]`;
+    block.querySelector('.location-input').name  = `schedule[${newDay}][location]`;
+});
+</script>
 @endsection

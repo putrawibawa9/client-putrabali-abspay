@@ -53,7 +53,7 @@ class ScheduleController extends Controller
         ];
      
         // coba test uri yang benar
-
+// dd($payload);
      
         $response = $this->client->post($this->baseUrl . '/scheduling/generateSemester', [
             'headers' => [
