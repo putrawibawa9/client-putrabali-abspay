@@ -28,4 +28,5 @@ Route::prefix('schedule')->name('schedule.')->group(function () {
 
         Route::get('/teacher/{id}/schedule', [ScheduleController::class, 'index'])
     ->name('teacher.schedule');
+    Route::get('/all-schedules', [ScheduleController::class, 'getAllSchedules'])->name('all-schedule');
 });

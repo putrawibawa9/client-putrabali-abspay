@@ -186,4 +186,15 @@ class ScheduleController extends Controller
             'count'     => $schedule['count'] ?? 0,
         ]);
     }
+
+
+    public function getAllSchedules(){
+        $response = $this->client->get($this->baseUrl . '/scheduling/all-schedules');
+        // dd($response);
+        $schedules = json_decode($response->getBody(), true);
+        $schedules = $schedules['data'];
+// dd($schedules);
+        $activeRoute    = 'all-schedules';
+        return view('schedules.all-schedule', compact('activeRoute', 'schedules'));
+    }
 }
