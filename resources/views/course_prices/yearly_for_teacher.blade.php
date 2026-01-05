@@ -52,7 +52,7 @@ function changeYear(year) {
                     <div class="flex flex-col items-start justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900 bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                         <div class="w-full flex justify-between items-center mb-1">
                             <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                {{ \Carbon\Carbon::create()->month($month['month'])->translatedFormat('F') }}
+                                {{ \Carbon\Carbon::create()->month($month['month'])->translatedFormat('F') }} {{ $course['year'] }}
                             </span>
                             @if($month['source'] === 'custom')
                                 <span class="text-xs bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded">Khusus</span>
