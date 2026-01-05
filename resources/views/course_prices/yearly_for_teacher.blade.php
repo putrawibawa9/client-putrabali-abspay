@@ -1,12 +1,42 @@
+{{-- @dd($course) --}}
 @extends('layouts.main')
 
 @section('content')
 <div class="p-4 md:p-6 dark:bg-gray-900 min-h-screen transition-colors duration-300">
     <div class="max-w-4xl mx-auto">
-        <h2 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100 flex items-center justify-between">
+      <form method="GET" >
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-100 flex items-center gap-2">
             💰 Harga Tahunan - {{ $course['course_name'] }}
-            <span class="text-sm text-gray-500 dark:text-gray-400">Tahun {{ $course['year'] }}</span>
         </h2>
+
+    <select
+    onchange="changeYear(this.value)"
+    class="text-sm rounded-lg border border-gray-300 dark:border-gray-600
+           bg-white dark:bg-gray-800
+           text-gray-700 dark:text-gray-200
+           px-3 py-1 focus:ring focus:ring-blue-200"
+>
+    @for ($year = now()->year + 2; $year >= now()->year - 5; $year--)
+        <option value="{{ $year }}"
+            {{ $course['year'] == $year ? 'selected' : '' }}>
+            Tahun {{ $year }}
+        </option>
+    @endfor
+</select>
+
+<script>
+function changeYear(year) {
+    window.location.href =
+        `/course-prices/view/{{ $course['course_id'] }}/${year}`;
+}
+</script>
+
+
+
+    </div>
+</form>
+
 
         {{-- Flash message --}}
         @if($errors->any())
