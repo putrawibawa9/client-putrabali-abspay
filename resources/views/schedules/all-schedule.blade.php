@@ -8,7 +8,7 @@
     </h1> --}}
 
     {{-- FILTER TABS --}}
-    {{-- <div class="flex space-x-3 mb-8">
+    <div class="flex space-x-3 mb-8">
         <a href="{{ route('teacher.schedule', ['id' => $teacherId, 'type' => 'future']) }}"
            class="px-4 py-2 rounded 
                   {{ $type=='future' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600' }}">
@@ -26,7 +26,7 @@
                   {{ $type=='all' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600' }}">
             Semua
         </a>
-    </div> --}}
+    </div>
 
     {{-- JIKA KOSONG --}}
 

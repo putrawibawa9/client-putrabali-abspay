@@ -18,21 +18,7 @@
     {{-- Filter Tanggal --}}
    <form method="GET" action="{{ route('daily-recap-payment.index') }}" class="mb-6">
     <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-        <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-            <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-100">Filter</h3>
-            <div class="flex items-center gap-2">
-                <a href="{{ route('daily-recap-payment.index') }}"
-                   class="inline-flex items-center px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600
-                          text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">
-                    Reset
-                </a>
-                <button type="submit"
-                        class="inline-flex items-center px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700
-                               focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-colors">
-                    Apply
-                </button>
-            </div>
-        </div>
+       
 
         <div class="p-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -128,6 +114,21 @@
                     @endforeach
                 </div>
             </div>
+             <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-100">Filter</h3>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('daily-recap-payment.index') }}"
+                   class="inline-flex items-center px-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600
+                          text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    Reset
+                </a>
+                <button type="submit"
+                        class="inline-flex items-center px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700
+                               focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 transition-colors">
+                    Apply
+                </button>
+            </div>
+        </div>
         </div>
     </div>
 </form>
