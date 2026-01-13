@@ -45,28 +45,38 @@ class RecapitulationController extends Controller
 
 public function dailyRecap(Request $request)
 {
-    // Ambil parameter tanggal dari query, kalau tidak ada pakai awal & akhir bulan ini
+    // Ambil parameter tanggal dari query
     $startDate = $request->query('start_date', now()->startOfMonth()->format('Y-m-d'));
-    $endDate = $request->query('end_date', now()->format('Y-m-d'));
+    $endDate   = $request->query('end_date', now()->format('Y-m-d'));
     $teacherId = $request->query('teacher_id');
+    $lokasiPb  = $request->query('lokasi_pb'); // ✅ TAMBAHAN
+
+    // Payload ke API (TETAP + lokasi_pb)
+    $params = [
+        'start_date' => $startDate,
+        'end_date'   => $endDate,
+    ];
+
+    if (!empty($teacherId)) {
+        $params['teacher_id'] = $teacherId;
+    }
+
+    if (!empty($lokasiPb)) {
+        $params['lokasi_pb'] = (int) $lokasiPb;
+    }
 
     // Kirim request ke API
-    $response = Http::get(env('API_BASE_URL') . '/meetings-daily-recap', [
-        'start_date' => $startDate,
-        'end_date' => $endDate,
-        'teacher_id' => $teacherId,
-    ]);
-
-   
+    $response = Http::get(
+        env('API_BASE_URL') . '/meetings-daily-recap',
+        $params
+    );
 
     $meetings = $response->successful() ? $response->json() : [];
-    
-    
+
     $activeRoute = 'daily-recap';
     $totalMeetings = count($meetings);
     $totalTeacherFee = array_sum(array_column($meetings, 'course_teacher_fee'));
     $teachers = $this->teacherService->getAllTeachers();
-    
 
     return view('recapitulations.daily', compact(
         'meetings',
@@ -75,10 +85,10 @@ public function dailyRecap(Request $request)
         'activeRoute',
         'totalMeetings',
         'totalTeacherFee',
-        'teachers',
-        
+        'teachers'
     ));
 }
+
 
  public function dailyRecapPayment(Request $request)
 {
