@@ -194,7 +194,17 @@ class ScheduleController extends Controller
         $schedules = json_decode($response->getBody(), true);
         $schedules = $schedules['data'];
 // dd($schedules);
+
+$teachers = $this->client->get($this->baseUrl . '/teachers');
+// dd($teachers);
+$teachers = json_decode($teachers->getBody(), true);    
+$teachers = $teachers['data'];
+// dd($teachers);
+$courses = $this->client->get($this->baseUrl . '/courses');
+$courses = json_decode($courses->getBody(), true);    
+$courses = $courses['data'];
+// dd($courses);
         $activeRoute    = 'all-schedules';
-        return view('schedules.all-schedule', compact('activeRoute', 'schedules'));
+        return view('schedules.all-schedule', compact('activeRoute', 'schedules', 'teachers', 'courses') );
     }
 }

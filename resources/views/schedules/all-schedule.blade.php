@@ -7,26 +7,93 @@
         Jadwal Guru (ID: {{ $teacherId }})
     </h1> --}}
 
-    {{-- FILTER TABS --}}
-    <div class="flex space-x-3 mb-8">
-        <a href="{{ route('teacher.schedule', ['id' => $teacherId, 'type' => 'future']) }}"
-           class="px-4 py-2 rounded 
-                  {{ $type=='future' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600' }}">
-            Future
-        </a>
+  {{-- FILTER FORM --}}
+<form method="GET"
+     
+      class="bg-gray-800 p-4 rounded-lg mb-8">
 
-        <a href="{{ route('teacher.schedule', ['id' => $teacherId, 'type' => 'history']) }}"
-           class="px-4 py-2 rounded 
-                  {{ $type=='history' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600' }}">
-            History
-        </a>
+    {{-- GURU --}}
+        <div>
+            <label class="block text-sm text-gray-300 mb-1">
+                Guru
+            </label>
+            <select name="teacher_id"
+                    class="w-full px-3 py-2 rounded
+                           bg-gray-700 text-white
+                           border border-gray-600
+                           focus:ring focus:ring-blue-500">
+                <option value="">Semua Guru</option>
+                @foreach ($teachers as $teacher)
+                    <option value="{{ $teacher['id'] }}"
+                        {{ request('teacher_id') == $teacher['id'] ? 'selected' : '' }}>
+                        {{ $teacher['name'] }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-        <a href="{{ route('teacher.schedule', ['id' => $teacherId, 'type' => 'all']) }}"
-           class="px-4 py-2 rounded
-                  {{ $type=='all' ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600' }}">
-            Semua
-        </a>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+        {{-- START DATE --}}
+        <div>
+            <label class="block text-sm text-gray-300 mb-1">
+                Dari Tanggal
+            </label>
+            <input type="date"
+                   name="start_date"
+                   value="{{ request('start_date') }}"
+                   class="w-full px-3 py-2 rounded
+                          bg-gray-700 text-white
+                          border border-gray-600
+                          focus:ring focus:ring-blue-500">
+        </div>
+
+        {{-- END DATE --}}
+        <div>
+            <label class="block text-sm text-gray-300 mb-1">
+                Sampai Tanggal
+            </label>
+            <input type="date"
+                   name="end_date"
+                   value="{{ request('end_date') }}"
+                   class="w-full px-3 py-2 rounded
+                          bg-gray-700 text-white
+                          border border-gray-600
+                          focus:ring focus:ring-blue-500">
+        </div>
+
+        {{-- COURSE --}}
+        <div>
+            <label class="block text-sm text-gray-300 mb-1">
+                Kelas
+            </label>
+            <select name="course_id"
+                    class="w-full px-3 py-2 rounded
+                           bg-gray-700 text-white
+                           border border-gray-600
+                           focus:ring focus:ring-blue-500">
+                <option value="">Semua Kelas</option>
+                @foreach ($courses as $course)
+                    <option value="{{ $course['id'] }}"
+                        {{ request('course_id') == $course['id'] ? 'selected' : '' }}>
+                        {{ $course['alias'] }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        {{-- SUBMIT --}}
+        <div class="flex items-end">
+            <button type="submit"
+                    class="w-full px-4 py-2 rounded
+                           bg-blue-600 hover:bg-blue-700
+                           text-white font-semibold">
+                Filter
+            </button>
+        </div>
+
     </div>
+</form>
 
     {{-- JIKA KOSONG --}}
 

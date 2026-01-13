@@ -81,64 +81,74 @@ public function dailyRecap(Request $request)
 }
 
  public function dailyRecapPayment(Request $request)
-    {
-        // Default tanggal: awal bulan s/d hari ini
-        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
-        $endDate   = $request->input('end_date', now()->toDateString());
+{
+    // Default tanggal
+    $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
+    $endDate   = $request->input('end_date', now()->toDateString());
 
-        // course_id[]: pastikan array & buang nilai kosong (mis. "" dari -- All Courses --)
-        $courseIds = collect($request->input('course_id', []))
-            ->filter(fn ($v) => $v !== null && $v !== '')
-            ->map(fn ($v) => is_numeric($v) ? (int) $v : $v)
-            ->values()
-            ->all();
+    // course_id[]
+    $courseIds = collect($request->input('course_id', []))
+        ->filter(fn ($v) => $v !== null && $v !== '')
+        ->map(fn ($v) => is_numeric($v) ? (int) $v : $v)
+        ->values()
+        ->all();
 
-        // payment_month: UI pakai label Indonesia -> convert ke English lowercase
-        $payload = [
-            'start_date' => $startDate,
-            'end_date'   => $endDate,
-        ];
+    // =========================
+    // PAYLOAD DASAR (TETAP)
+    // =========================
+    $payload = [
+        'start_date' => $startDate,
+        'end_date'   => $endDate,
+    ];
 
-        if (!empty($courseIds)) {
-            $payload['course_id'] = $courseIds; // ex: [1,2,3]
-        }
-
-        if ($request->filled('user_id')) {
-            $payload['user_id'] = (int) $request->input('user_id');
-        }
-
-        if ($request->filled('payment_month')) {
-            $payload['payment_month'] = $this->mapMonthIdToEn(
-                strtolower($request->input('payment_month'))
-            ); // hasil: "october", "november", dst
-        }
-
-        // Panggil API dengan JSON body
-        $response = Http::asJson()
-            ->timeout(20)
-            ->post(env('API_BASE_URL') . '/payments-daily-recap', $payload);
-
-        $payments = $response->successful() ? $response->json() : [
-            'total_payment' => 0,
-            'payments' => [],
-            'error' => $response->json('message') ?? 'Failed to fetch data'
-        ];
-
-        // Dropdown data (bebas kalau mau di-cache)
-        $courses = Http::get(env('API_BASE_URL') . '/courses')->json();
-        $users   = Http::get(env('API_BASE_URL') . '/users')->json();
-
-        $activeRoute = 'daily-recap-payment';
-
-        return view('recapitulations.daily-payment', compact(
-            'payments',
-            'startDate',
-            'endDate',
-            'activeRoute',
-            'courses',
-            'users'
-        ));
+    if (!empty($courseIds)) {
+        $payload['course_id'] = $courseIds;
     }
+
+    if ($request->filled('user_id')) {
+        $payload['user_id'] = (int) $request->input('user_id');
+    }
+
+    if ($request->filled('payment_month')) {
+        $payload['payment_month'] = $this->mapMonthIdToEn(
+            strtolower($request->input('payment_month'))
+        );
+    }
+
+    // =========================
+    // 🔹 TAMBAHAN: lokasi_pb
+    // =========================
+    if ($request->filled('lokasi_pb')) {
+        $payload['lokasi_pb'] = (int) $request->input('lokasi_pb');
+    }
+
+    // Kirim ke API
+    $response = Http::asJson()
+        ->timeout(20)
+        ->post(env('API_BASE_URL') . '/payments-daily-recap', $payload);
+
+    $payments = $response->successful() ? $response->json() : [
+        'total_payment' => 0,
+        'payments' => [],
+        'error' => $response->json('message') ?? 'Failed to fetch data'
+    ];
+
+    // Dropdown data
+    $courses = Http::get(env('API_BASE_URL') . '/courses')->json();
+    $users   = Http::get(env('API_BASE_URL') . '/users')->json();
+
+    $activeRoute = 'daily-recap-payment';
+
+    return view('recapitulations.daily-payment', compact(
+        'payments',
+        'startDate',
+        'endDate',
+        'activeRoute',
+        'courses',
+        'users'
+    ));
+}
+
 
     /**
      * Konversi nama bulan Indonesia -> English lowercase.

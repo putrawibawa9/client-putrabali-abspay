@@ -73,6 +73,25 @@
                         @endforeach
                     </select>
                 </div>
+                {{-- Lokasi PB --}}
+<div>
+    <label class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-200">
+        Lokasi PB
+    </label>
+    <select name="lokasi_pb"
+        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+               focus:ring-blue-500 focus:border-blue-500 p-2.5
+               dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <option value="">-- Semua Lokasi --</option>
+        <option value="1" {{ request('lokasi_pb') == '1' ? 'selected' : '' }}>
+            PB 1
+        </option>
+        <option value="2" {{ request('lokasi_pb') == '2' ? 'selected' : '' }}>
+            PB 2
+        </option>
+    </select>
+</div>
+
             </div>
 
             {{-- Courses (checkbox grid) --}}
