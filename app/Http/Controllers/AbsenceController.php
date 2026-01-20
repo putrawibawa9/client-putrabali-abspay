@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Services\CourseService;
 use App\Services\AbsenceService;
@@ -15,13 +18,18 @@ class AbsenceController extends Controller
       protected $courseService;
       protected $teacherService;
       protected $absenceService;
+        protected $client;
+        protected $baseUrl;
    public function __construct(MeetingService $meetingService, CourseService $courseService, TeacherService $teacherService, AbsenceService $absenceService)
     {
         $this->meetingService = $meetingService;
         $this->courseService = $courseService;
         $this->teacherService = $teacherService;
         $this->absenceService = $absenceService;
+          $this->baseUrl = config('services.api.base_url');
+
     }
+    
    
 
     public function searchCourses(Request $request)
@@ -76,7 +84,8 @@ class AbsenceController extends Controller
     }
    
 
-    public function absenceInput( $id){
+
+public function absenceInput( $id){
      
            $data = $this->courseService->getCourseWithStudentsbyID($id);
             // dd($data);
@@ -84,6 +93,11 @@ class AbsenceController extends Controller
            $activeRoute = 'absences';
              return view('pages.absences.input', compact('data', 'teachers', 'activeRoute'));
     }
+
+   
+
+
+
 
     public function store(Request $request)
 {
