@@ -2,7 +2,10 @@
 @extends('layouts.main')
 
 @section('content')
+
+
     <div
+    
         class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
         <div class="w-full mb-1">
             <div class="mb-4">
@@ -58,13 +61,49 @@
                         </li>
                     </ol>
                 </nav>
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Kelas {{ $students['alias'] }}</h1>
-                <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Jumlah siswa = {{ $students['studentCount'] }} Siswa</p>
+                {{-- <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Kelas {{ $students['alias'] }}</h1> --}}
+                {{-- <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Jumlah siswa = {{ $students['studentCount'] }} Siswa</p> --}}
 
 
             </div>
            
-        
+        <form method="GET" class="mb-4 flex flex-wrap gap-3 items-end">
+    <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Bulan
+        </label>
+        <select name="month"
+            class="w-full rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            @for ($m = 1; $m <= 12; $m++)
+                <option value="{{ $m }}"
+                    {{ request('month', date('n')) == $m ? 'selected' : '' }}>
+                    {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
+                </option>
+            @endfor
+        </select>
+    </div>
+
+    <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Tahun
+        </label>
+        <select name="year"
+            class="w-full rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            @for ($y = date('Y'); $y >= date('Y') - 5; $y--)
+                <option value="{{ $y }}"
+                    {{ request('year', date('Y')) == $y ? 'selected' : '' }}>
+                    {{ $y }}
+                </option>
+            @endfor
+        </select>
+    </div>
+
+    <button type="submit"
+        class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700">
+        Filter
+    </button>
+</form>
+
     <div class="flex flex-1 flex-col">
         <div class="overflow-x-auto">
             <div class="inline-block min-w-full align-middle">
@@ -78,29 +117,26 @@
                             </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    NIS
+                                    Nama
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Name
+                                    Hadir
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Sekolah
+                                    Absen
                                 </th>
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Wa Number
+                                    Attendance Rate
                                 </th>
                                 
                                 <th scope="col"
                                     class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                   Gender
+                                   Status
                                 </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                   Tanggal Daftar
-                                </th>
+                                
                                 
                               
                             </tr>
@@ -113,7 +149,7 @@
 
                                     <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
 
-                                        <form action="{{ route('student-course.destroy', $student['pivot']['id']) }}" method="POST" class="inline-block">
+                                        <form action="{{ route('student-course.destroy', $student['student_id']) }}" method="POST" class="inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" 
@@ -124,26 +160,24 @@
                                         </td> 
         <!-- NIS Column -->
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            {{ $student['nis'] }}
+            {{ $student['name'] }}
         </td>
         <!-- Name Column -->
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            <a href="/students/{{ $student['id'] }}" class="text-primary-600 hover:underline">{{ $student['name'] }}</a>
+            <a href="/students/{{ $student['student_id'] }}" class="text-primary-600 hover:underline">{{ $student['present'] }}x</a>
         </td>                
         
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            {{ $student['school'] }}
+            {{ $student['absent'] }}x
         </td> 
-        <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            <a href="https://wa.me/{{ $student['wa_number'] }}"> {{ $student['wa_number'] }} </a>
-        </td>
+       
         
       
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            {{ $student['gender'] }}
+            {{ $student['attendance_rate'] }}
         </td>
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            {{ $student['enroll_date'] }}
+            {{ $student['status'] }}
         </td>
 
         

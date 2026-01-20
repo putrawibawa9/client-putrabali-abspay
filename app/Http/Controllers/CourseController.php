@@ -99,13 +99,27 @@ class CourseController extends Controller
         return view('pages.meetings.index', compact('meetings', 'activeRoute'));
     }
 
-    public function showCourseWithStudents(string $id)
-    {
-        $students = $this->courseService->getCourseWithStudentsbyID($id);
-      
-        $activeRoute = 'courses'; 
-        return view('pages.courses.show', compact('students', 'activeRoute'));
-    }
+  public function showCourseWithStudents(Request $request, string $id)
+{
+    $month = $request->query('month', date('n')); // default bulan sekarang
+    $year  = $request->query('year', date('Y'));  // default tahun sekarang
+
+    $students = $this->courseService->monthlyAttendance(
+        $id,
+        (int) $month,
+        (int) $year
+    );
+
+    $activeRoute = 'courses';
+
+    return view('pages.courses.show', compact(
+        'students',
+        'activeRoute',
+        'month',
+        'year'
+    ));
+}
+
 
     /**
      * Show the form for editing the specified resource.

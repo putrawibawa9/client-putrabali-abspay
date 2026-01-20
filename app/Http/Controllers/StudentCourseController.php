@@ -34,7 +34,7 @@ class StudentCourseController extends Controller
 }
 
 public function destroy($id){
-  
+//   dd( $id);
     $this->studentCourseService->dropout($id);
     return redirect()->back()->with('success', "Student has been dropped out from the course");
 }
