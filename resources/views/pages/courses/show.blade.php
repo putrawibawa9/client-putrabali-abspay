@@ -174,7 +174,7 @@
         
       
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            {{ $student['attendance_rate'] }}
+            {{ $student['attendance_rate'] }} %
         </td>
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
             {{ $student['status'] }}
