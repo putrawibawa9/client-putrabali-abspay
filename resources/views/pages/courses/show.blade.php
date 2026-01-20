@@ -159,13 +159,15 @@
                                         </form>     
                                         </td> 
         <!-- NIS Column -->
-        <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            {{ $student['name'] }}
-        </td>
+      
         <!-- Name Column -->
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            <a href="/students/{{ $student['student_id'] }}" class="text-primary-600 hover:underline">{{ $student['present'] }}x</a>
-        </td>                
+            <a href="/students/{{ $student['student_id'] }}" class="text-primary-600 hover:underline">{{ $student['name'] }}x</a>
+        </td>   
+        
+          <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
+            {{ $student['present'] }}
+        </td>
         
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
             {{ $student['absent'] }}x
