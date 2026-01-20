@@ -162,11 +162,11 @@
       
         <!-- Name Column -->
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            <a href="/students/{{ $student['student_id'] }}" class="text-primary-600 hover:underline">{{ $student['name'] }}x</a>
+            <a href="/students/{{ $student['student_id'] }}" class="text-primary-600 hover:underline">{{ $student['name'] }}</a>
         </td>   
         
           <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            {{ $student['present'] }}
+            {{ $student['present'] }}x
         </td>
         
         <td class="p-4 text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
