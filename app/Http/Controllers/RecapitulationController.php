@@ -92,6 +92,7 @@ public function dailyRecap(Request $request)
 
  public function dailyRecapPayment(Request $request)
 {
+    // dd($request->all());
     // Default tanggal
     $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
     $endDate   = $request->input('end_date', now()->toDateString());
@@ -118,6 +119,11 @@ public function dailyRecap(Request $request)
     if ($request->filled('user_id')) {
         $payload['user_id'] = (int) $request->input('user_id');
     }
+
+    if ($request->filled('teacher_id')) {
+    $payload['teacher_id'] = (int) $request->input('teacher_id');
+}
+
 
     if ($request->filled('payment_month')) {
         $payload['payment_month'] = $this->mapMonthIdToEn(
@@ -147,6 +153,10 @@ public function dailyRecap(Request $request)
     $courses = Http::get(env('API_BASE_URL') . '/courses')->json();
     $users   = Http::get(env('API_BASE_URL') . '/users')->json();
 
+    $teachers =Http::get(env('API_BASE_URL') . '/teachers')->json();
+
+    // dd($teachers);
+
     $activeRoute = 'daily-recap-payment';
 
     return view('recapitulations.daily-payment', compact(
@@ -155,7 +165,8 @@ public function dailyRecap(Request $request)
         'endDate',
         'activeRoute',
         'courses',
-        'users'
+        'users',
+        'teachers'
     ));
 }
 

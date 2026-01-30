@@ -92,6 +92,23 @@
     </select>
 </div>
 
+<div>
+    <label class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-200">
+        Guru
+    </label>
+    <select name="teacher_id"
+        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+               focus:ring-blue-500 focus:border-blue-500 p-2.5
+               dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <option value="">-- Semua Guru --</option>
+          @foreach($teachers['data'] as $teacher)
+                            <option value="{{ $teacher['id'] }}" {{ request('teacher_id') == $teacher['id'] ? 'selected' : '' }}>
+                                {{ $teacher['name'] }}
+                            </option>
+                        @endforeach
+    </select>
+</div>
+
             </div>
 
             {{-- Courses (checkbox grid) --}}
