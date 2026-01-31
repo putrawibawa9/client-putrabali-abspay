@@ -131,6 +131,26 @@ public function dailyRecap(Request $request)
         );
     }
 
+    if ($request->filled('user_id')) {
+    $payload['user_id'] = (int) $request->input('user_id');
+}
+
+if ($request->filled('teacher_id')) {
+    $payload['teacher_id'] = (int) $request->input('teacher_id');
+}
+
+if ($request->filled('payment_month')) {
+    $payload['payment_month'] = $this->mapMonthIdToEn(
+        strtolower($request->input('payment_month'))
+    );
+}
+
+// ✅ TAMBAHAN: type
+if ($request->filled('type')) {
+    $payload['type'] = $request->input('type');
+}
+
+
     // =========================
     // 🔹 TAMBAHAN: lokasi_pb
     // =========================
