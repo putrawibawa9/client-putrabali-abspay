@@ -115,8 +115,9 @@ public function absenceInput( $id){
         "time" => $data["final_time"],
         "course_id" => (int)$data["course_id"],
         "teacher_id" => (int)$data["teacher_id"],
+        "lesson_plan" => $data["lesson_plan"],
     ];
-    
+    // dd($apiRequestData);
     // Add attendances to the request data
     $apiRequestData["attendances"] = $data["attendances"];
 
