@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 
-use GuzzleHttp\Exception\RequestException;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
-use App\Services\CourseService;
 use App\Services\AbsenceService;
+use App\Services\CourseService;
 use App\Services\MeetingService;
 use App\Services\TeacherService;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class AbsenceController extends Controller
@@ -29,6 +30,29 @@ class AbsenceController extends Controller
           $this->baseUrl = config('services.api.base_url');
 
     }
+
+    public function lessonPlanPage($courseId)
+{
+    try {
+
+        $response = Http::get(env('API_BASE_URL') . '/lesson-plans', [
+            'course_id' => $courseId
+        ]);
+
+        if ($response->successful()) {
+            $data = $response->json();
+            $lessonPlans = $data['data'] ?? [];
+        } else {
+            $lessonPlans = [];
+        }
+
+    } catch (\Exception $e) {
+        $lessonPlans = [];
+    }
+$activeRoute = 'absences';
+// dd($lessonPlans);
+    return view('lesson_plans.index', compact('lessonPlans', 'courseId', 'activeRoute'));
+}
     
    
 

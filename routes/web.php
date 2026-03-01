@@ -114,6 +114,12 @@ Route::get('/ping', function () {
 
     // for teachers
     Route::get('/absences/input/{id}', [AbsenceController::class, 'absenceInput']);
+
+
+    // lesson plan
+    Route::get('/courses/{courseId}/lesson-plans', 
+    [AbsenceController::class, 'lessonPlanPage'])->name('lesson-plans.index');
+
      Route::get('/students-search-assessments', [AssessmentController::class, 'searchStudentByNisOrName'])->name('students.search.assessments');
     Route::get('/absences', [AbsenceController::class, 'allCourses'])->name('absences.index');
     Route::get('/absence/courses/search', [AbsenceController::class, 'searchCourses'])->name('absence.courses.search');
