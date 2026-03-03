@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\TeacherService;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use App\Services\TeacherService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Log;
 
 class TeacherController extends Controller
 {
@@ -168,49 +169,74 @@ public function recapTeacherAbsences(Request $request)
 {
     $activeRoute = 'recap-teacher-absences';
 
-    // Panggil service absensi seperti biasa
+    // =============================
+    // 1️⃣ Normalize Month & Year
+    // =============================
+
+    $monthInput = $request->input('month'); // format: 2026-03
+
+    if ($monthInput) {
+        $carbonDate = \Carbon\Carbon::createFromFormat('Y-m', $monthInput);
+        $filterMonth = $carbonDate->month;
+        $filterYear  = $carbonDate->year;
+    } else {
+        $filterMonth = now()->month;
+        $filterYear  = now()->year;
+    }
+
+    // =============================
+    // 2️⃣ Get Teacher Recap Data
+    // =============================
+
     $teacher = $this->teacherService->recapTeacherAbsences([
-        'id' => $request->input('id'),
-        'month' => $request->input('month'),
+        'id'    => $request->input('id'),
+        'month' => $monthInput,
     ]);
 
-    $filterMonth = $request->input('month') ?? now()->month;
-    $filterYear  = $request->input('year') ?? now()->year;
+    if (isset($teacher['error'])) {
+        return redirect()->back()->with('error', $teacher['error']);
+    }
 
-    // ✅ Tambahkan panggilan API ke backend untuk ambil jumlah repost
+    // =============================
+    // 3️⃣ Call Backend API (Repost)
+    // =============================
+
+    $repostData  = [];
+    $repostCount = 0;
+    $proofs      = [];
+
     try {
-        $teacherId = $request->input('id');
-        $baseUrl = config('services.api.base_url'); // diambil dari .env (API_BASE_URL)
 
-        // Contoh: http://localhost:8000/api/v1/repost-proofs/16?month=10&year=2025
+        $teacherId = $request->input('id');
+        $baseUrl   = config('services.api.base_url');
+
         $response = Http::get("{$baseUrl}/repost-proofs/{$teacherId}", [
             'month' => $filterMonth,
             'year'  => $filterYear,
         ]);
 
         if ($response->successful()) {
-            $repostData = $response->json();
+            $repostData  = $response->json();
             $repostCount = $repostData['count'] ?? 0;
-        } else {
-            $repostCount = 0;
+            $proofs      = $repostData['proofs'] ?? [];
         }
 
     } catch (\Exception $e) {
-        $repostCount = 0;
+        // Optional: log error
+        Log::error('Repost API error: ' . $e->getMessage());
     }
 
-    if (isset($teacher['error'])) {
-        return redirect()->back()->with('error', $teacher['error']);
-    }
-// dd($repostData );
+    // =============================
+    // 4️⃣ Return Clean Data to View
+    // =============================
 
     return view('pages.recap-teacher-absences.show', compact(
         'activeRoute',
-        'repostData',
         'teacher',
+        'repostCount',
+        'proofs',
         'filterMonth',
-        'repostCount'
+        'filterYear'
     ));
 }
-
 }
