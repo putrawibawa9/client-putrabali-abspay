@@ -136,10 +136,10 @@
                                    
                                     <td class="p-4 space-x-2 whitespace-nowrap">
 
-                                        <a href="/recap-teacher-absences?id={{ $teacher['id'] }}"
+                                        {{-- <a href="/recap-teacher-absences?id={{ $teacher['id'] }}"
                                         class="inline-block px-4 py-2 bg-primary-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-200">
                                         Riwayat Mengajar
-                                     </a>
+                                     </a> --}}
                                      
                                         <button type="button" data-modal-toggle="edit-user-modal-teacher"
                                             data-id="{{ $teacher['id'] }}"
