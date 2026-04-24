@@ -172,7 +172,7 @@ if ($request->filled('type')) {
     // Dropdown data
     $courses = Http::get(env('API_BASE_URL') . '/courses')->json();
 
-    // @dd($courses);
+    // @dd($courses);```
     $users   = Http::get(env('API_BASE_URL') . '/users')->json();
 
     $teachers =Http::get(env('API_BASE_URL') . '/teachers')->json();
