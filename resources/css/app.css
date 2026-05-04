@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  .dark {
+    color-scheme: dark;
+  }
+
+  .dark input,
+  .dark select,
+  .dark textarea {
+    @apply bg-slate-700 border-slate-600 text-slate-100 placeholder:text-slate-400;
+  }
+
+  .dark input:focus,
+  .dark select:focus,
+  .dark textarea:focus {
+    @apply border-blue-500 ring-blue-500;
+  }
+
+  .dark select option {
+    background-color: rgb(30 41 59);
+    color: rgb(241 245 249);
+  }
+}
