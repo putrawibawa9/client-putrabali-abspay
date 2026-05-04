@@ -95,15 +95,15 @@
 <aside id="sidebar"
     class="fixed top-0 left-0 z-20 hidden h-full w-64 flex-shrink-0 pt-20 transition-transform duration-200 lg:flex lg:translate-x-0"
     aria-label="Sidebar">
-    <div class="relative flex min-h-screen flex-1 flex-col border-r border-gray-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+    <div class="relative flex min-h-screen flex-1 flex-col border-r border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
         <div class="flex flex-1 flex-col overflow-y-auto px-3 pb-4 pt-5">
-            <div class="mb-4 rounded-2xl border border-gray-200 bg-gray-50 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+            <div class="mb-4 rounded-2xl border border-gray-200 bg-gray-50 p-4 shadow-sm dark:border-gray-700 dark:bg-gray-700">
                 <div class="flex items-center gap-3">
                     <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 text-sm font-bold text-white shadow-md shadow-blue-900/20">
                         {{ $initials !== '' ? $initials : 'PB' }}
                     </div>
                     <div class="min-w-0">
-                        <p class="truncate text-xs uppercase tracking-[0.18em] text-gray-500 dark:text-slate-400">{{ $isAdmin ? 'Administrator' : 'Teacher Panel' }}</p>
+                        <p class="truncate text-xs uppercase tracking-[0.18em] text-gray-500 dark:text-gray-300">{{ $isAdmin ? 'Administrator' : 'Teacher Panel' }}</p>
                         <h3 class="truncate text-base font-semibold text-gray-900 dark:text-white">{{ $userName }}</h3>
                     </div>
                 </div>
@@ -117,10 +117,10 @@
                     <li class="sidebar-group rounded-2xl border border-transparent bg-white/70 dark:bg-transparent">
                         <button
                             type="button"
-                            class="sidebar-toggle flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white {{ $isOpen ? 'bg-gray-100 text-gray-900 dark:bg-slate-800 dark:text-white' : '' }}"
+                            class="sidebar-toggle flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white {{ $isOpen ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white' : '' }}"
                             data-sidebar-target="{{ $menu['id'] }}"
                             aria-expanded="{{ $isOpen ? 'true' : 'false' }}">
-                            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-slate-200">
+                            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-gray-100 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                     <path d="M10 3a1 1 0 0 1 .993.883L11 4v5h5a1 1 0 0 1 .117 1.993L16 11h-5v5a1 1 0 0 1-1.993.117L9 16v-5H4a1 1 0 0 1-.117-1.993L4 9h5V4a1 1 0 0 1 1-1Z"/>
                                 </svg>
@@ -132,7 +132,7 @@
                         </button>
 
                         <div id="{{ $menu['id'] }}" class="sidebar-panel {{ $isOpen ? '' : 'hidden' }}">
-                            <ul class="mt-2 space-y-1 border-l border-gray-200 pb-2 pl-4 dark:border-slate-700">
+                            <ul class="mt-2 space-y-1 border-l border-gray-200 pb-2 pl-4 dark:border-gray-700">
                                 @foreach ($menu['items'] as $item)
                                     @php
                                         $itemRoutes = $item['active_routes'] ?? [$item['route']];
@@ -140,7 +140,7 @@
                                     @endphp
                                     <li>
                                         <a href="{{ $item['href'] }}"
-                                            class="flex items-center rounded-xl px-3 py-2 text-sm transition {{ $isActive ? 'bg-blue-50 font-semibold text-blue-700 dark:bg-blue-500/15 dark:text-blue-200' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white' }}">
+                                            class="flex items-center rounded-xl px-3 py-2 text-sm transition {{ $isActive ? 'bg-blue-50 font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white' }}">
                                             {{ $item['label'] }}
                                         </a>
                                     </li>
@@ -173,7 +173,7 @@
 
                 panel.classList.add('hidden');
                 toggle.setAttribute('aria-expanded', 'false');
-                toggle.classList.remove('bg-gray-100', 'text-gray-900', 'dark:bg-slate-800', 'dark:text-white');
+                toggle.classList.remove('bg-gray-100', 'text-gray-900', 'dark:bg-gray-700', 'dark:text-white');
                 if (icon) {
                     icon.classList.remove('rotate-180');
                 }
@@ -197,7 +197,7 @@
                 toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
                 toggle.classList.toggle('bg-gray-100', willOpen);
                 toggle.classList.toggle('text-gray-900', willOpen);
-                toggle.classList.toggle('dark:bg-slate-800', willOpen);
+                toggle.classList.toggle('dark:bg-gray-700', willOpen);
                 toggle.classList.toggle('dark:text-white', willOpen);
 
                 if (icon) {
