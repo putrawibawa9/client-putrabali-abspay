@@ -92,27 +92,38 @@ class PaymentController extends Controller
             return $c;
         })
         ->filter(function ($c) {
-            // Hanya kirim:
-            // - SPP dengan nominal > 0
-            // - modul/pendaftaran/ujian (nominal boleh null; server set 50000)
+            // Hanya kirim item yang lengkap dan punya nominal manual valid.
             if (empty($c['type'])) return false;
+
             if ($c['type'] === 'spp') {
-                return !empty($c['payment_date']) && !empty($c['course_id']) && ($c['payment_amount'] >= 0);
+                return !empty($c['payment_date'])
+                    && !empty($c['course_id'])
+                    && (($c['payment_amount'] ?? 0) > 0);
             }
-            // Non-SPP: cukup ada tanggal & course_id; amount boleh null (server akan set 50000)
-            return !empty($c['payment_date']) && !empty($c['course_id']);
+
+            return !empty($c['payment_date'])
+                && !empty($c['course_id'])
+                && (($c['payment_amount'] ?? 0) > 0);
         })
         ->values();
 
-    // Validasi sisi client: spp yang dikirim WAJIB punya bulan
+    // Validasi sisi frontend: semua pembayaran wajib punya nominal manual valid.
     foreach ($filtered as $c) {
-        if ($c['type'] === 'spp' && ($c['payment_amount'] ?? 0) > 0) {
+        if (($c['payment_amount'] ?? 0) <= 0) {
+            return back()->with('error', 'Tolong masukkan nominal pembayaran yang valid.');
+        }
+
+        if ($c['type'] === 'spp') {
             if (empty($c['payment_month'])) { // "" atau null dianggap kosong
                 return back()->with('error', 'Tolong masukkan bulan pembayaran untuk SPP.');
             }
+            if (empty($c['payment_year'])) {
+                return back()->with('error', 'Tolong masukkan tahun pembayaran untuk SPP.');
+            }
         } else {
-            // Untuk non-SPP, rapikan: pastikan payment_month null
+            // Untuk non-SPP, rapikan: backend API baru hanya butuh date, amount, type, course_id.
             $c['payment_month'] = null;
+            $c['payment_year'] = null;
         }
     }
 
@@ -131,7 +142,7 @@ class PaymentController extends Controller
                 'payment_month'  => $c['type'] === 'spp' ? $c['payment_month'] : null,
                 'payment_year'   => $c['type'] === 'spp' ? $c['payment_year'] : null,
                 'type'           => $c['type'],
-                'payment_amount' => $c['payment_amount'], // boleh null untuk non-SPP; server set 50000
+                'payment_amount' => $c['payment_amount'],
             ];
         })->all(),
     ];

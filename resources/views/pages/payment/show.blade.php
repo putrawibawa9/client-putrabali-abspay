@@ -140,9 +140,9 @@
                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
                   <option value="" >Select Type</option>
                   <option selected  value="spp">Pembayaran SPP</option>
-                  <option value="modul">Modul || Rp.50.000</option>
-                  <option value="pendaftaran">Pendaftaran || Rp.50.000</option>
-                  <option value="ujian">Ujian || Rp.50.000</option>
+                  <option value="modul">Modul</option>
+                  <option value="pendaftaran">Pendaftaran</option>
+                  <option value="ujian">Ujian</option>
                 </select>
               </div>
 
@@ -222,10 +222,10 @@
 
                   {{-- Manual Payment Input --}}
                   <div class="flex flex-col gap-1 w-full md:w-56">
-                    <label class="text-sm text-gray-700 dark:text-gray-300">Input jumlah </label>
-                    <input min="0"  type="number" name="courses[{{ $index }}][payment_amount]" placeholder="Masukkan jumlah"
+                    <label class="text-sm text-gray-700 dark:text-gray-300">Input jumlah</label>
+                    <input min="1" type="number" name="courses[{{ $index }}][payment_amount]" placeholder="Masukkan jumlah"
                            class="w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
-                           <p style="color: red;">* tulis angka tanpa pemisah ribuan, contoh: 100000 (bukan 100.000)</p>
+                           <p style="color: red;">* semua tipe pembayaran sekarang diisi manual. Tulis angka tanpa pemisah ribuan, contoh: 100000 (bukan 100.000)</p>
                   </div>
                 </div>
               </div>
@@ -372,6 +372,7 @@
     for (let i = 0; i < courseCount; i++) {
       const typeSelect  = document.getElementById(`tipe_${i}`);
       const monthSelect = document.getElementById(`bulan_${i}`);
+      const yearSelect  = document.getElementById(`year_${i}`);
 
       const checkboxes  = document.querySelectorAll(`input[name="courses[${i}][payment_amount]"][type="checkbox"]`);
       const manualInput = document.querySelector(`input[name="courses[${i}][payment_amount]"][type="number"]`);
@@ -386,6 +387,15 @@
           if (!isSPP) monthSelect.value = '';
         }
 
+        if (yearSelect) {
+          yearSelect.disabled = !isSPP;
+          yearSelect.classList.toggle('opacity-50', !isSPP);
+          yearSelect.classList.toggle('cursor-not-allowed', !isSPP);
+          if (!isSPP) {
+            yearSelect.value = '{{ now()->year }}';
+          }
+        }
+
         checkboxes.forEach(cb => {
           cb.disabled = !isSPP;
           if (!isSPP) cb.checked = false;
@@ -394,10 +404,8 @@
         });
 
         if (manualInput) {
-          manualInput.disabled = !isSPP;
-          if (!isSPP) manualInput.value = '';
-          manualInput.classList.toggle('opacity-50', !isSPP);
-          manualInput.classList.toggle('cursor-not-allowed', !isSPP);
+          manualInput.disabled = false;
+          manualInput.classList.remove('opacity-50', 'cursor-not-allowed');
         }
       };
 
