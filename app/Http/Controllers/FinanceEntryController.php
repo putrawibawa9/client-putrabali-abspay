@@ -46,7 +46,24 @@ class FinanceEntryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $validated = $request->validate([
+            'finance_category_id' => ['required', 'integer'],
+            'direction' => ['required', 'in:expense,income'],
+            'item_name' => ['required', 'string', 'max:255'],
+            'unit_price' => ['required', 'integer', 'min:0'],
+            'quantity' => ['required', 'integer', 'min:1'],
+            'note' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $data = [
+            'finance_category_id' => (int) $validated['finance_category_id'],
+            'direction' => $validated['direction'],
+            'item_name' => $validated['item_name'],
+            'unit_price' => (int) $validated['unit_price'],
+            'quantity' => (int) $validated['quantity'],
+            'note' => $validated['note'] ?? null,
+        ];
+
         $response = Http::post(env('API_BASE_URL') . '/finance-entries', $data);
 
         if ($response->successful()) {
