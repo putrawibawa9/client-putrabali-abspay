@@ -114,6 +114,7 @@ class StudentService
                 'gender' => $data['gender'],
                 'school' => $data['school'],
                 'enroll_date' => $data['enroll_date'],
+                'heard_from' => $data['heard_from'] ?? null,
                 'courses' => $data['courses'],
                 'nik' => $data['nik'],
                 'nisn' => $data['nisn'],
@@ -235,6 +236,27 @@ class StudentService
                 'error' => $e->getMessage(),
             ];
         }
+    }
+
+    public function getAllStudentsForDashboard(): array
+    {
+        $allStudents = [];
+        $page = 1;
+        $lastPage = 1;
+
+        do {
+            $response = $this->getAllStudents($page);
+
+            if (isset($response['error'])) {
+                return [];
+            }
+
+            $allStudents = array_merge($allStudents, $response['data'] ?? []);
+            $lastPage = $response['last_page'] ?? $page;
+            $page++;
+        } while ($page <= $lastPage);
+
+        return $allStudents;
     }
     
 

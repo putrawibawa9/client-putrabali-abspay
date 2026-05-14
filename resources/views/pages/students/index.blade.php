@@ -2,6 +2,20 @@
 @extends('layouts.main')
 
 @section('content')
+@php
+    $heardFromOptions = [
+        'Instagram',
+        'Facebook',
+        'TikTok',
+        'Google',
+        'Teman',
+        'Orang Tua Murid',
+        'Brosur',
+        'Spanduk',
+        'Datang Langsung',
+        'Lainnya',
+    ];
+@endphp
 <div
     class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
     <div class="w-full mb-1">
@@ -148,6 +162,7 @@
         data-gender="{{ $student['gender'] }}"
         data-school="{{ $student['school'] }}"
         data-enroll_date="{{ $student['enroll_date'] }}"
+        data-heard_from="{{ $student['heard_from'] ?? '' }}"
 
         class="inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-amber-400 rounded-md hover:bg-amber-500">
         <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"
@@ -403,6 +418,24 @@
                                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="Enter school name" required>
                         </div>
+                        <div class="col-span-6">
+                            <label for="heard_from_select_edit"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tau dari mana?</label>
+                            <select id="heard_from_select_edit" name="heard_from_choice" data-heard-from-select
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="">Pilih sumber</option>
+                                @foreach ($heardFromOptions as $option)
+                                    <option value="{{ $option }}">{{ $option }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-span-6 hidden" data-heard-from-other-wrap>
+                            <label for="heard_from_other_edit"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lainnya</label>
+                            <input type="text" id="heard_from_other_edit" name="heard_from_other" data-heard-from-other
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Tulis sumber lainnya">
+                        </div>
                     <div class="col-span-6 sm:col-span-3">
     <label for="nik" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
         NIK (Nomor Induk Kependudukan)
@@ -538,6 +571,22 @@
             <input type="text" name="school" id="school"
                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Masukkan nama sekolah" required>
+        </div>
+        <div class="col-span-6">
+            <label for="heard_from_select_add" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tau dari mana?</label>
+            <select id="heard_from_select_add" name="heard_from_choice" data-heard-from-select
+                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option value="">Pilih sumber</option>
+                @foreach ($heardFromOptions as $option)
+                    <option value="{{ $option }}">{{ $option }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-span-6 hidden" data-heard-from-other-wrap>
+            <label for="heard_from_other_add" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lainnya</label>
+            <input type="text" id="heard_from_other_add" name="heard_from_other" data-heard-from-other
+                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Tulis sumber lainnya">
         </div>
 
         <!-- English Course -->

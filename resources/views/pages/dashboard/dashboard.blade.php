@@ -74,7 +74,7 @@
                 </div>
 
             <div class="flex flex-col min-h-full">
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 text-center">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Pendaftaran Baru Bulan Ini</h3>
         <p class="text-3xl font-bold text-blue-500 dark:text-blue-400">
@@ -87,6 +87,39 @@
         <p class="text-3xl font-bold text-green-500 dark:text-green-400">
             {{ $recapitulations['total_students'] }}
         </p>
+    </div>
+</div>
+
+<div class="mt-8">
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Sumber Pendaftaran</h3>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Sumber terbanyak bulan ini</p>
+            <h4 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $registrationSources['top_source'] }}</h4>
+            <p class="mt-3 text-blue-600 dark:text-blue-300 font-semibold">{{ $registrationSources['top_count'] }} siswa</p>
+        </div>
+
+        <div class="lg:col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <p class="text-sm text-gray-500 dark:text-gray-400">Ringkasan channel masuk siswa baru</p>
+                <span class="text-sm font-semibold text-gray-900 dark:text-white">Total: {{ $registrationSources['total'] }}</span>
+            </div>
+
+            @if (!empty($registrationSources['items']))
+                <div class="space-y-3">
+                    @foreach ($registrationSources['items'] as $item)
+                        <div class="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3 dark:bg-gray-800">
+                            <span class="text-gray-900 dark:text-white">{{ $item['source'] }}</span>
+                            <span class="text-sm font-semibold text-blue-600 dark:text-blue-300">{{ $item['count'] }} siswa</span>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="rounded-lg bg-gray-50 px-4 py-6 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                    Belum ada data sumber pendaftaran untuk periode ini.
+                </div>
+            @endif
+        </div>
     </div>
 </div>
 

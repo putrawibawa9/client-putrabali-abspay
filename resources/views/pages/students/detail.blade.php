@@ -79,6 +79,7 @@
 </div>
 
             <div><span class="font-semibold">Sekolah:</span> {{ $student['school'] }}</div>
+            <div><span class="font-semibold">Tau dari mana:</span> {{ $student['heard_from'] ?? '-' }}</div>
             <div><span class="font-semibold">NIK:</span> {{ $student['nik'] ?? '-' }}</div>
             <div><span class="font-semibold">NIS:</span> {{ $student['nis'] ?? '-' }}</div>
         </div>

@@ -19,14 +19,16 @@ class RecapitulationController extends Controller
  
     protected $recapitulationService;
     protected $teacherService;
+    protected $studentService;
 
      /**
      * Create a new controller instance.
      */
-    public function __construct(RecapitulationService $recapitulationService, TeacherService $teacherService)
+    public function __construct(RecapitulationService $recapitulationService, TeacherService $teacherService, StudentService $studentService)
     {
         $this->recapitulationService = $recapitulationService;
         $this->teacherService = $teacherService;
+        $this->studentService = $studentService;
     }
    
     public function index(Request $request)
@@ -35,12 +37,66 @@ class RecapitulationController extends Controller
     $month = $request->input('month');
     $year = $request->input('year');
     $recapitulations = $this->recapitulationService->getRecapitulations($month, $year);
+    $registrationSources = $this->buildRegistrationSourcesSummary($month, $year);
     // dd($recapitulations);
    $currentMonth = Carbon::now()->format('F'); // Full month name
    $activeRoute ='dashboard';
   
 //    dd($recapitulations);
-   return view('pages.dashboard.dashboard', compact('activeRoute', 'recapitulations', 'currentMonth'));
+   return view('pages.dashboard.dashboard', compact('activeRoute', 'recapitulations', 'currentMonth', 'registrationSources'));
+}
+
+private function buildRegistrationSourcesSummary($month = null, $year = null): array
+{
+    $students = $this->studentService->getAllStudentsForDashboard();
+
+    if (empty($students)) {
+        return [
+            'total' => 0,
+            'top_source' => '-',
+            'top_count' => 0,
+            'items' => [],
+        ];
+    }
+
+    $targetMonth = $month ? strtolower($month) : strtolower(now()->format('F'));
+    $targetYear = $year ?: now()->year;
+
+    $filtered = collect($students)->filter(function ($student) use ($targetMonth, $targetYear) {
+        if (empty($student['enroll_date'])) {
+            return false;
+        }
+
+        try {
+            $enrollDate = Carbon::parse($student['enroll_date']);
+        } catch (\Throwable $e) {
+            return false;
+        }
+
+        return strtolower($enrollDate->format('F')) === $targetMonth
+            && (int) $enrollDate->format('Y') === (int) $targetYear;
+    });
+
+    $grouped = $filtered
+        ->groupBy(function ($student) {
+            $source = trim((string) ($student['heard_from'] ?? ''));
+            return $source !== '' ? $source : 'Belum diisi';
+        })
+        ->map(fn ($items, $source) => [
+            'source' => $source,
+            'count' => count($items),
+        ])
+        ->sortByDesc('count')
+        ->values();
+
+    $top = $grouped->first();
+
+    return [
+        'total' => $filtered->count(),
+        'top_source' => $top['source'] ?? '-',
+        'top_count' => $top['count'] ?? 0,
+        'items' => $grouped->all(),
+    ];
 }
 
 public function dailyRecap(Request $request)

@@ -60,14 +60,23 @@ class StudentController extends Controller
      */
  public function store(Request $request)
 {
+    $heardFrom = $request->input('heard_from_choice') === 'Lainnya'
+        ? $request->input('heard_from_other')
+        : ($request->input('heard_from_choice') ?: $request->input('heard_from'));
+
+    $request->merge([
+        'heard_from' => $heardFrom,
+    ]);
+
     // dd($request->all());
     // Validate the incoming request data
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
         'wa_number' => 'required|string|max:255',
-        'gender' => 'required|string|max:255',
+        'gender' => 'required|in:Male,Female',
         'school' => 'required|string|max:255',
         'enroll_date' => 'required|date',
+        'heard_from' => 'nullable|string|max:255',
         'course_id' => 'required|array', // Ensure course_id is an array
         'custom_payment_rate' => 'nullable|array', // Ensure custom_payment_rate is an array
         'nik' => 'nullable|string|max:255',
@@ -104,6 +113,7 @@ class StudentController extends Controller
         'gender' => $validatedData['gender'],
         'school' => $validatedData['school'],
         'enroll_date' => $validatedData['enroll_date'],
+        'heard_from' => $validatedData['heard_from'] ?? null,
         'nik' => $validatedData['nik'],
         'nisn' => $validatedData['nisn'],
         'courses' => $courses,
