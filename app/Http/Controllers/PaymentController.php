@@ -389,16 +389,11 @@ public function paidAndUnpaidStudentsMonthly(Request $request){
 public function generateReceipt($id)
 {
         $base = $this->normalizeApiBaseUrl($this->baseUrl ?: env('API_BASE_URL', 'http://localhost:8000/api/v1'));
+        $p = $this->fetchReceiptPayload($base, $id);
 
-        // Endpoint: /payments/{id}/receipt (contoh: /payments/15/receipt)
-        $endpoint = "{$base}/payments/{$id}/receipt";
-
-        $res = Http::acceptJson()->get($endpoint);
-        if (!$res->ok()) {
+        if ($p === null) {
             abort(502, 'Gagal mengambil data kwitansi dari API.');
         }
-
-        $p = $res->json();
 
         // Normalisasi + formatting
         $date = isset($p['date']) ? Carbon::parse($p['date']) : now();
@@ -620,6 +615,49 @@ public function generateReceipt($id)
         }
 
         return rtrim($baseUrl, '/');
+    }
+
+    protected function fetchReceiptPayload(string $baseUrl, int|string $paymentId): ?array
+    {
+        $candidates = collect([
+            rtrim($baseUrl, '/') . "/payments/{$paymentId}/receipt",
+            str_contains($baseUrl, '/api/v1')
+                ? preg_replace('#/api/v1$#', '/api', rtrim($baseUrl, '/')) . "/payments/{$paymentId}/receipt"
+                : null,
+        ])->filter()->unique()->values();
+
+        foreach ($candidates as $endpoint) {
+            try {
+                $response = Http::acceptJson()->timeout(15)->get($endpoint);
+
+                if ($response->ok()) {
+                    $payload = $response->json();
+
+                    if (is_array($payload) && isset($payload['data']) && is_array($payload['data'])) {
+                        $payload = $payload['data'];
+                    }
+
+                    if (is_array($payload)) {
+                        return $payload;
+                    }
+                }
+
+                Log::warning('Receipt API request failed', [
+                    'payment_id' => $paymentId,
+                    'endpoint' => $endpoint,
+                    'status' => $response->status(),
+                    'body' => $response->body(),
+                ]);
+            } catch (\Throwable $e) {
+                Log::error('Receipt API exception', [
+                    'payment_id' => $paymentId,
+                    'endpoint' => $endpoint,
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        return null;
     }
   
 
