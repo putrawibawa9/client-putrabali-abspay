@@ -57,10 +57,10 @@
         [
             'id' => 'admin-schedules',
             'label' => 'Penjadwalan',
-            'routes' => ['generate-semester', 'all-schedules', 'update-meeting', 'teacher-schedules', 'teacher-schedule'],
+            'routes' => ['recurring-schedule-create', 'recurring-schedules', 'generate-semester', 'all-schedules', 'update-meeting', 'teacher-schedules', 'teacher-schedule'],
             'items' => [
-                ['label' => 'Buat Jadwal', 'href' => route('schedule.generate.form'), 'route' => 'generate-semester'],
-                ['label' => 'Cek Semua Jadwal', 'href' => route('schedule.all-schedule'), 'route' => 'all-schedules'],
+                ['label' => 'Buat Jadwal', 'href' => route('schedule.recurring.create'), 'route' => 'recurring-schedule-create'],
+                ['label' => 'Recurring Schedule', 'href' => route('schedule.recurring.index'), 'route' => 'recurring-schedules'],
             ],
         ],
         [

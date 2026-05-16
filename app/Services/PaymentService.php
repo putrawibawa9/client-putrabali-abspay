@@ -79,25 +79,42 @@ class PaymentService
             if ($response->getStatusCode() === 201) {
                 // Decode the JSON response into an associative array
                 $data = json_decode($response->getBody()->getContents(), true);
-               
+                return [
+                    'success' => true,
+                    'data' => $data,
+                ];
             }
+
+            return [
+                'success' => false,
+                'message' => 'Unexpected response status code: ' . $response->getStatusCode(),
+            ];
         } catch (RequestException $e) {
             
-    if ($e->hasResponse()) {
-        $response = $e->getResponse();
-        $body = json_decode($response->getBody()->getContents(), true);
+            if ($e->hasResponse()) {
+                $response = $e->getResponse();
+                $body = json_decode($response->getBody()->getContents(), true);
 
-      return $body;
-    }
+                return [
+                    'success' => false,
+                    'message' => $body['message'] ?? 'An error occurred while processing the request.',
+                    'errors' => $body['errors'] ?? [],
+                ];
+            }
 
-    return response()->json(['message' => 'An error occurred while processing the request.'], 500);
-}catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'An error occurred while processing the request.',
+            ];
+        } catch (\Exception $e) {
             // Log unexpected errors
             Log::error('Unexpected Error: ' . $e->getMessage());
 
             // Return a generic error message
             return [
+                'success' => false,
                 'error' =>  $e->getMessage(),
+                'message' => $e->getMessage(),
             ];
         }
 

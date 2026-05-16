@@ -5,6 +5,21 @@ use App\Http\Controllers\Schedule\ScheduleController;
 
 Route::prefix('schedule')->name('schedule.')->group(function () {
 
+    Route::get('/recurring', [ScheduleController::class, 'recurringIndex'])
+        ->name('recurring.index');
+
+    Route::get('/recurring/create', [ScheduleController::class, 'showRecurringCreateForm'])
+        ->name('recurring.create');
+
+    Route::post('/recurring', [ScheduleController::class, 'storeRecurringSchedule'])
+        ->name('recurring.store');
+
+    Route::put('/recurring/{scheduleId}', [ScheduleController::class, 'updateRecurringScheduleV2'])
+        ->name('recurring.schedule.update');
+
+    Route::delete('/recurring/{scheduleId}', [ScheduleController::class, 'destroyRecurringSchedule'])
+        ->name('recurring.schedule.destroy');
+
     // FORM generate semester
     Route::get('/generate', [ScheduleController::class, 'showGenerateForm'])
         ->name('generate.form');

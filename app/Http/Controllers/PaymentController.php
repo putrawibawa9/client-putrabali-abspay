@@ -12,6 +12,7 @@ use App\Services\AbsenceService;
 use App\Services\PaymentService;
 use App\Services\StudentService;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use App\Services\StudentCourseService;
 
 
@@ -76,7 +77,6 @@ class PaymentController extends Controller
     $studentId = $request->input('student_id');
     $actor     = $request->input('actor');
     $userId    = $request->input('user_id');
-
     // Normalisasi & filter: kirim HANYA item yang dibayar
     $filtered = collect($courses)
         ->map(function ($c) {
@@ -156,13 +156,26 @@ class PaymentController extends Controller
     }
 
     // Kirim ke service
-    $error = $this->paymentService->store($payload);
+    $result = $this->paymentService->store($payload);
 
-    if (isset($error['message'])) {
-        return back()->with('error', $error['message']);
+    if (($result['success'] ?? false) !== true) {
+        return back()->with('error', $result['message'] ?? 'Gagal menyimpan pembayaran.');
     }
 
-    return back()->with('success', 'Payment has been successfully added');
+    $redirect = redirect()
+        ->route('payments.show', $studentId)
+        ->with('success', 'Payment has been successfully added');
+
+    $student = $this->studentService->getStudentById($studentId);
+    $whatsappInvoice = $this->buildWhatsappInvoicePayload($student, $payload['courses'], $result['data'] ?? []);
+
+    if ($whatsappInvoice !== null) {
+        $redirect->with('whatsapp_invoice', $whatsappInvoice);
+    } else {
+        $redirect->with('invoice_warning', 'Pembayaran tersimpan, tetapi link kwitansi PDF belum bisa dibuat. Pastikan backend mengembalikan ID payment yang baru dibuat dan nomor WhatsApp siswa valid.');
+    }
+
+    return $redirect;
 }
 
 
@@ -375,9 +388,7 @@ public function paidAndUnpaidStudentsMonthly(Request $request){
 
 public function generateReceipt($id)
 {
-
-     $base = env('API_BASE_URL', 'http://localhost:8000/api'); // Base URL API
-    
+        $base = $this->normalizeApiBaseUrl($this->baseUrl ?: env('API_BASE_URL', 'http://localhost:8000/api/v1'));
 
         // Endpoint: /payments/{id}/receipt (contoh: /payments/15/receipt)
         $endpoint = "{$base}/payments/{$id}/receipt";
@@ -444,6 +455,171 @@ public function generateReceipt($id)
             'months' => $data['unpaid_months'] ?? [],
             'year' => $data['year'] ?? now()->year,
         ]);
+    }
+
+    protected function buildWhatsappInvoicePayload(array $student, array $courses, array $paymentResult = []): ?array
+    {
+        $phone = $this->normalizeWhatsappNumber($student['wa_number'] ?? null);
+
+        if ($phone === null) {
+            return null;
+        }
+
+        $studentName = $student['name'] ?? 'Siswa';
+        $courseMap = collect($student['active_courses'] ?? [])->mapWithKeys(function ($course) {
+            return [
+                $course['id'] => trim(($course['subject'] ?? 'Course') . ' - ' . ($course['alias'] ?? '')),
+            ];
+        });
+
+        $items = collect($courses)->values()->map(function ($course, $index) use ($courseMap) {
+            $courseLabel = $courseMap[$course['course_id']] ?? ('Course #' . $course['course_id']);
+            $typeLabel = match ($course['type']) {
+                'spp' => 'SPP',
+                'modul' => 'Modul',
+                'pendaftaran' => 'Pendaftaran',
+                'ujian' => 'Ujian',
+                default => Str::headline((string) $course['type']),
+            };
+
+            $period = '';
+            if (($course['type'] ?? '') === 'spp' && !empty($course['payment_month']) && !empty($course['payment_year'])) {
+                $period = ' (' . ucfirst((string) $course['payment_month']) . ' ' . $course['payment_year'] . ')';
+            }
+
+            return [
+                'index' => $index,
+                'label' => "{$courseLabel} - {$typeLabel}{$period}",
+                'amount' => (int) ($course['payment_amount'] ?? 0),
+                'date' => $course['payment_date'] ?? now()->toDateString(),
+            ];
+        })->values();
+
+        $paymentIds = $this->extractPaymentIds($paymentResult);
+        if ($paymentIds->isEmpty()) {
+            return null;
+        }
+
+        $items = $items->map(function ($item, $index) use ($paymentIds) {
+            $paymentId = $paymentIds->get($index);
+            $item['receipt_url'] = $paymentId ? route('payments.receipt', $paymentId) : null;
+            return $item;
+        });
+
+        $total = $items->sum('amount');
+        $date = $items->pluck('date')->filter()->first() ?? now()->toDateString();
+
+        $lines = [
+            "Halo {$studentName},",
+            '',
+            'Berikut link kwitansi pembayaran Anda di Putra Bali English Course:',
+            '',
+        ];
+
+        foreach ($items as $item) {
+            $lines[] = '- ' . $item['label'] . ': Rp ' . number_format($item['amount'], 0, ',', '.');
+            if (!empty($item['receipt_url'])) {
+                $lines[] = '  Kwitansi PDF: ' . $item['receipt_url'];
+            }
+        }
+
+        $lines = array_merge($lines, [
+            '',
+            'Tanggal pembayaran: ' . Carbon::parse($date)->translatedFormat('d F Y'),
+            'Total: Rp ' . number_format($total, 0, ',', '.'),
+            '',
+            'Terima kasih. Simpan pesan ini sebagai ringkasan invoice pembayaran Anda.',
+        ]);
+
+        $message = implode("\n", $lines);
+
+        return [
+            'url' => 'https://wa.me/' . $phone . '?text=' . rawurlencode($message),
+            'phone' => $phone,
+            'student_name' => $studentName,
+            'total' => $total,
+            'items_count' => $items->count(),
+            'receipt_links_count' => $items->filter(fn ($item) => !empty($item['receipt_url']))->count(),
+        ];
+    }
+
+    protected function extractPaymentIds(array $paymentResult)
+    {
+        return collect($paymentResult)
+            ->pipe(function ($data) {
+                if ($data instanceof \Illuminate\Support\Collection) {
+                    return $data->values();
+                }
+
+                if (isset($data['data']) && is_array($data['data'])) {
+                    return collect($data['data']);
+                }
+
+                if (isset($data['payments']) && is_array($data['payments'])) {
+                    return collect($data['payments']);
+                }
+
+                if (is_array($data) && array_is_list($data)) {
+                    return collect($data);
+                }
+
+                return collect([$data]);
+            })
+            ->map(function ($item) {
+                if (is_numeric($item)) {
+                    return (int) $item;
+                }
+
+                if (is_array($item)) {
+                    foreach (['id', 'payment_id'] as $key) {
+                        if (!empty($item[$key]) && is_numeric($item[$key])) {
+                            return (int) $item[$key];
+                        }
+                    }
+                }
+
+                return null;
+            })
+            ->filter()
+            ->values();
+    }
+
+    protected function normalizeWhatsappNumber(?string $waNumber): ?string
+    {
+        if (empty($waNumber)) {
+            return null;
+        }
+
+        $phone = preg_replace('/\D+/', '', $waNumber);
+
+        if ($phone === '') {
+            return null;
+        }
+
+        if (str_starts_with($phone, '0')) {
+            $phone = '62' . substr($phone, 1);
+        }
+
+        if (!str_starts_with($phone, '62')) {
+            return null;
+        }
+
+        return $phone;
+    }
+
+    protected function normalizeApiBaseUrl(?string $baseUrl): string
+    {
+        $baseUrl = trim((string) $baseUrl);
+
+        if ($baseUrl === '') {
+            return 'http://localhost:8000/api/v1';
+        }
+
+        if (!preg_match('#^https?://#i', $baseUrl)) {
+            $baseUrl = 'http://' . ltrim($baseUrl, '/');
+        }
+
+        return rtrim($baseUrl, '/');
     }
   
 

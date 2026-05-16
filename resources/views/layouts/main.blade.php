@@ -123,6 +123,9 @@
         {{-- Untuk !empty dapat dihilangkan nanti saat redirect page sudah diimplementasikan (untuk menghindari bug alert) --}}
         {{-- Contoh @if (Session::has('success')) --}}
         <script>
+            const whatsappInvoice = @json(session('whatsapp_invoice'));
+            const invoiceWarning = @json(session('invoice_warning'));
+
             Swal.fire({
                 title: 'Success!',
                 text: "{{ Session::get('success') ?? ($success ?? '') }}",
@@ -133,7 +136,43 @@
                 },
                 buttonsStyling: true,
                 confirmButtonColor: '#1d4ed8' // Change this to your desired color
-            })
+            }).then(async () => {
+                if (invoiceWarning) {
+                    await Swal.fire({
+                        title: 'Invoice WhatsApp belum bisa dikirim',
+                        text: invoiceWarning,
+                        icon: 'warning',
+                        confirmButtonText: 'Mengerti',
+                        customClass: {
+                            confirmButton: 'custom-confirm-button'
+                        },
+                        buttonsStyling: true,
+                        confirmButtonColor: '#d97706'
+                    });
+                }
+
+                if (whatsappInvoice && whatsappInvoice.url) {
+                    const result = await Swal.fire({
+                        title: 'Kirim invoice via WA?',
+                        text: `${whatsappInvoice.receipt_links_count || whatsappInvoice.items_count || 0} link kwitansi PDF untuk ${whatsappInvoice.student_name || 'siswa'} siap dikirim ke ${whatsappInvoice.phone || 'nomor siswa'}.`,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Kirim Sekarang',
+                        cancelButtonText: 'Nanti Saja',
+                        customClass: {
+                            confirmButton: 'custom-confirm-button',
+                            cancelButton: 'custom-decline-button'
+                        },
+                        buttonsStyling: true,
+                        confirmButtonColor: '#16a34a',
+                        cancelButtonColor: '#6b7280'
+                    });
+
+                    if (result.isConfirmed) {
+                        window.open(whatsappInvoice.url, '_blank', 'noopener');
+                    }
+                }
+            });
         </script>
     @endif
 

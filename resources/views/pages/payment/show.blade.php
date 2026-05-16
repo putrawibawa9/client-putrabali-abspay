@@ -8,6 +8,28 @@
 
 <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-8">
 
+  @if (session('whatsapp_invoice'))
+    @php $whatsappInvoice = session('whatsapp_invoice'); @endphp
+    <div class="rounded-xl border border-green-200 bg-green-50 p-4 text-green-900 shadow-sm dark:border-green-800 dark:bg-green-900/20 dark:text-green-100">
+      <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 class="text-base font-semibold">Invoice WhatsApp siap dikirim</h2>
+          <p class="mt-1 text-sm text-green-800 dark:text-green-200">
+            Ringkasan {{ $whatsappInvoice['items_count'] ?? 0 }} pembayaran untuk {{ $whatsappInvoice['student_name'] ?? $student['name'] }} sudah disiapkan ke nomor {{ $whatsappInvoice['phone'] ?? '-' }}.
+          </p>
+        </div>
+        <a href="{{ $whatsappInvoice['url'] }}" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.768.966-.941 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.787-1.48-1.76-1.653-2.058-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51h-.57c-.198 0-.52.074-.792.372-.273.297-1.04 1.016-1.04 2.479s1.065 2.875 1.213 3.074c.149.198 2.095 3.2 5.077 4.487.71.307 1.263.49 1.694.627.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.414.248-.694.248-1.29.173-1.413-.074-.124-.272-.198-.57-.347Z"/>
+            <path d="M20.52 3.449A11.904 11.904 0 0 0 12.042 0C5.495 0 .167 5.327.167 11.874c0 2.09.546 4.13 1.584 5.929L0 24l6.356-1.667a11.87 11.87 0 0 0 5.686 1.448h.005c6.546 0 11.874-5.327 11.874-11.874a11.79 11.79 0 0 0-3.401-8.458Zm-8.478 18.42h-.004a9.86 9.86 0 0 1-5.026-1.378l-.361-.214-3.772.99 1.007-3.677-.235-.377a9.86 9.86 0 0 1-1.511-5.26c.003-5.441 4.43-9.867 9.875-9.867a9.8 9.8 0 0 1 6.982 2.896 9.8 9.8 0 0 1 2.89 6.982c-.003 5.441-4.43 9.867-9.845 9.867Z"/>
+          </svg>
+          <span>Kirim Invoice ke WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  @endif
+
   {{-- Breadcrumb --}}
   <nav class="flex" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
@@ -252,7 +274,14 @@
     </div>
 
     {{-- Submit --}}
-    <div class="flex justify-end">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+        <span class="block font-medium text-gray-900 dark:text-white">Invoice WhatsApp dikirim lewat popup setelah transaksi berhasil</span>
+        <span class="mt-1 block text-xs text-gray-500 dark:text-gray-400">
+          Sistem akan langsung menyiapkan invoice ke nomor siswa: {{ $student['wa_number'] ?? '-' }}.
+        </span>
+      </div>
+
       <button type="submit"
         @if(count($active) === 0)
           disabled aria-disabled="true"
