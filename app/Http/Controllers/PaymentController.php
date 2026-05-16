@@ -162,17 +162,21 @@ class PaymentController extends Controller
         return back()->with('error', $result['message'] ?? 'Gagal menyimpan pembayaran.');
     }
 
+    $createdPayments = $result['payments'] ?? [];
+    $successMessage = $result['message'] ?? 'Payment has been successfully added';
+
     $redirect = redirect()
         ->route('payments.show', $studentId)
-        ->with('success', 'Payment has been successfully added');
+        ->with('success', $successMessage)
+        ->with('payment_success_summary', $this->buildPaymentSuccessSummary($createdPayments));
 
     $student = $this->studentService->getStudentById($studentId);
-    $whatsappInvoice = $this->buildWhatsappInvoicePayload($student, $payload['courses'], $result['data'] ?? []);
+    $whatsappInvoice = $this->buildWhatsappInvoicePayload($student, $createdPayments);
 
     if ($whatsappInvoice !== null) {
         $redirect->with('whatsapp_invoice', $whatsappInvoice);
     } else {
-        $redirect->with('invoice_warning', 'Pembayaran tersimpan, tetapi link kwitansi PDF belum bisa dibuat. Pastikan backend mengembalikan ID payment yang baru dibuat dan nomor WhatsApp siswa valid.');
+        $redirect->with('invoice_warning', 'Pembayaran tersimpan, tetapi invoice WhatsApp belum bisa disiapkan karena nomor WhatsApp siswa belum valid.');
     }
 
     return $redirect;
@@ -452,7 +456,7 @@ public function generateReceipt($id)
         ]);
     }
 
-    protected function buildWhatsappInvoicePayload(array $student, array $courses, array $paymentResult = []): ?array
+    protected function buildWhatsappInvoicePayload(array $student, array $payments): ?array
     {
         $phone = $this->normalizeWhatsappNumber($student['wa_number'] ?? null);
 
@@ -461,70 +465,46 @@ public function generateReceipt($id)
         }
 
         $studentName = $student['name'] ?? 'Siswa';
-        $courseMap = collect($student['active_courses'] ?? [])->mapWithKeys(function ($course) {
-            return [
-                $course['id'] => trim(($course['subject'] ?? 'Course') . ' - ' . ($course['alias'] ?? '')),
-            ];
-        });
+        $items = collect($payments)
+            ->filter(fn ($payment) => is_array($payment))
+            ->values()
+            ->map(function (array $payment, int $index) {
+                return [
+                    'index' => $index + 1,
+                    'type_label' => $this->formatPaymentTypeLabel($payment['type'] ?? null),
+                    'amount' => (int) ($payment['payment_amount'] ?? 0),
+                    'date' => $payment['payment_date'] ?? now()->toDateString(),
+                ];
+            });
 
-        $items = collect($courses)->values()->map(function ($course, $index) use ($courseMap) {
-            $courseLabel = $courseMap[$course['course_id']] ?? ('Course #' . $course['course_id']);
-            $typeLabel = match ($course['type']) {
-                'spp' => 'SPP',
-                'modul' => 'Modul',
-                'pendaftaran' => 'Pendaftaran',
-                'ujian' => 'Ujian',
-                default => Str::headline((string) $course['type']),
-            };
-
-            $period = '';
-            if (($course['type'] ?? '') === 'spp' && !empty($course['payment_month']) && !empty($course['payment_year'])) {
-                $period = ' (' . ucfirst((string) $course['payment_month']) . ' ' . $course['payment_year'] . ')';
-            }
-
-            return [
-                'index' => $index,
-                'label' => "{$courseLabel} - {$typeLabel}{$period}",
-                'amount' => (int) ($course['payment_amount'] ?? 0),
-                'date' => $course['payment_date'] ?? now()->toDateString(),
-            ];
-        })->values();
-
-        $paymentIds = $this->extractPaymentIds($paymentResult);
-        if ($paymentIds->isEmpty()) {
+        if ($items->isEmpty()) {
             return null;
         }
 
-        $items = $items->map(function ($item, $index) use ($paymentIds) {
-            $paymentId = $paymentIds->get($index);
-            $item['receipt_url'] = $paymentId ? route('payments.receipt', $paymentId) : null;
-            return $item;
-        });
-
         $total = $items->sum('amount');
-        $date = $items->pluck('date')->filter()->first() ?? now()->toDateString();
 
         $lines = [
-            "Halo {$studentName},",
+            'Halo, pembayaran Anda sudah kami terima.',
             '',
-            'Berikut link kwitansi pembayaran Anda di Putra Bali English Course:',
+            $items->count() > 1 ? 'Detail pembayaran:' : 'Detail:',
             '',
         ];
 
-        foreach ($items as $item) {
-            $lines[] = '- ' . $item['label'] . ': Rp ' . number_format($item['amount'], 0, ',', '.');
-            if (!empty($item['receipt_url'])) {
-                $lines[] = '  Kwitansi PDF: ' . $item['receipt_url'];
+        if ($items->count() === 1) {
+            $item = $items->first();
+            $lines[] = '- Tipe: ' . $item['type_label'];
+            $lines[] = '- Nominal: Rp ' . number_format($item['amount'], 0, ',', '.');
+            $lines[] = '- Tanggal: ' . $item['date'];
+        } else {
+            foreach ($items as $item) {
+                $lines[] = $item['index'] . '. ' . $item['type_label'] . ' - Rp ' . number_format($item['amount'], 0, ',', '.');
+                $lines[] = '';
+            }
+
+            if (end($lines) === '') {
+                array_pop($lines);
             }
         }
-
-        $lines = array_merge($lines, [
-            '',
-            'Tanggal pembayaran: ' . Carbon::parse($date)->translatedFormat('d F Y'),
-            'Total: Rp ' . number_format($total, 0, ',', '.'),
-            '',
-            'Terima kasih. Simpan pesan ini sebagai ringkasan invoice pembayaran Anda.',
-        ]);
 
         $message = implode("\n", $lines);
 
@@ -534,49 +514,39 @@ public function generateReceipt($id)
             'student_name' => $studentName,
             'total' => $total,
             'items_count' => $items->count(),
-            'receipt_links_count' => $items->filter(fn ($item) => !empty($item['receipt_url']))->count(),
+            'payments' => $items->map(function ($item) {
+                return [
+                    'type_label' => $item['type_label'],
+                    'amount_label' => 'Rp ' . number_format($item['amount'], 0, ',', '.'),
+                    'date' => $item['date'],
+                ];
+            })->all(),
         ];
     }
 
-    protected function extractPaymentIds(array $paymentResult)
+    protected function buildPaymentSuccessSummary(array $payments): array
     {
-        return collect($paymentResult)
-            ->pipe(function ($data) {
-                if ($data instanceof \Illuminate\Support\Collection) {
-                    return $data->values();
-                }
-
-                if (isset($data['data']) && is_array($data['data'])) {
-                    return collect($data['data']);
-                }
-
-                if (isset($data['payments']) && is_array($data['payments'])) {
-                    return collect($data['payments']);
-                }
-
-                if (is_array($data) && array_is_list($data)) {
-                    return collect($data);
-                }
-
-                return collect([$data]);
+        return collect($payments)
+            ->filter(fn ($payment) => is_array($payment))
+            ->map(function (array $payment) {
+                return [
+                    'type_label' => $this->formatPaymentTypeLabel($payment['type'] ?? null),
+                    'amount_label' => 'Rp ' . number_format((int) ($payment['payment_amount'] ?? 0), 0, ',', '.'),
+                ];
             })
-            ->map(function ($item) {
-                if (is_numeric($item)) {
-                    return (int) $item;
-                }
+            ->values()
+            ->all();
+    }
 
-                if (is_array($item)) {
-                    foreach (['id', 'payment_id'] as $key) {
-                        if (!empty($item[$key]) && is_numeric($item[$key])) {
-                            return (int) $item[$key];
-                        }
-                    }
-                }
-
-                return null;
-            })
-            ->filter()
-            ->values();
+    protected function formatPaymentTypeLabel(?string $type): string
+    {
+        return match ($type) {
+            'spp' => 'SPP',
+            'modul' => 'Modul',
+            'pendaftaran' => 'Pendaftaran',
+            'ujian' => 'Ujian',
+            default => Str::headline((string) $type),
+        };
     }
 
     protected function normalizeWhatsappNumber(?string $waNumber): ?string

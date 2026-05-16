@@ -81,7 +81,9 @@ class PaymentService
                 $data = json_decode($response->getBody()->getContents(), true);
                 return [
                     'success' => true,
-                    'data' => $data,
+                    'message' => $data['message'] ?? 'Payments saved successfully!',
+                    'payments' => $this->normalizeCreatedPayments($data),
+                    'raw' => $data,
                 ];
             }
 
@@ -118,6 +120,36 @@ class PaymentService
             ];
         }
 
+    }
+
+    protected function normalizeCreatedPayments(array $payload): array
+    {
+        $payments = [];
+
+        if (isset($payload['payments']) && is_array($payload['payments'])) {
+            $payments = $payload['payments'];
+        } elseif (isset($payload['data']['payments']) && is_array($payload['data']['payments'])) {
+            $payments = $payload['data']['payments'];
+        }
+
+        return collect($payments)
+            ->filter(fn ($payment) => is_array($payment))
+            ->map(function (array $payment) {
+                return [
+                    'id' => isset($payment['id']) ? (int) $payment['id'] : null,
+                    'student_id' => isset($payment['student_id']) ? (int) $payment['student_id'] : null,
+                    'course_id' => isset($payment['course_id']) ? (int) $payment['course_id'] : null,
+                    'type' => $payment['type'] ?? null,
+                    'payment_amount' => isset($payment['payment_amount']) ? (int) $payment['payment_amount'] : 0,
+                    'payment_date' => $payment['payment_date'] ?? null,
+                    'payment_month' => $payment['payment_month'] ?? null,
+                    'payment_year' => $payment['payment_year'] ?? null,
+                    'receipt_url' => $payment['receipt_url'] ?? null,
+                ];
+            })
+            ->filter(fn ($payment) => !empty($payment['id']) && !empty($payment['receipt_url']))
+            ->values()
+            ->all();
     }
 
     public function getStudentPayment($id){

@@ -125,10 +125,27 @@
         <script>
             const whatsappInvoice = @json(session('whatsapp_invoice'));
             const invoiceWarning = @json(session('invoice_warning'));
+            const paymentSuccessSummary = @json(session('payment_success_summary'));
+            const successMessage = @json(Session::get('success') ?? ($success ?? ''));
+            const paymentSummaryHtml = Array.isArray(paymentSuccessSummary) && paymentSuccessSummary.length
+                ? `
+                    <div style="text-align:left;">
+                        <div style="margin-bottom:12px;">${successMessage}</div>
+                        <div style="font-weight:600;margin-bottom:10px;">Payment berhasil disimpan:</div>
+                        <ul style="margin:0;padding-left:18px;">
+                            ${paymentSuccessSummary.map((payment) => `
+                                <li style="margin-bottom:8px;">
+                                    <div>${payment.type_label || 'Payment'} - ${payment.amount_label || '-'}</div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `
+                : successMessage;
 
             Swal.fire({
                 title: 'Success!',
-                text: "{{ Session::get('success') ?? ($success ?? '') }}",
+                html: paymentSummaryHtml,
                 icon: 'success',
                 confirmButtonText: 'OK',
                 customClass: {
@@ -154,7 +171,7 @@
                 if (whatsappInvoice && whatsappInvoice.url) {
                     const result = await Swal.fire({
                         title: 'Kirim invoice via WA?',
-                        text: `${whatsappInvoice.receipt_links_count || whatsappInvoice.items_count || 0} link kwitansi PDF untuk ${whatsappInvoice.student_name || 'siswa'} siap dikirim ke ${whatsappInvoice.phone || 'nomor siswa'}.`,
+                        text: `Ringkasan pembayaran untuk ${whatsappInvoice.student_name || 'siswa'} siap dikirim ke ${whatsappInvoice.phone || 'nomor siswa'}.`,
                         icon: 'question',
                         showCancelButton: true,
                         confirmButtonText: 'Kirim Sekarang',
