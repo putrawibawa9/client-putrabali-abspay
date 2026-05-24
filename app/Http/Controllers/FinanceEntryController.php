@@ -102,6 +102,20 @@ class FinanceEntryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $response = Http::delete(env('API_BASE_URL') . '/finance-entries/' . $id);
+
+        if ($response->successful()) {
+            $payload = $response->json();
+
+            return redirect()
+                ->route('finance-categories')
+                ->with('success', $payload['message'] ?? 'Finance entry deleted successfully.');
+        }
+
+        $payload = $response->json();
+
+        return redirect()
+            ->route('finance-categories')
+            ->with('error', $payload['message'] ?? 'Failed to delete finance entry.');
     }
 }
